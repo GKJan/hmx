@@ -1,0 +1,135 @@
+<template>
+  <div class="personal-container">
+    <div class="header">
+      <img v-if="userInfo.sex === 1" src="../../assets/wx/小鹅通评估报告-34.jpg">
+      <img v-else src="../../assets/wx/小鹅通评估报告-34.jpg">
+      <span>{{ userInfo.username }}</span>
+    </div>
+    <div class="menu" @click="toSearch">
+      <span>搜索报告</span>
+      <span class="arrow">></span>
+    </div>
+    <div class="menu" @click="toRecord">
+      <span>录入数据</span>
+      <span class="arrow">></span>
+    </div>
+    <div class="menu" @click="show = true">
+      <span>修改密码</span>
+      <span class="arrow">></span>
+    </div>
+    <div class="logout" @click="logout">
+      <span>退出登录</span>
+    </div>
+    <van-popup v-model="show" class="wrapper">
+      <div class="form">
+        <el-form ref="form" :model="form" :rules="rules" label-width="65px">
+          <el-form-item label="新密码" prop="password">
+            <el-input type="password" v-model="form.password" placeholder="请输入新密码"></el-input>
+          </el-form-item>
+        </el-form>
+        <el-button type="primary" @click="submit">确认修改</el-button>
+      </div>
+    </van-popup>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      show: false,
+      userInfo: {},
+      form: {},
+      rules: {
+        password: [{ required: true, message: '请输入新密码', trigger: 'blur' }]
+      }
+    }
+  },
+
+  created () {
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+  },
+
+  methods: {
+    toSearch () {
+      this.$router.push('/wx/search')
+    },
+
+    toRecord () {
+      this.$router.push('/wx/record')
+    },
+
+    submit () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.api.updatePassWord(this.form).then((res) => {
+            if (res.success) {
+              this.$toast('修改成功，请重新登录')
+              setTimeout(() => {
+                localStorage.removeItem('userInfo')
+                this.$router.replace('/wx/login')
+              }, 500)
+            }
+          })
+        }
+      })
+    },
+
+    logout () {
+      localStorage.removeItem('userInfo')
+      this.$toast('退出成功')
+      setTimeout(() => {
+        this.$router.replace('/wx/login')
+      }, 500)
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.personal-container {
+  padding: 0 15px;
+  min-height: 100%;
+  // background-color: #f8f8f8;
+  .header {
+    padding: 25px 10px 15px;
+    display: flex;
+    align-items: center;
+    // border-bottom: 1px solid #ddd;
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+  }
+  .menu {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    .arrow {
+      transform: scale(1, 1.5);
+    }
+  }
+  .logout {
+    margin-top: 50px;
+    text-align: center;
+    span {
+      color: #304890;
+      border-bottom: 1px solid #304890;
+    }
+  }
+  .wrapper {
+    border-radius: 10px;
+    .form {
+      text-align: center;
+      padding: 15px;
+      width: 250px;
+      background-color: #fff;
+    }
+  }
+}
+</style>
