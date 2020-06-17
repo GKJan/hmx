@@ -115,7 +115,7 @@ export default {
       opacity: 0;
       width: 80px;
       top: 5px;
-      left: 100px;
+      left: 385px;
       cursor: pointer;
     }
     a {
@@ -125,7 +125,7 @@ export default {
       width: 120px;
       height: 30px;
       top: 5px;
-      left: 390px;
+      left: 560px;
       cursor: pointer;
     }
   }

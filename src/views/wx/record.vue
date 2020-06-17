@@ -28,7 +28,7 @@
           <el-date-picker
             v-model="form.birth"
             type="date"
-            value-format="yyyy-MM"
+            value-format="yyyy-MM-dd"
             placeholder="选择出生年月">
           </el-date-picker>
         </el-form-item>
@@ -68,14 +68,14 @@
         <el-form-item label="10米折返跑(秒)" prop="sensitives">
           <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="拍球(次)" prop="racket">
-          <el-input v-model="form.racket" placeholder="请输入拍球次数"></el-input>
+        <el-form-item label="拍球(个)">
+          <el-input v-model="form.racket" placeholder="请输入拍球个数"></el-input>
         </el-form-item>
-        <el-form-item label="传球(次)" prop="pass">
-          <el-input v-model="form.pass" placeholder="请输入传球次数"></el-input>
+        <el-form-item label="传球(个)">
+          <el-input v-model="form.pass" placeholder="请输入传球个数"></el-input>
         </el-form-item>
-        <el-form-item label="投篮(次)" prop="shoot">
-          <el-input v-model="form.shoot" placeholder="请输入投篮次数"></el-input>
+        <el-form-item label="投篮(个)">
+          <el-input v-model="form.shoot" placeholder="请输入投篮个数"></el-input>
         </el-form-item>
       </el-form>
       <el-button @click="record" class="login-btn" type="primary">录入</el-button>
@@ -107,9 +107,9 @@ export default {
         balance: [{ required: true, message: '请输入', trigger: 'blur' }],
         flexibility: [{ required: true, message: '请输入', trigger: 'blur' }],
         sensitives: [{ required: true, message: '请输入', trigger: 'blur' }],
-        racket: [{ required: true, message: '请输入拍球次数', trigger: 'blur' }],
-        pass: [{ required: true, message: '请输入传球次数', trigger: 'blur' }],
-        shoot: [{ required: true, message: '请输入投篮次数', trigger: 'blur' }]
+        racket: [{ required: true, message: '请输入拍球个数', trigger: 'blur' }],
+        pass: [{ required: true, message: '请输入传球个数', trigger: 'blur' }],
+        shoot: [{ required: true, message: '请输入投篮个数', trigger: 'blur' }]
       },
       sessionList: []
     }

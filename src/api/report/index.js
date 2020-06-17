@@ -35,6 +35,22 @@ export default {
     })
   },
 
+  editData (params) {
+    return request({
+      url: '/item/update',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+
+  delData (params) {
+    return request({
+      url: '/item/del',
+      method: 'get',
+      params: params
+    })
+  },
+
   getDetail (params) {
     return request({
       url: '/item/detail',

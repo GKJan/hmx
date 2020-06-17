@@ -35,10 +35,12 @@
             <input type="file" id="file" @change="handleImport">
             <a href="http://tc.huamengxing.com:8080/api/item/downloadFile"></a>
             <el-button type="success" icon="el-icon-plus" @click="addDialog = true">录入</el-button>
-            <el-button type="warning" icon="el-icon-printer">导入</el-button>
+            <el-button type="warning" :disabled="btnDisabled" icon="el-icon-edit" @click="beforeEdit">编辑</el-button>
+            <el-button type="danger" :disabled="btnDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button>
+            <el-button type="primary" :disabled="btnDisabled" icon="el-icon-document" @click="handleReport">分析报告</el-button>
+            <el-button type="info" icon="el-icon-printer">导入</el-button>
             <el-button type="info" icon="el-icon-takeaway-box" @click="handleExport">导出</el-button>
-            <el-button type="primary" :disabled="delDisabled" icon="el-icon-document" @click="handleReport">分析报告</el-button>
-            <el-button type="danger" icon="el-icon-sort-down">下载导入模板</el-button>
+            <el-button type="info" icon="el-icon-sort-down">下载导入模板</el-button>
           </template>
           <template #tableColumn>
             <el-table-column
@@ -56,13 +58,18 @@
               align="center">
             </el-table-column>
             <el-table-column
-              prop="ibm"
-              label="BMI"
+              prop="height"
+              label="身高"
               align="center">
             </el-table-column>
             <el-table-column
               prop="resultHeight"
               label="预测身高"
+              align="center">
+            </el-table-column>
+            <el-table-column
+              prop="ibm"
+              label="BMI"
               align="center">
             </el-table-column>
             <el-table-column
@@ -120,18 +127,8 @@
           @handleSelectionChange="handleSelectionChange2"
         >
           <template #searchItem>
-            <!-- <div class="search-item">
-              <span>姓名</span>
-              <el-input v-model="listQuery2.name" placeholder="请输入姓名"></el-input>
-            </div>
-            <div class="search-item">
-              <el-button type="primary" icon="el-icon-search" @click="$refs.table2.getList()">搜索</el-button>
-            </div> -->
           </template>
           <template #operBtn>
-            <!-- <el-button type="success" icon="el-icon-plus" @click="addDialog = true">新增</el-button> -->
-            <!-- <el-button type="success" icon="el-icon-edit-outline">编辑</el-button> -->
-            <!-- <el-button type="danger" :disabled="delDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button> -->
           </template>
           <template #tableColumn>
             <el-table-column
@@ -212,7 +209,7 @@
           <el-date-picker
             v-model="form.birth"
             type="date"
-            value-format="yyyy-MM"
+            value-format="yyyy-MM-dd"
             placeholder="选择出生年月">
           </el-date-picker>
         </el-form-item>
@@ -252,19 +249,64 @@
         <el-form-item label="10米折返跑(秒)" prop="sensitives">
           <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="拍球(次)" prop="racket">
+        <el-form-item label="拍球(次)">
           <el-input v-model="form.racket" placeholder="请输入拍球次数"></el-input>
         </el-form-item>
-        <el-form-item label="传球(次)" prop="pass">
+        <el-form-item label="传球(次)">
           <el-input v-model="form.pass" placeholder="请输入传球次数"></el-input>
         </el-form-item>
-        <el-form-item label="投篮(次)" prop="shoot">
+        <el-form-item label="投篮(次)">
           <el-input v-model="form.shoot" placeholder="请输入投篮次数"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addDialog = false">取 消</el-button>
         <el-button type="primary" @click="handleAdd">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog width="500px" title="修改数据" :visible.sync="editDialog">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+        <el-form-item label="姓名" prop="name">
+          <el-input disabled v-model="form.name" placeholder="请输入姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="学员身高(cm)" prop="height">
+          <el-input v-model="form.height" placeholder="请输入学员身高"></el-input>
+        </el-form-item>
+        <el-form-item label="学员体重(kg)" prop="weight">
+          <el-input v-model="form.weight" placeholder="请输入学员体重"></el-input>
+        </el-form-item>
+        <el-form-item label="立定跳远(cm)" prop="legs">
+          <el-input v-model="form.legs" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="网球掷远(m)" prop="szLimb">
+          <el-input v-model="form.szLimb" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="双脚连续跳(秒)" prop="coordinate">
+          <el-input v-model="form.coordinate" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="走平衡木(秒)" prop="balance">
+          <el-input v-model="form.balance" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="坐位体前屈(cm)" prop="flexibility">
+          <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="10米折返跑(秒)" prop="sensitives">
+          <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="拍球(次)">
+          <el-input v-model="form.racket" placeholder="请输入拍球次数"></el-input>
+        </el-form-item>
+        <el-form-item label="传球(次)">
+          <el-input v-model="form.pass" placeholder="请输入传球次数"></el-input>
+        </el-form-item>
+        <el-form-item label="投篮(次)">
+          <el-input v-model="form.shoot" placeholder="请输入投篮次数"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="editDialog = false">取 消</el-button>
+        <el-button type="primary" @click="handleEdit">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -282,6 +324,7 @@ export default {
       listQuery1: {},
       listQuery2: {},
       addDialog: false,
+      editDialog: false,
       form: {
         // state: 1
       },
@@ -329,7 +372,7 @@ export default {
   },
 
   computed: {
-    delDisabled () {
+    btnDisabled () {
       if (this.selectList1.length === 1) {
         return false
       } else {
@@ -360,17 +403,38 @@ export default {
       })
     },
 
+    beforeEdit () {
+      this.editDialog = true
+      const form = JSON.parse(JSON.stringify(this.selectList1[0]))
+      this.form = form
+    },
+
+    handleEdit () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.api.editData(this.form).then((res) => {
+            if (res.success) {
+              this.$message.success('修改成功')
+              this.editDialog = false
+              this.form = {}
+              this.$refs.table1.getList()
+            }
+          })
+        }
+      })
+    },
+
     handleDel () {
       this.$confirm('是否删除这条记录?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.api.delSession({ id: this.selectList[0].id }).then(res => {
+        this.api.delData({ id: this.selectList1[0].id }).then(res => {
           if (res.success) {
             this.$message.success('删除成功')
-            this.$refs.table.listQuery.current = 1
-            this.$refs.table.getList()
+            this.$refs.table1.listQuery.current = 1
+            this.$refs.table1.getList()
           }
         })
       })
