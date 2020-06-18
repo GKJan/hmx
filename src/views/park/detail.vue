@@ -22,7 +22,7 @@
           <img src="../../assets/wx/zong.png" class="zong">
           <div class="bottom">
             <div class="left">
-              <span>八项总成绩：</span>
+              <span>八项体质总成绩：</span>
               <span>(满分：100分)</span>
             </div>
             <div class="middle">{{ total }}</div>
@@ -469,7 +469,7 @@
 
         <div class="content">
           <div class="item">
-            <img src="../../assets/pc/小鹅通评估报告pc端-13.png" class="title">
+            <img src="../../assets/pc/小鹅通评估报告pc端-19.png" class="title">
             <div class="detail">
               <template v-if="info.flexibility < info.flexibilityAvg">
                 <div class="tushi">
@@ -555,7 +555,8 @@
           <div class="item2">
             <img src="../../assets/wx/小鹅通评估报告pc端-09.png">
             <div class="text">
-              <p>我的成绩：{{ info.racket }}个 评价：{{ racketScore  }}</p>
+              <p>我的成绩：{{ info.racket }}个，评价：{{ racketScore  }}</p>
+              <!-- <p>评价：{{ racketScore  }}</p> -->
               <span v-if="info.racketScore < 24">
                 数据显示幼儿拍球能力偏弱，建议开展一系列拍球的游戏，追逐类、比赛类都是拍球熟练的一种练习手段，并且定期为孩子测量拍球的熟练程度测试。
               </span>
@@ -571,7 +572,8 @@
           <div class="item2">
             <img src="../../assets/wx/小鹅通评估报告pc端-10.png">
             <div class="text">
-              <p>我的成绩：{{ info.pass }}个 评价：{{ passScore  }}</p>
+              <p>我的成绩：{{ info.pass }}个，评价：{{ passScore  }}</p>
+              <!-- <p>评价：{{ passScore  }}</p> -->
               <span v-if="info.passScore < 18">
                 数据显示幼儿传球命中精准度能力偏弱，建议开展一系列传球准确度的游戏，上肢力量锻炼、亲子传球比远和比准活动都是传球命中的一种练习手段，注重幼儿的上肢力量锻炼，并且定期为孩子测量传球精准度。
               </span>
@@ -587,7 +589,8 @@
           <div class="item2">
             <img src="../../assets/wx/小鹅通评估报告pc端-11.png">
             <div class="text">
-              <p>我的成绩：{{ info.shoot }}个 评价：{{ shootScore  }}</p>
+              <p>我的成绩：{{ info.shoot }}个，评价：{{ shootScore  }}</p>
+              <!-- <p>评价：{{ shootScore  }}</p> -->
               <span v-if="info.shootScore < 18">
                 数据显示幼儿投篮精准度能力偏弱，建议开展一系列投掷准确度的游戏，投目标、亲子投篮活动都是投篮精准度的一种练习手段，注重幼儿的上肢力量锻炼，并且定期为孩子测量投篮精准度。
               </span>
@@ -800,16 +803,16 @@ export default {
           my: res.data.szLimb, avg: res.data.limbAvg
         },
         {
-          my: res.data.coordinate, avg: res.data.coordinateAvg
+          my: res.data.coordinateAvg, avg: res.data.coordinate
         },
         {
-          my: res.data.balance, avg: res.data.balanceAvg
+          my: res.data.balanceAvg, avg: res.data.balance
         },
         {
           my: res.data.flexibility, avg: res.data.flexibilityAvg
         },
         {
-          my: res.data.sensitives, avg: res.data.sensitiveAvg
+          my: res.data.sensitiveAvg, avg: res.data.sensitives
         }
       ]
     })
@@ -974,7 +977,7 @@ export default {
         .bottom {
           height: 8vw;
           margin-top: 8vw;
-          padding: 1vw 2vw;
+          padding: 1vw;
           background-color: #f0a818;
           display: flex;
           align-items: center;
@@ -1050,32 +1053,35 @@ export default {
               .wdsg1 {
                 top: .5vw;
                 left: .5vw;
-                color: #304890;
+                color: #F0D800;
+                font-weight: 600;
               }
               .pjsg1 {
                 top: 0;
                 right: .5vw;
-                color: #3078c0;
+                color: #304890;
               }
               .wdsg2 {
                 top: 0;
                 left: .8vw;
-                color: #304890;
+                color: #F0D800;
+                font-weight: 600;
               }
               .pjsg2 {
                 top: .8vw;
                 right: .8vw;
-                color: #3078c0;
+                color: #304890;
               }
               .wdsg3 {
                 top: 0;
                 left: .5vw;
-                color: #304890;
+                color: #F0D800;
+                font-weight: 600;
               }
               .pjsg3 {
                 top: 0;
                 right: .5vw;
-                color: #3078c0;
+                color: #304890;
               }
               .wdtz1 {
                 top: -4vw;
@@ -1104,46 +1110,50 @@ export default {
               .wdll1 {
                 top: 1.2vw;
                 left: .6vw;
-                color: #304890;
+                color: #F0D800;
+                font-weight: 600;
               }
               .pjll1 {
                 top: 4.5vw;
                 left: .6vw;
-                color: #3078c0;
+                color: #304890;
               }
               .wdll2 {
                 top: 1.2vw;
                 left: .6vw;
-                color: #304890;
+                color: #F0D800;
+                font-weight: 600;
               }
               .pjll2 {
                 top: 4.5vw;
                 left: .6vw;
-                color: #3078c0;
+                color: #304890;
               }
               .wdll3 {
                 top: 1.2vw;
                 left: .6vw;
-                color: #304890;
+                color: #F0D800;
+                font-weight: 600;
               }
               .pjll3 {
                 top: 4.5vw;
                 left: .6vw;
-                color: #3078c0;
+                color: #304890;
               }
               .wdsj {
                 top: 1.7vw;
                 right: 1vw;
                 display: flex;
                 flex-direction: column;
-                color: #304890;
+                color: #F0D800;
+                font-weight: 600;
               }
               .pjsj {
                 top: 6.2vw;
                 right: 0vw;
                 display: flex;
                 flex-direction: column;
-                color: #3078c0;
+                color: #304890;
               }
             }
             .method {
@@ -1191,20 +1201,20 @@ export default {
                   width: .6vw;
                   height: .6vw;
                   border-radius: 50%;
-                  background-color: #304890;
+                  background-color: #F0D800;
                 }
                 .span1 {
-                  color: #304890;
+                  color: #F0D800;
                   font-size: 13px;
                 }
                 .point2 {
                   width: .6vw;
                   height: .6vw;
                   border-radius: 50%;
-                  background-color: #3078c0;
+                  background-color: #304890;
                 }
                 .span2 {
-                  color: #3078c0;
+                  color: #304890;
                   font-size: 13px;
                 }
               }
@@ -1228,7 +1238,7 @@ export default {
             width: 16.6vw;
             position: absolute;
             top: 3.2vw;
-            left: .4vw;
+            left: .5vw;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1236,7 +1246,7 @@ export default {
               font-size: 12px;
               color: #304890;
               font-weight: bold;
-              margin: 0 0 .5vw;
+              margin: .2vw 0;
             }
             span {
               font-size: 12px;
