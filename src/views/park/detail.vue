@@ -48,6 +48,7 @@
                   <span>平衡性：{{ info.balance }}秒</span>
                   <span>柔韧性：{{ info.flexibility }}cm</span>
                   <span>灵敏性：{{ info.sensitives }}秒</span>
+                  <span>预测身高：{{ info.resultHeight }}cm</span>
                 </div>
                 <div class="item-right">
                   <div class="item" v-for="item in compareData" :key="item.my">
@@ -738,20 +739,20 @@ export default {
     //   }
     // },
     pingyu () {
-      if (this.total >= 34) {
-        return '幼儿身体素质发展水平非常优秀，灵敏协调性以及柔韧及反应能力非常棒，希望继续保持锻炼，在空余时间可以陪孩子参加各种各样的体育游戏活动。'
+      if (this.total >= 85) {
+        return '幼儿身体素质发展水平处于优秀水平，但也要关注相关的指标数据的变化和提升，希望继续周期性有规划的保持锻炼，保证锻炼的科学性和有效性，在空余时间可以陪孩子参加各种各样的体育游戏活动。'
       }
-      if (this.total >= 28 && this.total <= 33) {
-        return '幼儿身体素质发展水平处于正常水平，并且身体素质的综合性较好，希望继续保持孩子的运动，尽可能在额外的时间增加多项运动的练习，保护好孩子对运动的兴趣。'
+      if (this.total >= 75 && this.total <= 84) {
+        return '幼儿身体素质处于中等发展水平，数据显示身体素质的综合性相对较好，但部分身体素质依然有较大的提升空间，希望继续保持孩子的运动，尽可能在额外的时间增加多项运动的练习，保护好孩子对运动的兴趣。'
       }
-      if (this.total >= 22 && this.total <= 27) {
-        return '幼儿身体素质发展整体不错，但根据数据显示，孩子的部分身体素质有较大的提升空间，建议多让孩子参加各种各样的体育活动，提升其综合性的身体素质水平。'
+      if (this.total >= 65 && this.total <= 74) {
+        return '幼儿身体素质发展整体处于中等稍微偏低水平，孩子的部分身体素质有较大的提升空间，特别关注分值比较低的身体素质指标，建议针对指标的数据，可以多让孩子参加各种各样的体育活动以弥补，提升其综合性的身体素质水平。'
       }
-      if (this.total >= 16 && this.total <= 21) {
-        return '根据测试数据现实，孩子的身体素质存在一些小问题，我们建议可以进一步进行相关的身体素质的测试，以期为了孩子身体素质的正常发展提供有效建议，为了孩子的健康，我们共同努力。'
+      if (this.total >= 50 && this.total <= 64) {
+        return '根据测试数据显示，孩子的身体素质存在一些小问题，我们建议可以进一步定期进行相关的身体素质的测试，并且有目的有计划的进行相关的运动安排，以期为了孩子身体素质的正常发展提供有效措施，为了孩子的健康，我们共同努力。'
       }
-      if (this.total < 16) {
-        return '根据测试数据现实，孩子的身体素质存在很大问题，我们建议进行相关专家咨询，并及时为孩子进行运动的处方、营养的搭配和合理的作息，，并且建议定期到医院进行问诊和咨询，为了孩子的健康，我们共同努力。'
+      if (this.total < 49) {
+        return '根据测试数据显示，孩子的身体素质存在很大问题，我们建议进行相关专家咨询，并及时为孩子进行运动的处方、营养的搭配和合理的作息，，并且建议定期到医院进行问诊和咨询，为了孩子的健康，我们共同努力。'
       }
     },
     racketScore () {
@@ -879,21 +880,48 @@ export default {
     handlePrint () {
       let that = this
       that.btnLoading = true
-      html2Canvas(document.querySelector('#content'), {
-        allowTaint: true,
-        scale: 2
-      }).then(function (canvas) {
-        let contentWidth = canvas.width
-        let contentHeight = canvas.height
-        let pageData = canvas.toDataURL('image/jpeg', 0.4)
-        let pdfWidth = (contentWidth + 10) / 2 * 0.75
-        let pdfHeight = (contentHeight + 10) / 2 * 0.75 // 500为底部留白
-        let imgWidth = pdfWidth
-        let imgHeight = (contentHeight / 2 * 0.75) //内容图片这里不需要留白的距离
-        let pdf = new JsPDF('', 'pt', [pdfWidth, pdfHeight])
-        pdf.addImage(pageData, 'jpeg', 0, 0, imgWidth, imgHeight)
-        pdf.save(that.info.name + '-评估报告.pdf')
-        that.btnLoading = false
+      html2Canvas(document.querySelector('#content')).then(function (canvas) {
+        // let contentWidth = canvas.width
+        // let contentHeight = canvas.height
+        // let pageData = canvas.toDataURL('image/jpeg', 0.4)
+        // let pdfWidth = (contentWidth + 10) / 2 * 0.75
+        // let pdfHeight = (contentHeight + 10) / 2 * 0.75 // 500为底部留白
+        // let imgWidth = pdfWidth
+        // let imgHeight = (contentHeight / 2 * 0.75) //内容图片这里不需要留白的距离
+        // let pdf = new JsPDF('', 'pt', [pdfWidth, pdfHeight])
+        // pdf.addImage(pageData, 'jpeg', 0, 0, imgWidth, imgHeight)
+        // pdf.save(that.info.name + '-评估报告.pdf')
+        // that.btnLoading = false
+        let contentWidth = canvas.width;
+        let contentHeight = canvas.height;
+        //一页pdf显示html页面生成的canvas高度;
+        let pageHeight = contentWidth / 592.28 * 841.89;
+        //未生成pdf的html页面高度
+        let leftHeight = contentHeight;
+        //页面偏移
+        let position = 0;
+        //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+        let imgWidth = 595.28;
+        let imgHeight = 592.28 / contentWidth * contentHeight;
+        let pageData = canvas.toDataURL('image/jpeg', 1.0);
+        let pdf = new JsPDF('', 'pt', 'a4');
+        //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+        //当内容未超过pdf一页显示的范围，无需分页
+        if (leftHeight < pageHeight) {
+          pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+        } else {
+          while (leftHeight > 0) {
+            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+            leftHeight -= pageHeight;
+            position -= 841.89;
+            //避免添加空白页
+            if (leftHeight > 0) {
+              pdf.addPage();
+            }
+          }
+        }
+        pdf.save(that.info.name + '-评估报告.pdf');
+        that.btnLoading = false;
       })
     }
   }
@@ -916,7 +944,7 @@ export default {
     width: 60vw;
     margin: 0 auto;
     .info {
-      height: 86vw;
+      height: 85.3vw;
       background-image: url('../../assets/pc/小鹅通评估报告pc端_画板 1 副本 6.png');
       background-size: 100% 100%;
       position: relative;
@@ -955,7 +983,7 @@ export default {
       }
     }
     .swipe-item {
-      padding: 4vw;
+      padding: 6vw 4vw;
       margin-top: 1vw;
       height: 72vw;
       background-image: url('../../assets/pc/小鹅通评估报告pc端_画板 1 副本 7.png');
@@ -1265,7 +1293,7 @@ export default {
           display: flex;
           flex-direction: column;
           .top {
-            height: 23.5vw;
+            height: 24.5vw;
             width: 20vw;
             padding: 1vw;
             border-radius: 0 0 15px 15px;
@@ -1317,8 +1345,8 @@ export default {
                 color: #304890;
                 border-radius: 15px;
                 span {
-                  height: 2.5vw;
-                  line-height: 2.5vw;
+                  height: 2.4vw;
+                  line-height: 2.4vw;
                   // padding: 1vw 0;
                 }
               }
@@ -1326,7 +1354,7 @@ export default {
                 display: flex;
                 flex-direction: column;
                 .item {
-                  height: 2.5vw;
+                  height: 2.4vw;
                   display: flex;
                   flex-direction: column;
                   justify-content: center;
@@ -1355,7 +1383,7 @@ export default {
             }
           }
           .bottom {
-            height: 8vw;
+            height: 7vw;
             margin-top: 1vw;
             padding: 1vw;
             background-color: #fff;
@@ -1401,6 +1429,7 @@ export default {
             height: 28vw;
           }
           .pingyu {
+            margin-top: -1vw;
             padding: 0 2vw;
             display: flex;
             flex-direction: column;

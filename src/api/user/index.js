@@ -25,6 +25,14 @@ export default {
     })
   },
 
+  delUser (params) {
+    return request({
+      url: '/member/delete',
+      method: 'get',
+      params: params
+    })
+  },
+
   exportUser (params) {
     return request({
       url: '/member/export',

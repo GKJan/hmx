@@ -18,7 +18,7 @@
         <el-button type="success" icon="el-icon-plus" @click="action = 'add';addDialog = true;form = {}">新增</el-button>
         <el-button type="warning" icon="el-icon-edit-outline" :disabled="editDisabled" @click="beforeEdit">编辑</el-button>
         <el-button type="info" icon="el-icon-printer" @click="handleExport">导出</el-button>
-        <!-- <el-button type="danger" :disabled="delDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button> -->
+        <el-button type="danger" :disabled="editDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button>
       </template>
       <template #tableColumn>
         <el-table-column
@@ -185,7 +185,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.api.delPark({ id: this.selectList[0].id }).then(res => {
+        this.api.delUser({ id: this.selectList[0].id }).then(res => {
           if (res.success) {
             this.$message.success('删除成功')
             this.$refs.table.listQuery.current = 1
