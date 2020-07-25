@@ -64,9 +64,7 @@ export default {
   data () {
     return {
       userInfo: {},
-      tableData: [],
       listQuery: {},
-      total: 0,
       addDialog: false,
       form: {
         // state: 1
@@ -104,7 +102,7 @@ export default {
         if (valid) {
           this.api.addPark(this.form).then((res) => {
             if (res.success) {
-              this.$message.success('增加成功')
+              this.$message.success('新增成功')
               this.addDialog = false
               this.form = {}
               this.$refs.table.getList()

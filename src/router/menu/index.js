@@ -28,5 +28,10 @@ export default [
     path: '/log',
     name: 'Log',
     component: () => import('@/views/user/log.vue')
+  },
+  {
+    path: '/certificate',
+    name: 'Certificate',
+    component: () => import('@/views/user/certificate.vue')
   }
 ]

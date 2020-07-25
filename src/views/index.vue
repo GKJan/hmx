@@ -57,57 +57,7 @@ export default {
         password: [{ required: true, message: '请输入新密码', trigger: 'blur' }]
       },
       dialog: false,
-      menulist: [
-        // {
-        //   id: '1',
-        //   name: '园区管理',
-        //   path: '/park',
-        //   children: [],
-        //   icon: 'icon-yuanqu'
-        // },
-        // {
-        //   id: '2',
-        //   name: '场次管理',
-        //   path: '/session',
-        //   children: [],
-        //   icon: 'icon-changciweixuanzhongGAI'
-        // },
-        // {
-        //   id: '3',
-        //   name: '信息报告',
-        //   path: '/report',
-        //   children: [],
-        //   icon: 'icon-baogao'
-        // },
-        // {
-        //   id: '4',
-        //   name: '用户管理',
-        //   path: '/user',
-        //   children: [],
-        //   icon: 'icon-yonghu'
-        // },
-        // {
-        //   id: '5',
-        //   name: '日志管理',
-        //   path: '/log',
-        //   children: [],
-        //   icon: 'icon-rizhi'
-        // }
-        // {
-        //   id: '2',
-        //   name: '菜单管理2',
-        //   path: '/menu',
-        //   children: [
-        //     {
-        //       id: '3',
-        //       name: '菜单管理2-1',
-        //       path: '/menu',
-        //       icon: ''
-        //     }
-        //   ],
-        //   icon: ''
-        // }
-      ]
+      menulist: []
     }
   },
 
@@ -148,6 +98,13 @@ export default {
           id: '5',
           name: '日志管理',
           path: '/log',
+          children: [],
+          icon: 'icon-rizhi'
+        },
+        {
+          id: '6',
+          name: '证书管理',
+          path: '/certificate',
           children: [],
           icon: 'icon-rizhi'
         }

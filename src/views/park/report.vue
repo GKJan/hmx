@@ -270,11 +270,31 @@
         <el-form-item label="姓名" prop="name">
           <el-input disabled v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
+        <el-form-item label="出生年月" prop="birth">
+          <el-date-picker
+            v-model="form.birth"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="选择出生年月">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="家长姓名" prop="parentName">
+          <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="家长手机号" prop="phone">
+          <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
+        </el-form-item>
         <el-form-item label="学员身高(cm)" prop="height">
           <el-input v-model="form.height" placeholder="请输入学员身高"></el-input>
         </el-form-item>
         <el-form-item label="学员体重(kg)" prop="weight">
           <el-input v-model="form.weight" placeholder="请输入学员体重"></el-input>
+        </el-form-item>
+        <el-form-item label="父亲身高(cm)" prop="FHeight">
+          <el-input v-model="form.FHeight" placeholder="请输入父亲身高"></el-input>
+        </el-form-item>
+        <el-form-item label="母亲身高(cm)" prop="MHeight">
+          <el-input v-model="form.MHeight" placeholder="请输入母亲身高"></el-input>
         </el-form-item>
         <el-form-item label="立定跳远(cm)" prop="legs">
           <el-input v-model="form.legs" placeholder="请输入"></el-input>
@@ -405,8 +425,15 @@ export default {
 
     beforeEdit () {
       this.editDialog = true
-      const form = JSON.parse(JSON.stringify(this.selectList1[0]))
-      this.form = form
+      this.api.getDetail({ id: this.selectList1[0].id }).then(res => {
+        if (res.success) {
+          const { id, name, parentName, phone, height, weight, legs, szLimb, coordinate, balance, flexibility, sensitives, racket, pass, shoot } = res.data
+          this.form = { id, name, parentName, phone, height, weight, legs, szLimb, coordinate, balance, flexibility, sensitives, racket, pass, shoot }
+          this.$set(this.form, 'birth', res.data.birthday)
+          this.$set(this.form, 'FHeight', res.data.fHeight)
+          this.$set(this.form, 'MHeight', res.data.mHeight)
+        }
+      })
     },
 
     handleEdit () {
