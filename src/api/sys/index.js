@@ -8,5 +8,13 @@ export default {
       method: 'post',
       data: qs.stringify(params)
     })
+  },
+
+  getDictList (params) {
+    return request({
+      url: '/sysDict',
+      method: 'get',
+      params: params
+    })
   }
 }

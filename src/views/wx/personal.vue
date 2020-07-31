@@ -10,7 +10,11 @@
       <span class="arrow">></span>
     </div>
     <div class="menu" @click="toRecord">
-      <span>录入数据</span>
+      <span>录入数据(幼儿园)</span>
+      <span class="arrow">></span>
+    </div>
+    <div class="menu" @click="toPriRecord">
+      <span>录入数据(小学)</span>
       <span class="arrow">></span>
     </div>
     <div class="menu" @click="show = true">
@@ -57,6 +61,10 @@ export default {
 
     toRecord () {
       this.$router.push('/wx/record')
+    },
+
+    toPriRecord () {
+      this.$router.push('/wx/primaryRecord')
     },
 
     submit () {

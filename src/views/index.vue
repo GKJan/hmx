@@ -3,22 +3,19 @@
     <div class="layout-header">
       <div class="header-left">
         <img src="../assets/img/logo.png">
-        <span>{{ userInfo.areaName }}</span>
+        <span>华蒙星体测系统</span>
       </div>
-      <el-popover
-        placement="bottom"
-        trigger="click"
-      >
-        <div slot="reference" class="header-right">
-          <img v-if="userInfo.sex === 1" src="../assets/wx/小鹅通评估报告-34.jpg">
-          <img v-else src="../assets/wx/小鹅通评估报告-34.jpg">
+      <!-- {{ userInfo.areaName }} -->
+      <div class="header-right">
+        <span style="font-size: 14px;">当前位置：{{ routeTitle }}</span>
+        <div class="right">
+          <img v-if="userInfo.sex === 1" src="../assets/wx/小鹅通评估报告-34.jpg" class="avatar">
+          <img v-else src="../assets/wx/小鹅通评估报告-34.jpg" class="avatar">
           <span>{{ userInfo.username }}</span>
+          <span class="change" @click="dialog = true"><i class="el-icon-lock"></i>修改密码</span>
+          <img src="../assets/img/close.png" class="close" @click="logout">
         </div>
-        <div class="oper">
-          <div style="padding-bottom: 5px;border-bottom: 1px solid #eee;cursor: pointer;" @click="dialog = true">修改密码</div>
-          <div style="padding-top: 5px;cursor: pointer;" @click="logout">退出登录</div>
-        </div>
-      </el-popover>
+      </div>
     </div>
     <el-dialog width="500px" title="修改密码" :visible.sync="dialog">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
@@ -34,9 +31,12 @@
     <div class="layout-side" v-loading="menuloading">
       <slide-menu :list="menulist"></slide-menu>
     </div>
-    <transition name="fade">
+    <div class="layout-body">
+      <router-view></router-view>
+    </div>
+    <!-- <transition name="fade">
       <router-view class="layout-body"></router-view>
-    </transition>
+    </transition> -->
   </div>
 </template>
 
@@ -61,6 +61,12 @@ export default {
     }
   },
 
+  computed: {
+    routeTitle () {
+      return this.$route.meta.title
+    }
+  },
+
   created () {
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
     this.form.id = this.userInfo.id
@@ -82,8 +88,15 @@ export default {
         },
         {
           id: '3',
-          name: '信息报告',
+          name: '信息报告(幼儿园)',
           path: '/report',
+          children: [],
+          icon: 'icon-baogao'
+        },
+        {
+          id: '7',
+          name: '信息报告(小学)',
+          path: '/primaryReport',
           children: [],
           icon: 'icon-baogao'
         },
@@ -107,17 +120,31 @@ export default {
           path: '/certificate',
           children: [],
           icon: 'icon-rizhi'
+        },
+        {
+          id: '8',
+          name: '数据统计',
+          path: '/statistic',
+          children: [],
+          icon: 'icon-rizhi'
         }
       ]
     } else if (this.userInfo.role === 2 ) {
       this.menulist = [
         {
           id: '3',
-          name: '信息报告',
+          name: '信息报告(幼儿园)',
           path: '/report',
           children: [],
           icon: 'icon-baogao'
-        }
+        },
+        {
+          id: '7',
+          name: '信息报告(小学)',
+          path: '/primaryReport',
+          children: [],
+          icon: 'icon-baogao'
+        },
       ]
     } else if (this.userInfo.role === 3 ) {
       this.menulist = [
@@ -130,8 +157,15 @@ export default {
         },
         {
           id: '3',
-          name: '信息报告',
+          name: '信息报告(幼儿园)',
           path: '/report',
+          children: [],
+          icon: 'icon-baogao'
+        },
+        {
+          id: '7',
+          name: '信息报告(小学)',
+          path: '/primaryReport',
           children: [],
           icon: 'icon-baogao'
         },
@@ -180,35 +214,58 @@ export default {
 
 .layout-container {
   .layout-header {
-    padding: 15px 25px;
+    height: 62px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    // box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
     .header-left {
+      width: 200px;
       display: flex;
       align-items: center;
+      // justify-content: center;
+      background-color: #545c64;
       img {
         width: 30px;
         height: 30px;
+        margin-left: 10px;
       }
       span {
-        font-size: 24px;
+        font-size: 20px;
+        color: #fff;
         margin-left: 5px;
       }
     }
     .header-right {
+      width: calc(100% - 250px);
+      padding: 0 25px;
       display: flex;
       align-items: center;
-      cursor: pointer;
-      img {
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-      }
-      span {
+      justify-content: space-between;
+      .right {
         font-size: 14px;
-        margin-left: 5px;
+        color: #666;
+        display: flex;
+        align-items: center;
+        .avatar {
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          margin-right: 5px;
+        }
+        .change {
+          font-size: 13px;
+          margin: 0 15px;
+          cursor: pointer;
+          i {
+            font-size: 18px;
+            margin-right: 5px;
+            color: #666;
+          }
+        }
+        .close {
+          width: 15px;
+          height: 16px;
+          cursor: pointer;
+        }
       }
     }
   }
@@ -219,6 +276,10 @@ export default {
     width: 200px;
     overflow-x: hidden;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    background-color: #545c64;
+  }
+  .layout-side::-webkit-scrollbar {
+    display: none;
   }
   .layout-body {
     position: absolute;

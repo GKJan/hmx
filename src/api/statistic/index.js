@@ -1,42 +1,49 @@
 import request from '../request'
-import qs from 'qs'
 
 export default {
-  getParkPage (params) {
+  countSex (params) {
     return request({
-      url: '/area/getPage',
+      url: '/count/countSex',
       method: 'get',
       params: params
     })
   },
 
-  getParkList (params) {
+  countTotal (params) {
     return request({
-      url: '/area/list',
+      url: '/count/countTotal',
       method: 'get',
       params: params
     })
   },
 
-  addPark (params) {
+  countType (params) {
     return request({
-      url: '/area/save',
+      url: '/count/countType',
       method: 'get',
       params: params
     })
   },
 
-  delPark (params) {
+  getItemCount (params) {
     return request({
-      url: '/area/delete',
+      url: '/count/getItemCount',
       method: 'get',
       params: params
     })
   },
 
-  getArea (params) {
+  getXxItemCount (params) {
     return request({
-      url: '/sys/sysArea/list',
+      url: '/count/getXxItemCount',
+      method: 'get',
+      params: params
+    })
+  },
+
+  countYxz (params) {
+    return request({
+      url: '/count/yxz',
       method: 'get',
       params: params
     })

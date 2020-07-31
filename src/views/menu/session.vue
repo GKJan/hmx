@@ -30,6 +30,11 @@
           align="center">
         </el-table-column>
         <el-table-column
+          prop="areaName"
+          label="所属园区"
+          align="center">
+        </el-table-column>
+        <el-table-column
           prop="startTime"
           label="开始时间"
           align="center">

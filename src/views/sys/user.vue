@@ -17,8 +17,9 @@
       <template #operBtn>
         <el-button type="success" icon="el-icon-plus" @click="action = 'add';addDialog = true;form = {}">新增</el-button>
         <el-button type="warning" icon="el-icon-edit-outline" :disabled="editDisabled" @click="beforeEdit">编辑</el-button>
-        <el-button type="info" icon="el-icon-printer" @click="handleExport">导出</el-button>
         <el-button type="danger" :disabled="editDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button>
+        <el-button type="primary" :disabled="editDisabled" icon="el-icon-refresh" @click="handlePsw">修改密码</el-button>
+        <el-button type="info" icon="el-icon-printer" @click="handleExport">导出</el-button>
       </template>
       <template #tableColumn>
         <el-table-column
@@ -192,6 +193,24 @@ export default {
             this.$refs.table.getList()
           }
         })
+      })
+    },
+
+    handlePsw () {
+      this.$prompt('请输入密码', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        if (value) {
+          this.api.updatePassWord({ id: this.selectList[0].id, password: value }).then((res) => {
+            if (res.success) {
+              this.$message.success('修改成功')
+              this.$refs.table.getList()
+            }
+          })
+        } else {
+          this.$message.error('请输入密码')
+        }
       })
     },
 

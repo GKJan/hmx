@@ -4,7 +4,7 @@
       <el-tab-pane label="报告列表">
         <table-panel
           ref="table1"
-          :apiMethod="api.getDataPage"
+          :apiMethod="api.getXxDataPage"
           @handleSelectionChange="handleSelectionChange1"
         >
           <template #searchItem>
@@ -33,7 +33,7 @@
           </template>
           <template #operBtn>
             <input type="file" id="file" @change="handleImport">
-            <a href="http://tc.huamengxing.com:8080/api/item/downloadFile"></a>
+            <a href="http://114.55.104.155:8085/api/xxItem/downloadFile"></a>
             <el-button type="success" icon="el-icon-plus" @click="addDialog = true">录入</el-button>
             <el-button type="warning" :disabled="btnDisabled" icon="el-icon-edit" @click="beforeEdit">编辑</el-button>
             <el-button type="danger" :disabled="btnDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button>
@@ -53,8 +53,18 @@
               align="center">
             </el-table-column>
             <el-table-column
+              prop="xyType"
+              label="学员类型"
+              align="center">
+            </el-table-column>
+            <el-table-column
               prop="name"
               label="姓名"
+              align="center">
+            </el-table-column>
+            <el-table-column
+              prop="age"
+              label="年龄"
               align="center">
             </el-table-column>
             <el-table-column
@@ -73,6 +83,16 @@
               align="center">
             </el-table-column>
             <el-table-column
+              prop="feiHl"
+              label="肺活量"
+              align="center">
+            </el-table-column>
+            <el-table-column
+              prop="tiaos"
+              label="跳绳"
+              align="center">
+            </el-table-column>
+            <!-- <el-table-column
               prop="legs"
               label="下肢力量"
               align="center">
@@ -91,7 +111,7 @@
               prop="balance"
               label="平衡性"
               align="center">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
               prop="flexibility"
               label="柔韧性"
@@ -103,18 +123,23 @@
               align="center">
             </el-table-column>
             <el-table-column
-              prop="racket"
-              label="拍球"
+              prop="remove"
+              label="移动"
               align="center">
             </el-table-column>
             <el-table-column
               prop="pass"
-              label="传球"
+              label="接球"
               align="center">
             </el-table-column>
             <el-table-column
               prop="shoot"
               label="投篮"
+              align="center">
+            </el-table-column>
+            <el-table-column
+              prop="total"
+              label="总分"
               align="center">
             </el-table-column>
           </template>
@@ -123,10 +148,17 @@
       <el-tab-pane label="信息列表">
         <table-panel
           ref="table2"
-          :apiMethod="api.getReportPage"
+          :apiMethod="api.getXxReportPage"
           @handleSelectionChange="handleSelectionChange2"
         >
           <template #searchItem>
+            <div class="search-item">
+              <span>小朋友姓名</span>
+              <el-input v-model="listQuery2.childName" placeholder="请输入小朋友姓名"></el-input>
+            </div>
+            <div class="search-item">
+              <el-button type="primary" icon="el-icon-search" @click="$refs.table2.getList()">搜索</el-button>
+            </div>
           </template>
           <template #operBtn>
           </template>
@@ -205,6 +237,10 @@
         <el-form-item label="校区" prop="school">
           <el-input v-model="form.school" disabled placeholder="请输入校区"></el-input>
         </el-form-item>
+        <el-form-item label="学员类型" prop="xyType">
+          <el-radio v-model="form.xyType" label="华蒙星学员"></el-radio>
+          <el-radio v-model="form.xyType" label="非学员"></el-radio>
+        </el-form-item>
         <el-form-item label="出生年月" prop="birth">
           <el-date-picker
             v-model="form.birth"
@@ -231,7 +267,7 @@
         <el-form-item label="母亲身高(cm)" prop="MHeight">
           <el-input v-model="form.MHeight" placeholder="请输入母亲身高"></el-input>
         </el-form-item>
-        <el-form-item label="立定跳远(cm)" prop="legs">
+        <!-- <el-form-item label="立定跳远(cm)" prop="legs">
           <el-input v-model="form.legs" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="网球掷远(m)" prop="szLimb">
@@ -242,6 +278,12 @@
         </el-form-item>
         <el-form-item label="走平衡木(秒)" prop="balance">
           <el-input v-model="form.balance" placeholder="请输入"></el-input>
+        </el-form-item> -->
+        <el-form-item label="肺活量" prop="feiHl">
+          <el-input type="number" v-model.number="form.feiHl" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="跳绳" prop="tiaos">
+          <el-input v-model="form.tiaos" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="坐位体前屈(cm)" prop="flexibility">
           <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
@@ -249,11 +291,11 @@
         <el-form-item label="10米折返跑(秒)" prop="sensitives">
           <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="拍球(次)">
-          <el-input v-model="form.racket" placeholder="请输入拍球次数"></el-input>
+        <el-form-item label="移动">
+          <el-input v-model="form.remove" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="传球(次)">
-          <el-input v-model="form.pass" placeholder="请输入传球次数"></el-input>
+        <el-form-item label="接球(次)">
+          <el-input v-model="form.pass" placeholder="请输入接球次数"></el-input>
         </el-form-item>
         <el-form-item label="投篮(次)">
           <el-input v-model="form.shoot" placeholder="请输入投篮次数"></el-input>
@@ -296,7 +338,7 @@
         <el-form-item label="母亲身高(cm)" prop="MHeight">
           <el-input v-model="form.MHeight" placeholder="请输入母亲身高"></el-input>
         </el-form-item>
-        <el-form-item label="立定跳远(cm)" prop="legs">
+        <!-- <el-form-item label="立定跳远(cm)" prop="legs">
           <el-input v-model="form.legs" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="网球掷远(m)" prop="szLimb">
@@ -307,6 +349,12 @@
         </el-form-item>
         <el-form-item label="走平衡木(秒)" prop="balance">
           <el-input v-model="form.balance" placeholder="请输入"></el-input>
+        </el-form-item> -->
+        <el-form-item label="肺活量" prop="feiHl">
+          <el-input type="number" v-model.number="form.feiHl" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item label="跳绳" prop="tiaos">
+          <el-input v-model="form.tiaos" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="坐位体前屈(cm)" prop="flexibility">
           <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
@@ -314,11 +362,11 @@
         <el-form-item label="10米折返跑(秒)" prop="sensitives">
           <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="拍球(次)">
-          <el-input v-model="form.racket" placeholder="请输入拍球次数"></el-input>
+        <el-form-item label="移动">
+          <el-input v-model="form.remove" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="传球(次)">
-          <el-input v-model="form.pass" placeholder="请输入传球次数"></el-input>
+        <el-form-item label="接球(次)">
+          <el-input v-model="form.pass" placeholder="请输入接球次数"></el-input>
         </el-form-item>
         <el-form-item label="投篮(次)">
           <el-input v-model="form.shoot" placeholder="请输入投篮次数"></el-input>
@@ -353,6 +401,7 @@ export default {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
         school: [{ required: true, message: '请输入校区', trigger: 'blur' }],
+        xyType: [{ required: true, message: '请选择学员类型', trigger: 'change' }],
         birth: [{ required: true, message: '请选择出生年月', trigger: 'change' }],
         parentName: [{ required: true, message: '请输入家长姓名', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入家长手机号', trigger: 'blur' }],
@@ -360,13 +409,11 @@ export default {
         weight: [{ required: true, message: '请输入学员体重', trigger: 'blur' }],
         FHeight: [{ required: true, message: '请输入父亲身高', trigger: 'blur' }],
         MHeight: [{ required: true, message: '请输入母亲身高', trigger: 'blur' }],
-        legs: [{ required: true, message: '请输入', trigger: 'blur' }],
-        szLimb: [{ required: true, message: '请输入', trigger: 'blur' }],
-        coordinate: [{ required: true, message: '请输入', trigger: 'blur' }],
-        balance: [{ required: true, message: '请输入', trigger: 'blur' }],
+        feiHl: [{ required: true, message: '请输入', trigger: 'blur' }],
+        tiaos: [{ required: true, message: '请输入', trigger: 'blur' }],
         flexibility: [{ required: true, message: '请输入', trigger: 'blur' }],
         sensitives: [{ required: true, message: '请输入', trigger: 'blur' }],
-        racket: [{ required: true, message: '请输入', trigger: 'blur' }],
+        remove: [{ required: true, message: '请输入', trigger: 'blur' }],
         pass: [{ required: true, message: '请输入', trigger: 'blur' }],
         shoot: [{ required: true, message: '请输入', trigger: 'blur' }]
       },
@@ -411,7 +458,7 @@ export default {
     handleAdd () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.api.addReport(this.form).then((res) => {
+          this.api.addXxReport(this.form).then((res) => {
             if (res.success) {
               this.$message.success('添加成功')
               this.addDialog = false
@@ -425,10 +472,10 @@ export default {
 
     beforeEdit () {
       this.editDialog = true
-      this.api.getDetail({ id: this.selectList1[0].id }).then(res => {
+      this.api.getXxDetail({ id: this.selectList1[0].id }).then(res => {
         if (res.success) {
-          const { id, name, parentName, phone, height, weight, legs, szLimb, coordinate, balance, flexibility, sensitives, racket, pass, shoot } = res.data
-          this.form = { id, name, parentName, phone, height, weight, legs, szLimb, coordinate, balance, flexibility, sensitives, racket, pass, shoot }
+          const { id, name, parentName, phone, height, weight, feiHl, tiaos, flexibility, sensitives, remove, pass, shoot } = res.data
+          this.form = { id, name, parentName, phone, height, weight, feiHl, tiaos, flexibility, sensitives, remove, pass, shoot }
           this.$set(this.form, 'birth', res.data.birthday)
           this.$set(this.form, 'FHeight', res.data.fHeight)
           this.$set(this.form, 'MHeight', res.data.mHeight)
@@ -439,7 +486,7 @@ export default {
     handleEdit () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.api.editData(this.form).then((res) => {
+          this.api.editXxData(this.form).then((res) => {
             if (res.success) {
               this.$message.success('修改成功')
               this.editDialog = false
@@ -457,7 +504,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.api.delData({ id: this.selectList1[0].id }).then(res => {
+        this.api.delXxData({ id: this.selectList1[0].id }).then(res => {
           if (res.success) {
             this.$message.success('删除成功')
             this.$refs.table1.listQuery.current = 1
@@ -470,7 +517,7 @@ export default {
     handleImport (e) {
       let formData = new FormData()
       formData.append('file', e.target.files[0])
-      this.api.importReport(formData).then(res => {
+      this.api.importXxReport(formData).then(res => {
         if (res.success) {
           this.$message.success('导入成功')
           this.$refs.table1.getList()
@@ -480,13 +527,13 @@ export default {
 
     handleExport () {
       this.listQuery1.ascOrDesc = 'desc'
-      this.api.exportData(this.listQuery1).then(res => {
+      this.api.exportXxData(this.listQuery1).then(res => {
         const link = document.createElement('a')
         let blob = new Blob([res], {type: 'application/vnd.ms-excel'})
         link.style.display = 'none'
         link.href = URL.createObjectURL(blob)
         // link.download = res.headers['content-disposition'] //下载后文件名
-        link.download = '报告列表' //下载的文件名
+        link.download = '报告列表(小学)' //下载的文件名
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
@@ -496,11 +543,11 @@ export default {
     },
 
     handleReport () {
-      this.$router.push({ path: '/report/detail', query: { id: this.selectList1[0].id }})
+      this.$router.push({ path: '/report/primaryDetail', query: { id: this.selectList1[0].id }})
     },
 
     handleDown () {
-      this.api.getTemplate().then(res => {
+      this.api.getXxTemplate().then(res => {
         console.log(res)
       })
     },

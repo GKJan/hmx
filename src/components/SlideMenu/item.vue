@@ -34,5 +34,6 @@ export default {
 <style scoped lang="scss">
 .iconfont {
   margin-right: 10px;
+  color: #fff;
 }
 </style>

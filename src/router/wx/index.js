@@ -28,5 +28,11 @@ export default [
     name: 'WxRecord',
     component: () => import('@/views/wx/record.vue'),
     meta: { title: '录入数据' }
+  },
+  {
+    path: '/wx/primaryRecord',
+    name: 'wxPrimaryRecord',
+    component: () => import('@/views/wx/primary-record.vue'),
+    meta: { title: '录入数据' }
   }
 ]

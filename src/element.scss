@@ -9,9 +9,15 @@
   text-align: center;
   font-size: 13px;
 }
+.el-button--mini {
+  height: 28px;
+  line-height: 28px;
+  margin-left: 10px;
+}
 .el-pagination {
   text-align: right;
-  margin-top: 10px;
+  margin-top: 1px;
+  background-color: #fff;
 }
 .el-tabs__header {
   margin: 0;
@@ -24,3 +30,7 @@
   min-width: 60px;
   text-align: center;
 }
+// .el-input-number.is-controls-right .el-input__inner {
+//   padding-left: 5px;
+//   padding-right: 10px;
+// }
