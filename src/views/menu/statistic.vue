@@ -21,7 +21,7 @@
     </div>
     <div class="col-box">
       <div class="title">
-        <span>幼儿园各项目合格统计</span>
+        <span>幼儿园各项目合格比例</span>
         <div class="filter">
           <span>年龄段：</span>
           <el-input-number size="mini" v-model="startAge" controls-position="right" :min="3" :max="6"></el-input-number>
@@ -34,7 +34,7 @@
     </div>
     <div class="col-box">
       <div class="title">
-        <span>小学各项目合格统计</span>
+        <span>小学各项目合格比例</span>
         <div class="filter">
           <span>年龄段：</span>
           <el-input-number size="mini" v-model="startAgeXx" controls-position="right" :min="7" :max="10"></el-input-number>
@@ -104,6 +104,7 @@ export default {
           for (let i in res.data) {
             data.push({ name: i, value: res.data[i] })
           }
+          console.log(data)
           this.drawPieChart('sexChart', ['男', '女'], '男女比例', data)
         }
       })
@@ -118,12 +119,13 @@ export default {
           let data = []
           for (let i in res.data) {
             if (i === 'nanHg') {
-              data.push({ name: '男生合格数', value: res.data[i] })
+              data.unshift({ name: '男生合格数', value: res.data[i] })
             }
             if (i === 'nvHg') {
-              data.push({ name: '女生合格数', value: res.data[i] })
+              data.unshift({ name: '女生合格数', value: res.data[i] })
             }
           }
+          console.log(data)
           this.drawPieChart('hegeChart', ['男生合格数', '女生合格数'], '合格比例', data)
         }
       })
@@ -147,6 +149,9 @@ export default {
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
+            label: {
+              formatter: '{b} : {c} ({d}%)'
+            },
             data: seriesData,
             emphasis: {
               itemStyle: {
@@ -167,28 +172,28 @@ export default {
       this.api.getItemCount({ start: this.startAge, end: this.endAge }).then(res => {
         if (res.success) {
           let maleItemCount = [
-            res.data.nanTotal,
-            res.data.nanHeightHg,
-            res.data.nanIbmHg,
-            res.data.nanLegsHg,
-            res.data.nanLimbHg,
-            res.data.nanCoordinateHg,
-            res.data.nanBalanceHg,
-            res.data.nanFlexibilityHg,
-            res.data.nanSensitivesHg
+            // res.data.nanTotal,
+            (res.data.nanHeightHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanIbmHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanLegsHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanLimbHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanCoordinateHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanBalanceHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanFlexibilityHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanSensitivesHg/res.data.nanTotal*100).toFixed(2)
           ]
           let femaleItemCount = [
-            res.data.nvTotal,
-            res.data.nvHeightHg,
-            res.data.nvIbmHg,
-            res.data.nvLegsHg,
-            res.data.nvLimbHg,
-            res.data.nvCoordinateHg,
-            res.data.nvBalanceHg,
-            res.data.nvFlexibilityHg,
-            res.data.nvSensitivesHg
+            // res.data.nvTotal,
+            (res.data.nvHeightHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvIbmHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvLegsHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvLimbHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvCoordinateHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvBalanceHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvFlexibilityHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvSensitivesHg/res.data.nvTotal*100).toFixed(2)
           ]
-          this.drawColChart('itemChart', maleItemCount, femaleItemCount)
+          this.drawColChart('itemChart', maleItemCount, femaleItemCount, ['身高', 'BMI', '上肢力量', '下肢力量', '协调性', '平衡性', '柔韧性', '灵敏性'])
         }
       })
     },
@@ -200,42 +205,43 @@ export default {
       this.api.getXxItemCount({ start: this.startAgeXx, end: this.endAgeXx }).then(res => {
         if (res.success) {
           let maleItemCount = [
-            res.data.nanTotal,
-            res.data.nanHeightHg,
-            res.data.nanIbmHg,
-            res.data.nanFeiHlHg,
-            res.data.nanTiaosHg,
-            res.data.nanFlexibilityHg,
-            res.data.nanSensitivesHg
+            // res.data.nanTotal,
+            (res.data.nanHeightHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanIbmHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanFeiHlHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanTiaosHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanFlexibilityHg/res.data.nanTotal*100).toFixed(2),
+            (res.data.nanSensitivesHg/res.data.nanTotal*100).toFixed(2)
           ]
           let femaleItemCount = [
-            res.data.nvTotal,
-            res.data.nvHeightHg,
-            res.data.nvIbmHg,
-            res.data.nvFeiHlHg,
-            res.data.nvTiaosHg,
-            res.data.nvFlexibilityHg,
-            res.data.nvSensitivesHg
+            // res.data.nvTotal,
+            (res.data.nvHeightHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvIbmHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvFeiHlHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvTiaosHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvFlexibilityHg/res.data.nvTotal*100).toFixed(2),
+            (res.data.nvSensitivesHg/res.data.nvTotal*100).toFixed(2)
           ]
-          this.drawColChart('xxItemChart', maleItemCount, femaleItemCount)
+          this.drawColChart('xxItemChart', maleItemCount, femaleItemCount, ['身高', 'BMI', '肺活量', '跳绳', '柔韧性', '灵敏性'])
         }
       })
     },
 
-    drawColChart (element, maleData, femaleData) {
+    drawColChart (element, maleData, femaleData, xAxisData) {
       let colChart = echarts.init(document.getElementById(element))
       colChart.setOption({
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          formatter: '{b}合格比例<br/>{a0}: {c0}%<br/>{a1}: {c1}%'
         },
         legend: {
-          top: 20,
+          top: 10,
           data: ['男生', '女生']
         },
         xAxis: [
           {
             type: 'category',
-            data: ['总数', '身高', 'BMI', '肺活量', '跳绳', '协调性', '平衡性', '柔韧性', '灵敏性']
+            data: xAxisData
           }
         ],
         yAxis: [
@@ -247,11 +253,21 @@ export default {
           {
             name: '男生',
             type: 'bar',
+            label: {
+              show: true,
+              position: 'top',
+              formatter: '{c}%'
+            },
             data: maleData,
           },
           {
             name: '女生',
             type: 'bar',
+            label: {
+              show: true,
+              position: 'top',
+              formatter: '{c}%'
+            },
             data: femaleData
           }
         ]

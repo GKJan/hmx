@@ -84,7 +84,7 @@ export default {
           name: '场次管理',
           path: '/session',
           children: [],
-          icon: 'icon-changciweixuanzhongGAI'
+          icon: 'icon-changci'
         },
         {
           id: '3',
@@ -101,11 +101,18 @@ export default {
           icon: 'icon-baogao'
         },
         {
+          id: '9',
+          name: '信息报告(篮球)',
+          path: '/basketReport',
+          children: [],
+          icon: 'icon-baogao'
+        },
+        {
           id: '4',
           name: '用户管理',
           path: '/user',
           children: [],
-          icon: 'icon-yonghu'
+          icon: 'icon-user'
         },
         {
           id: '5',
@@ -119,14 +126,14 @@ export default {
           name: '证书管理',
           path: '/certificate',
           children: [],
-          icon: 'icon-rizhi'
+          icon: 'icon-zhengshu'
         },
         {
           id: '8',
           name: '数据统计',
           path: '/statistic',
           children: [],
-          icon: 'icon-rizhi'
+          icon: 'icon-tongji'
         }
       ]
     } else if (this.userInfo.role === 2 ) {
@@ -145,6 +152,13 @@ export default {
           children: [],
           icon: 'icon-baogao'
         },
+        {
+          id: '9',
+          name: '信息报告(篮球)',
+          path: '/basketReport',
+          children: [],
+          icon: 'icon-baogao'
+        }
       ]
     } else if (this.userInfo.role === 3 ) {
       this.menulist = [
@@ -153,7 +167,7 @@ export default {
           name: '场次管理',
           path: '/session',
           children: [],
-          icon: 'icon-changciweixuanzhongGAI'
+          icon: 'icon-changci'
         },
         {
           id: '3',
@@ -170,11 +184,18 @@ export default {
           icon: 'icon-baogao'
         },
         {
+          id: '9',
+          name: '信息报告(篮球)',
+          path: '/basketReport',
+          children: [],
+          icon: 'icon-baogao'
+        },
+        {
           id: '4',
           name: '用户管理',
           path: '/user',
           children: [],
-          icon: 'icon-yonghu'
+          icon: 'icon-user'
         }
       ]
     }
@@ -210,7 +231,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url(http://at.alicdn.com/t/font_995795_8vzb832bril.css);
+@import url(http://at.alicdn.com/t/font_995795_py42tkwez4j.css);
 
 .layout-container {
   .layout-header {

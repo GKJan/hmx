@@ -24,6 +24,12 @@ export default [
     meta: { title: '信息报告(小学)' }
   },
   {
+    path: '/basketReport',
+    name: 'BasketReport',
+    component: () => import('@/views/menu/basket.vue'),
+    meta: { title: '信息报告(篮球)' }
+  },
+  {
     path: '/report/primaryDetail',
     name: 'PrimaryDetail',
     component: () => import('@/views/detail/primary-detail.vue'),

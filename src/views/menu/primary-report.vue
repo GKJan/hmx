@@ -33,7 +33,7 @@
           </template>
           <template #operBtn>
             <input type="file" id="file" @change="handleImport">
-            <a href="http://114.55.104.155:8085/api/xxItem/downloadFile"></a>
+            <a :href="tempUrl"></a>
             <el-button type="success" icon="el-icon-plus" @click="addDialog = true">录入</el-button>
             <el-button type="warning" :disabled="btnDisabled" icon="el-icon-edit" @click="beforeEdit">编辑</el-button>
             <el-button type="danger" :disabled="btnDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button>
@@ -389,6 +389,7 @@ export default {
   },
   data () {
     return {
+      tempUrl: '',
       listQuery1: {},
       listQuery2: {},
       addDialog: false,
@@ -425,6 +426,7 @@ export default {
   },
 
   created () {
+    this.tempUrl = process.env.VUE_APP_baseApi + 'xxItem/downloadFile'
     this.getSessionList()
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
     this.form.school = userInfo.areaName

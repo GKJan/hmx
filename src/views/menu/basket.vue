@@ -4,7 +4,7 @@
       <el-tab-pane label="报告列表">
         <table-panel
           ref="table1"
-          :apiMethod="api.getDataPage"
+          :apiMethod="api.getBasketDataPage"
           @handleSelectionChange="handleSelectionChange1"
         >
           <template #searchItem>
@@ -67,7 +67,7 @@
               label="年龄"
               align="center">
             </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
               prop="height"
               label="身高"
               align="center">
@@ -76,44 +76,19 @@
               prop="resultHeight"
               label="预测身高"
               align="center">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
-              prop="ibm"
-              label="BMI"
+              prop="rall"
+              label="滚球"
               align="center">
             </el-table-column>
             <el-table-column
-              prop="legs"
-              label="下肢力量"
+              prop="dsDribble"
+              label="运球"
               align="center">
             </el-table-column>
             <el-table-column
-              prop="szLimb"
-              label="上肢力量"
-              align="center">
-            </el-table-column>
-            <el-table-column
-              prop="coordinate"
-              label="协调性"
-              align="center">
-            </el-table-column>
-            <el-table-column
-              prop="balance"
-              label="平衡性"
-              align="center">
-            </el-table-column>
-            <el-table-column
-              prop="flexibility"
-              label="柔韧性"
-              align="center">
-            </el-table-column>
-            <el-table-column
-              prop="sensitives"
-              label="灵敏性"
-              align="center">
-            </el-table-column>
-            <el-table-column
-              prop="racket"
+              prop="bat"
               label="拍球"
               align="center">
             </el-table-column>
@@ -138,7 +113,7 @@
       <el-tab-pane label="信息列表">
         <table-panel
           ref="table2"
-          :apiMethod="api.getReportPage"
+          :apiMethod="api.getBasketReportPage"
           @handleSelectionChange="handleSelectionChange2"
         >
           <template #searchItem>
@@ -203,8 +178,8 @@
       </el-tab-pane>
     </el-tabs>
 
-    <el-dialog width="500px" title="录入数据" :visible.sync="addDialog">
-      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+    <el-dialog width="600px" title="录入数据" :visible.sync="addDialog">
+      <el-form ref="form" :model="form" :rules="rules" label-width="155px">
         <el-form-item label="场次" prop="sportId">
           <el-select v-model="form.sportId" placeholder="请选择场次">
             <el-option
@@ -245,44 +220,20 @@
         <el-form-item label="家长手机号" prop="phone">
           <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
         </el-form-item>
-        <el-form-item label="学员身高(cm)" prop="height">
-          <el-input v-model="form.height" placeholder="请输入学员身高"></el-input>
+        <el-form-item label="30秒胯下O字绕滚球" prop="rall">
+          <el-input v-model="form.rall" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="学员体重(kg)" prop="weight">
-          <el-input v-model="form.weight" placeholder="请输入学员体重"></el-input>
+        <el-form-item label="30秒原地单手运球" prop="dsDribble">
+          <el-input v-model="form.dsDribble" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="父亲身高(cm)" prop="FHeight">
-          <el-input v-model="form.FHeight" placeholder="请输入父亲身高"></el-input>
+        <el-form-item label="8米折返动感1+1拍球" prop="bat">
+          <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="母亲身高(cm)" prop="MHeight">
-          <el-input v-model="form.MHeight" placeholder="请输入母亲身高"></el-input>
+        <el-form-item label="传/抛球进圈" prop="pass">
+          <el-input v-model="form.pass" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="立定跳远(cm)" prop="legs">
-          <el-input v-model="form.legs" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="网球掷远(m)" prop="szLimb">
-          <el-input v-model="form.szLimb" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="双脚连续跳(秒)" prop="coordinate">
-          <el-input v-model="form.coordinate" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="走平衡木(秒)" prop="balance">
-          <el-input v-model="form.balance" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="坐位体前屈(cm)" prop="flexibility">
-          <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="10米折返跑(秒)" prop="sensitives">
-          <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="拍球(次)">
-          <el-input v-model="form.racket" placeholder="请输入拍球次数"></el-input>
-        </el-form-item>
-        <el-form-item label="传球(次)">
-          <el-input v-model="form.pass" placeholder="请输入传球次数"></el-input>
-        </el-form-item>
-        <el-form-item label="投篮(次)">
-          <el-input v-model="form.shoot" placeholder="请输入投篮次数"></el-input>
+        <el-form-item label="原地投篮" prop="shoot">
+          <el-input v-model="form.shoot" placeholder="请输入"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -291,8 +242,8 @@
       </div>
     </el-dialog>
 
-    <el-dialog width="500px" title="修改数据" :visible.sync="editDialog">
-      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+    <el-dialog width="600px" title="修改数据" :visible.sync="editDialog">
+      <el-form ref="form" :model="form" :rules="rules" label-width="155px">
         <el-form-item label="姓名" prop="name">
           <el-input disabled v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
@@ -310,44 +261,20 @@
         <el-form-item label="家长手机号" prop="phone">
           <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
         </el-form-item>
-        <el-form-item label="学员身高(cm)" prop="height">
-          <el-input v-model="form.height" placeholder="请输入学员身高"></el-input>
+        <el-form-item label="30秒胯下O字绕滚球" prop="rall">
+          <el-input v-model="form.rall" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="学员体重(kg)" prop="weight">
-          <el-input v-model="form.weight" placeholder="请输入学员体重"></el-input>
+        <el-form-item label="30秒原地单手运球" prop="dsDribble">
+          <el-input v-model="form.dsDribble" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="父亲身高(cm)" prop="FHeight">
-          <el-input v-model="form.FHeight" placeholder="请输入父亲身高"></el-input>
+        <el-form-item label="8米折返动感1+1拍球" prop="bat">
+          <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="母亲身高(cm)" prop="MHeight">
-          <el-input v-model="form.MHeight" placeholder="请输入母亲身高"></el-input>
+        <el-form-item label="传/抛球进圈" prop="pass">
+          <el-input v-model="form.pass" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="立定跳远(cm)" prop="legs">
-          <el-input v-model="form.legs" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="网球掷远(m)" prop="szLimb">
-          <el-input v-model="form.szLimb" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="双脚连续跳(秒)" prop="coordinate">
-          <el-input v-model="form.coordinate" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="走平衡木(秒)" prop="balance">
-          <el-input v-model="form.balance" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="坐位体前屈(cm)" prop="flexibility">
-          <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="10米折返跑(秒)" prop="sensitives">
-          <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="拍球(次)">
-          <el-input v-model="form.racket" placeholder="请输入拍球次数"></el-input>
-        </el-form-item>
-        <el-form-item label="传球(次)">
-          <el-input v-model="form.pass" placeholder="请输入传球次数"></el-input>
-        </el-form-item>
-        <el-form-item label="投篮(次)">
-          <el-input v-model="form.shoot" placeholder="请输入投篮次数"></el-input>
+        <el-form-item label="原地投篮" prop="shoot">
+          <el-input v-model="form.shoot" placeholder="请输入"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -384,17 +311,9 @@ export default {
         birth: [{ required: true, message: '请选择出生年月', trigger: 'change' }],
         parentName: [{ required: true, message: '请输入家长姓名', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入家长手机号', trigger: 'blur' }],
-        height: [{ required: true, message: '请输入学员身高', trigger: 'blur' }],
-        weight: [{ required: true, message: '请输入学员体重', trigger: 'blur' }],
-        FHeight: [{ required: true, message: '请输入父亲身高', trigger: 'blur' }],
-        MHeight: [{ required: true, message: '请输入母亲身高', trigger: 'blur' }],
-        legs: [{ required: true, message: '请输入', trigger: 'blur' }],
-        szLimb: [{ required: true, message: '请输入', trigger: 'blur' }],
-        coordinate: [{ required: true, message: '请输入', trigger: 'blur' }],
-        balance: [{ required: true, message: '请输入', trigger: 'blur' }],
-        flexibility: [{ required: true, message: '请输入', trigger: 'blur' }],
-        sensitives: [{ required: true, message: '请输入', trigger: 'blur' }],
-        racket: [{ required: true, message: '请输入', trigger: 'blur' }],
+        rall: [{ required: true, message: '请输入', trigger: 'blur' }],
+        dsDribble: [{ required: true, message: '请输入', trigger: 'blur' }],
+        bat: [{ required: true, message: '请输入', trigger: 'blur' }],
         pass: [{ required: true, message: '请输入', trigger: 'blur' }],
         shoot: [{ required: true, message: '请输入', trigger: 'blur' }]
       },
@@ -406,7 +325,7 @@ export default {
   },
 
   created () {
-    this.tempUrl = process.env.VUE_APP_baseApi + 'item/downloadFile'
+    this.tempUrl = process.env.VUE_APP_baseApi + 'baskItem/downloadFile'
     this.getSessionList()
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
     this.form.school = userInfo.areaName
@@ -440,7 +359,7 @@ export default {
     handleAdd () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.api.addReport(this.form).then((res) => {
+          this.api.addBasketReport(this.form).then((res) => {
             if (res.success) {
               this.$message.success('添加成功')
               this.addDialog = false
@@ -454,13 +373,11 @@ export default {
 
     beforeEdit () {
       this.editDialog = true
-      this.api.getDetail({ id: this.selectList1[0].id }).then(res => {
+      this.api.getBasketDetail({ id: this.selectList1[0].id }).then(res => {
         if (res.success) {
-          const { id, name, parentName, phone, height, weight, legs, szLimb, coordinate, balance, flexibility, sensitives, racket, pass, shoot } = res.data
-          this.form = { id, name, parentName, phone, height, weight, legs, szLimb, coordinate, balance, flexibility, sensitives, racket, pass, shoot }
+          const { id, name, parentName, phone, rall, dsDribble, bat, pass, shoot } = res.data
+          this.form = { id, name, parentName, phone, rall, dsDribble, bat, pass, shoot }
           this.$set(this.form, 'birth', res.data.birthday)
-          this.$set(this.form, 'FHeight', res.data.fHeight)
-          this.$set(this.form, 'MHeight', res.data.mHeight)
         }
       })
     },
@@ -468,7 +385,7 @@ export default {
     handleEdit () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.api.editData(this.form).then((res) => {
+          this.api.editBasketData(this.form).then((res) => {
             if (res.success) {
               this.$message.success('修改成功')
               this.editDialog = false
@@ -486,7 +403,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.api.delData({ id: this.selectList1[0].id }).then(res => {
+        this.api.delBasketData({ id: this.selectList1[0].id }).then(res => {
           if (res.success) {
             this.$message.success('删除成功')
             this.$refs.table1.listQuery.current = 1
@@ -499,7 +416,7 @@ export default {
     handleImport (e) {
       let formData = new FormData()
       formData.append('file', e.target.files[0])
-      this.api.importReport(formData).then(res => {
+      this.api.importBasketReport(formData).then(res => {
         if (res.success) {
           this.$message.success('导入成功')
           this.$refs.table1.getList()
@@ -509,13 +426,13 @@ export default {
 
     handleExport () {
       this.listQuery1.ascOrDesc = 'desc'
-      this.api.exportData(this.listQuery1).then(res => {
+      this.api.exportBasketData(this.listQuery1).then(res => {
         const link = document.createElement('a')
         let blob = new Blob([res], {type: 'application/vnd.ms-excel'})
         link.style.display = 'none'
         link.href = URL.createObjectURL(blob)
         // link.download = res.headers['content-disposition'] //下载后文件名
-        link.download = '报告列表' //下载的文件名
+        link.download = '报告列表(篮球)' //下载的文件名
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
@@ -525,11 +442,11 @@ export default {
     },
 
     handleReport () {
-      this.$router.push({ path: '/report/detail', query: { id: this.selectList1[0].id }})
+      this.$router.push({ path: '/report/primaryDetail', query: { id: this.selectList1[0].id }})
     },
 
     handleDown () {
-      this.api.getTemplate().then(res => {
+      this.api.getBasketTemplate().then(res => {
         console.log(res)
       })
     },
