@@ -16,5 +16,13 @@ export default {
       method: 'get',
       params: params
     })
+  },
+
+  getRegionList (params) {
+    return request({
+      url: '/area/regionList',
+      method: 'get',
+      params: params
+    })
   }
 }

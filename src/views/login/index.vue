@@ -57,7 +57,11 @@ export default {
               this.$message.success('登录成功')
               localStorage.setItem('userInfo', JSON.stringify(res.data))
               localStorage.setItem('loginTime', Date.now())
-              this.$router.push('/')
+              if (res.data.role === 4 || res.data.role === 5) {
+                this.$router.push('/certificate')
+              } else {
+                this.$router.push('/report')
+              }
             }
           })
         }

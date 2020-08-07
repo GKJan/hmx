@@ -45,7 +45,13 @@ export default [
     path: '/user',
     name: 'User',
     component: () => import('@/views/sys/user.vue'),
-    meta: { title: '用户管理' }
+    meta: { title: '普通用户管理' }
+  },
+  {
+    path: '/certificateUser',
+    name: 'CertificateUser',
+    component: () => import('@/views/sys/c-user.vue'),
+    meta: { title: '证书用户管理' }
   },
   {
     path: '/log',

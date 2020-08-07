@@ -38,17 +38,17 @@
         </el-table-column>
         <el-table-column
           prop="areaName"
-          label="所属园区/区域"
+          label="所属园区"
           align="center">
         </el-table-column>
         <el-table-column
           label="角色"
           align="center">
-          <template slot-scope="scope">{{ scope.row.role | roleFilter }}</template>
+          <template slot-scope="scope">{{ scope.row.role === 1 ? '管理员' : (scope.row.role === 2 ? '录入员' : '园区管理员') }}</template>
         </el-table-column>
       </template>
     </table-panel>
-    <el-dialog width="530px" :title="action === 'add' ? '新增用户' : '编辑用户'" :visible.sync="addDialog">
+    <el-dialog width="500px" :title="action === 'add' ? '新增用户' : '编辑用户'" :visible.sync="addDialog">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
@@ -59,23 +59,15 @@
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="form.phone" placeholder="请输入手机号" maxlength="11"></el-input>
         </el-form-item>
-        <el-form-item label="角色" prop="role" v-if="userInfo.role === 1 || (userInfo.role === 3 && action === 'add') || userInfo.role === 5">
-          <el-radio-group v-model="form.role" @change="handleChange">
-            <el-radio v-if="userInfo.role === 1 || userInfo.role === 3" :label="2">录入员</el-radio>
-            <el-radio v-if="userInfo.role === 1" :label="3">园区管理员</el-radio>
-            <el-radio v-if="userInfo.role === 1 || userInfo.role === 5" :label="4">师资部</el-radio>
-            <el-radio v-if="userInfo.role === 1" :label="5">总部管理员</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="所属园区" prop="areaId" v-if="form.role === 1 || form.role === 2 || form.role === 3">
-          <el-select v-model="form.areaId" placeholder="请选择所属园区">
-            <el-option v-for="item in parkList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属区域" prop="areaId" v-if="form.role === 4 || form.role === 5">
+        <el-form-item label="所属区域" prop="areaId">
           <el-select v-model="form.areaId" placeholder="请选择所属区域">
             <el-option v-for="item in areaList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="角色" prop="role" v-if="userInfo.role === 1 || userInfo.role === 5 || (userInfo.role === 4 && action === 'add')">
+          <!-- <el-radio v-model="form.role" :label="1">管理员</el-radio> -->
+          <el-radio v-model="form.role" :label="4">师资部</el-radio>
+          <el-radio v-if="userInfo.role === 1" v-model="form.role" :label="5">总部管理员</el-radio>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -105,17 +97,15 @@ export default {
         username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-        areaId: [{ required: true, message: '请选择所属园区/区域', trigger: 'blur' }],
+        areaId: [{ required: true, message: '请选择所属区域', trigger: 'change' }],
         role: [{ required: true, message: '请选择角色', trigger: 'change' }]
       },
-      parkList: [],
       areaList: [],
       selectList: []
     }
   },
 
   created () {
-    this.getParkList()
     this.getAreaList()
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
   },
@@ -134,35 +124,7 @@ export default {
     }
   },
 
-  filters: {
-    roleFilter (val) {
-      if (val === 1) {
-        return '系统管理员'
-      }
-      if (val === 2) {
-        return '录入员'
-      }
-      if (val === 3) {
-        return '园区管理员'
-      }
-      if (val === 4) {
-        return '师资部'
-      }
-      if (val === 5) {
-        return '总部管理员'
-      }
-    }
-  },
-
   methods: {
-    getParkList () {
-      this.api.getParkList().then(res => {
-        if (res.success) {
-          this.parkList = res.data
-        }
-      })
-    },
-
     getAreaList () {
       this.api.getRegionList().then(res => {
         if (res.success) {
@@ -176,10 +138,6 @@ export default {
       this.addDialog = true
       const { id, username, phone, areaId, role } = this.selectList[0]
       this.form = { id, username, phone, areaId, role }
-    },
-
-    handleChange () {
-      this.$set(this.form, 'areaId', '')
     },
 
     handleAdd () {

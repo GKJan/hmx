@@ -32,7 +32,9 @@
       <slide-menu :list="menulist"></slide-menu>
     </div>
     <div class="layout-body">
-      <router-view></router-view>
+      <transition name="slide-fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </div>
     <!-- <transition name="fade">
       <router-view class="layout-body"></router-view>
@@ -70,7 +72,7 @@ export default {
   created () {
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
     this.form.id = this.userInfo.id
-    if (this.userInfo.role === 1) {
+    if (this.userInfo.role === 1) { // 1管理员2录入员3园区管理员4 师资部 5总部管理员
       this.menulist = [
         {
           id: '1',
@@ -198,6 +200,43 @@ export default {
           icon: 'icon-user'
         }
       ]
+    } else if (this.userInfo.role === 4) {
+      this.menulist = [
+        {
+          id: '6',
+          name: '证书管理',
+          path: '/certificate',
+          children: [],
+          icon: 'icon-zhengshu'
+        }
+      ]
+    } else if (this.userInfo.role === 5) {
+      this.menulist = [
+        {
+          id: '6',
+          name: '证书管理',
+          path: '/certificate',
+          children: [],
+          icon: 'icon-zhengshu'
+        },
+        {
+          id: '4',
+          name: '用户管理',
+          path: '/user',
+          children: [],
+          icon: 'icon-user'
+        }
+      ]
+    }
+  },
+
+  mounted () {
+    const routes = []
+    for (let item of this.menulist) {
+      routes.push(item.path)
+    }
+    if (!routes.includes(this.$route.path)) {
+      return this.$router.go(-1)
     }
   },
 
@@ -312,5 +351,20 @@ export default {
     padding: 10px;
     overflow-y: auto;
   }
+}
+</style>
+<style lang="scss">
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
