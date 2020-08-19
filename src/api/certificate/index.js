@@ -2,7 +2,7 @@ import request from '../request'
 import qs from 'qs'
 
 export default {
-  getCertificateList (params) {
+  getzsCategoryPage (params) {
     return request({
       url: '/zsCategory/page',
       method: 'get',
@@ -10,7 +10,15 @@ export default {
     })
   },
 
-  saveCertificate (params) {
+  getzsCategoryList (params) {
+    return request({
+      url: '/zsCategory/list',
+      method: 'get',
+      params: params
+    })
+  },
+
+  savezsCategory (params) {
     return request({
       url: '/zsCategory/save',
       method: 'post',
@@ -18,7 +26,7 @@ export default {
     })
   },
 
-  updateCertificate (params) {
+  updatezsCategory (params) {
     return request({
       url: '/zsCategory/update',
       method: 'post',
@@ -26,7 +34,7 @@ export default {
     })
   },
 
-  delCertificate (params) {
+  delzsCategory (params) {
     return request({
       url: '/zsCategory/del',
       method: 'get',

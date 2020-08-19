@@ -59,7 +59,7 @@
         <el-form-item label="坐位体前屈(cm)" prop="flexibility">
           <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="10米折返跑(秒)" prop="sensitives">
+        <el-form-item label="10米x4折返跑(秒)" prop="sensitives">
           <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="移动">

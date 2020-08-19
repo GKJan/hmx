@@ -2,7 +2,7 @@
   <div class="content-container">
     <table-panel
       ref="table"
-      :apiMethod="api.getCertificateList"
+      :apiMethod="api.getzsCategoryPage"
       @handleSelectionChange="handleSelectionChange"
     >
       <template #searchItem>
@@ -133,7 +133,7 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           if (this.action === 'add') {
-            this.api.saveCertificate(this.form).then((res) => {
+            this.api.savezsCategory(this.form).then((res) => {
               if (res.success) {
                 this.$message.success('新增成功')
                 this.dialog = false
@@ -142,7 +142,7 @@ export default {
               }
             })
           } else {
-            this.api.updateCertificate(this.form).then((res) => {
+            this.api.updatezsCategory(this.form).then((res) => {
               if (res.success) {
                 this.$message.success('新增成功')
                 this.dialog = false
@@ -165,7 +165,7 @@ export default {
         for (let item of this.selectList) {
           ids.push(item.id)
         }
-        this.api.delCertificate({ ids: ids.toString() }).then(res => {
+        this.api.delzsCategory({ ids: ids.toString() }).then(res => {
           if (res.success) {
             this.$message.success('删除成功')
             this.$refs.table.listQuery.current = 1

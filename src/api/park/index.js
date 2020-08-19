@@ -26,6 +26,14 @@ export default {
     })
   },
 
+  editPark (params) {
+    return request({
+      url: '/area/update',
+      method: 'get',
+      params: params
+    })
+  },
+
   delPark (params) {
     return request({
       url: '/area/delete',

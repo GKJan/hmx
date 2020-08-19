@@ -280,7 +280,7 @@
           <el-input v-model="form.balance" placeholder="请输入"></el-input>
         </el-form-item> -->
         <el-form-item label="肺活量" prop="feiHl">
-          <el-input type="number" v-model.number="form.feiHl" placeholder="请输入"></el-input>
+          <el-input v-model.number="form.feiHl" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="跳绳" prop="tiaos">
           <el-input v-model="form.tiaos" placeholder="请输入"></el-input>
@@ -288,7 +288,7 @@
         <el-form-item label="坐位体前屈(cm)" prop="flexibility">
           <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="10米折返跑(秒)" prop="sensitives">
+        <el-form-item label="10米x4折返跑(秒)" prop="sensitives">
           <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="移动">
@@ -351,7 +351,7 @@
           <el-input v-model="form.balance" placeholder="请输入"></el-input>
         </el-form-item> -->
         <el-form-item label="肺活量" prop="feiHl">
-          <el-input type="number" v-model.number="form.feiHl" placeholder="请输入"></el-input>
+          <el-input v-model.number="form.feiHl" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="跳绳" prop="tiaos">
           <el-input v-model="form.tiaos" placeholder="请输入"></el-input>
@@ -359,7 +359,7 @@
         <el-form-item label="坐位体前屈(cm)" prop="flexibility">
           <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="10米折返跑(秒)" prop="sensitives">
+        <el-form-item label="10米x4折返跑(秒)" prop="sensitives">
           <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="移动">

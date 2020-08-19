@@ -8,6 +8,7 @@ import userApi from './user'
 import logApi from './log'
 import statisticApi from './statistic'
 import certificateApi from './certificate'
+import creaApi from './cred'
 
 export default {
   ...sysApi,
@@ -19,5 +20,6 @@ export default {
   ...userApi,
   ...logApi,
   ...statisticApi,
-  ...certificateApi
+  ...certificateApi,
+  ...creaApi
 }

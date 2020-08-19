@@ -16,9 +16,9 @@
         </div>
       </template>
       <template #operBtn>
-        <el-button v-if="userInfo.role === 1" type="success" icon="el-icon-plus" @click="addDialog = true">新增</el-button>
-        <!-- <el-button type="success" icon="el-icon-edit-outline">编辑</el-button> -->
-        <el-button type="danger" :disabled="delDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button>
+        <el-button v-if="userInfo.role === 1" type="success" icon="el-icon-plus" @click="action = 'add';addDialog = true;form = {}">新增</el-button>
+        <el-button v-if="userInfo.role === 1" type="warning" :disabled="btnDisabled" icon="el-icon-edit-outline" @click="beforeEdit">编辑</el-button>
+        <el-button type="danger" :disabled="btnDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button>
       </template>
       <template #tableColumn>
         <el-table-column
@@ -47,7 +47,7 @@
         </el-table-column> -->
       </template>
     </table-panel>
-    <el-dialog width="500px" title="新增园区" :visible.sync="addDialog">
+    <el-dialog width="500px" :title="action === 'add' ? '新增园区' : '编辑园区'" :visible.sync="addDialog">
       <el-form ref="form" :model="form" :rules="rules" label-width="95px">
         <el-form-item label="园区名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入园区名称"></el-input>
@@ -89,6 +89,7 @@ export default {
       addDialog: false,
       form: {
       },
+      action: 'add',
       rules: {
         name: [{ required: true, message: '请输入园区名称', trigger: 'blur' }],
         areaCode: [{ required: true, message: '请选择所属行政区', trigger: 'change' }],
@@ -117,7 +118,7 @@ export default {
   },
 
   computed: {
-    delDisabled () {
+    btnDisabled () {
       if (this.selectList.length === 1) {
         return false
       } else {
@@ -136,18 +137,36 @@ export default {
       })
     },
 
+    beforeEdit () {
+      this.action = 'edit'
+      this.addDialog = true
+      const { id, name, type } = this.selectList[0]
+      this.form = { id, name, type }
+    },
+
     handleAdd () {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.form.areaCode = this.form.areaCode[this.form.areaCode.length - 1]
-          this.api.addPark(this.form).then((res) => {
-            if (res.success) {
-              this.$message.success('新增成功')
-              this.addDialog = false
-              this.form = {}
-              this.$refs.table.getList()
-            }
-          })
+          if (this.action === 'add') {
+            this.api.addPark(this.form).then((res) => {
+              if (res.success) {
+                this.$message.success('新增成功')
+                this.addDialog = false
+                this.form = {}
+                this.$refs.table.getList()
+              }
+            })
+          } else {
+            this.api.editPark(this.form).then((res) => {
+              if (res.success) {
+                this.$message.success('修改成功')
+                this.addDialog = false
+                this.form = {}
+                this.$refs.table.getList()
+              }
+            })
+          }
         }
       })
     },

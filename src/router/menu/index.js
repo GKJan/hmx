@@ -60,10 +60,22 @@ export default [
     meta: { title: '日志管理' }
   },
   {
+    path: '/cred',
+    name: 'Cred',
+    component: () => import('@/views/menu/cred.vue'),
+    meta: { title: '证书管理' }
+  },
+  {
+    path: '/audit',
+    name: 'Audit',
+    component: () => import('@/views/menu/audit.vue'),
+    meta: { title: '证书审核管理' }
+  },
+  {
     path: '/certificate',
     name: 'Certificate',
     component: () => import('@/views/menu/certificate.vue'),
-    meta: { title: '证书管理' }
+    meta: { title: '证书类型管理' }
   },
   {
     path: '/statistic',

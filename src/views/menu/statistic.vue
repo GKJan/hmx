@@ -3,6 +3,16 @@
     <div class="pie-box">
       <div class="title">
         <span>男女比例</span>
+        <div class="filter">
+          <el-select v-model="type" placeholder="请选择" @change="handleSelect">
+            <el-option
+              v-for="item in typeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
       </div>
       <div class="pie-chart" id="sexChart"></div>
     </div>
@@ -74,6 +84,21 @@ require('echarts/lib/component/legend')
 export default {
   data () {
     return {
+      typeOptions: [
+        {
+          label: '幼儿园',
+          value: 1
+        },
+        {
+          label: '小学',
+          value: 2
+        },
+        {
+          label: '篮球',
+          value: 3
+        }
+      ],
+      type: 1,
       currentYear: '',
       startAgeHege: 3,
       endAgeHege: 10,
@@ -98,7 +123,7 @@ export default {
 
   methods: {
     getCountSex () {
-      this.api.countSex().then(res => {
+      this.api.countSex({ type: this.type }).then(res => {
         if (res.success) {
           let data = []
           for (let i in res.data) {
@@ -108,6 +133,10 @@ export default {
           this.drawPieChart('sexChart', ['男', '女'], '男女比例', data)
         }
       })
+    },
+
+    handleSelect () {
+      this.getCountSex()
     },
 
     getCountHege () {

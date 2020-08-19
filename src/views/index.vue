@@ -124,8 +124,22 @@ export default {
           icon: 'icon-rizhi'
         },
         {
-          id: '6',
+          id: '10',
           name: '证书管理',
+          path: '/cred',
+          children: [],
+          icon: 'icon-zhengshu'
+        },
+        {
+          id: '11',
+          name: '证书审核管理',
+          path: '/audit',
+          children: [],
+          icon: 'icon-zhengshu'
+        },
+        {
+          id: '6',
+          name: '证书类型管理',
           path: '/certificate',
           children: [],
           icon: 'icon-zhengshu'
@@ -203,8 +217,22 @@ export default {
     } else if (this.userInfo.role === 4) {
       this.menulist = [
         {
-          id: '6',
+          id: '10',
           name: '证书管理',
+          path: '/cred',
+          children: [],
+          icon: 'icon-zhengshu'
+        },
+        {
+          id: '11',
+          name: '证书审核管理',
+          path: '/audit',
+          children: [],
+          icon: 'icon-zhengshu'
+        },
+        {
+          id: '6',
+          name: '证书类型管理',
           path: '/certificate',
           children: [],
           icon: 'icon-zhengshu'
@@ -213,8 +241,22 @@ export default {
     } else if (this.userInfo.role === 5) {
       this.menulist = [
         {
-          id: '6',
+          id: '10',
           name: '证书管理',
+          path: '/cred',
+          children: [],
+          icon: 'icon-zhengshu'
+        },
+        {
+          id: '11',
+          name: '证书审核管理',
+          path: '/audit',
+          children: [],
+          icon: 'icon-zhengshu'
+        },
+        {
+          id: '6',
+          name: '证书类型管理',
           path: '/certificate',
           children: [],
           icon: 'icon-zhengshu'
