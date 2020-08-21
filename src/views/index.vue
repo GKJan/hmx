@@ -139,8 +139,8 @@ export default {
         },
         {
           id: '6',
-          name: '证书类型管理',
-          path: '/certificate',
+          name: '证书分类管理',
+          path: '/cred/class',
           children: [],
           icon: 'icon-zhengshu'
         },
@@ -148,6 +148,13 @@ export default {
           id: '8',
           name: '数据统计',
           path: '/statistic',
+          children: [],
+          icon: 'icon-tongji'
+        },
+        {
+          id: '12',
+          name: '证书数据统计',
+          path: '/cred/tj',
           children: [],
           icon: 'icon-tongji'
         }
@@ -232,8 +239,8 @@ export default {
         },
         {
           id: '6',
-          name: '证书类型管理',
-          path: '/certificate',
+          name: '证书分类管理',
+          path: '/cred/class',
           children: [],
           icon: 'icon-zhengshu'
         }
@@ -256,8 +263,8 @@ export default {
         },
         {
           id: '6',
-          name: '证书类型管理',
-          path: '/certificate',
+          name: '证书分类管理',
+          path: '/cred/class',
           children: [],
           icon: 'icon-zhengshu'
         },
@@ -267,6 +274,13 @@ export default {
           path: '/user',
           children: [],
           icon: 'icon-user'
+        },
+        {
+          id: '12',
+          name: '证书数据统计',
+          path: '/cred/tj',
+          children: [],
+          icon: 'icon-tongji'
         }
       ]
     }

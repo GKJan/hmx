@@ -9,6 +9,10 @@
       <span>搜索报告</span>
       <span class="arrow">></span>
     </div>
+    <div class="menu" @click="toSearchCred">
+      <span>搜索证书</span>
+      <span class="arrow">></span>
+    </div>
     <div class="menu" @click="toRecord">
       <span>录入数据(幼儿园)</span>
       <span class="arrow">></span>
@@ -57,6 +61,10 @@ export default {
   methods: {
     toSearch () {
       this.$router.push('/wx/search')
+    },
+
+    toSearchCred () {
+      this.$router.push('/wx/cred/search')
     },
 
     toRecord () {

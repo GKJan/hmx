@@ -58,7 +58,7 @@ export default {
               localStorage.setItem('userInfo', JSON.stringify(res.data))
               localStorage.setItem('loginTime', Date.now())
               if (res.data.role === 4 || res.data.role === 5) {
-                this.$router.push('/certificate')
+                this.$router.push('/cred')
               } else {
                 this.$router.push('/report')
               }

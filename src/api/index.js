@@ -7,7 +7,7 @@ import basketApi from './basket'
 import userApi from './user'
 import logApi from './log'
 import statisticApi from './statistic'
-import certificateApi from './certificate'
+import credClassApi from './cred-class'
 import creaApi from './cred'
 
 export default {
@@ -20,6 +20,6 @@ export default {
   ...userApi,
   ...logApi,
   ...statisticApi,
-  ...certificateApi,
+  ...credClassApi,
   ...creaApi
 }

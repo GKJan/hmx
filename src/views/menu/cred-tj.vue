@@ -2,25 +2,38 @@
   <div class="statistic-container">
     <div class="pie-box">
       <div class="title">
-        <span>男女比例</span>
-        <div class="filter">
-          <el-select v-model="type" placeholder="请选择" @change="handleSelect">
-            <el-option
-              v-for="item in typeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </div>
+        <span>各类型占比统计</span>
+      </div>
+      <div class="pie-chart" id="classChart"></div>
+    </div>
+    <div class="pie-box">
+      <div class="title">
+        <span>各区域占比统计</span>
+      </div>
+      <div class="pie-chart" id="areaChart"></div>
+    </div>
+    <div class="pie-box">
+      <div class="title">
+        <span>男女占比统计</span>
       </div>
       <div class="pie-chart" id="sexChart"></div>
     </div>
     <div class="pie-box">
       <div class="title">
+        <span>流失新增占比统计</span>
+        <el-date-picker
+          v-model="currentYear"
+          type="year"
+          placeholder="选择年份"
+          @change="handleChange">
+        </el-date-picker>
+      </div>
+      <div class="pie-chart" id="yearChart"></div>
+    </div>
+    <!-- <div class="pie-box">
+      <div class="title">
         <span>合格比例</span>
         <div class="filter">
-          <!-- <span>年龄段：</span> -->
           <el-input-number size="mini" v-model="startAgeHege" controls-position="right" :min="3" :max="10"></el-input-number>
           <span> -- </span>
           <el-input-number size="mini" v-model="endAgeHege" controls-position="right" :min="3" :max="10"></el-input-number>
@@ -66,7 +79,7 @@
         </el-date-picker>
       </div>
       <div class="line-chart" id="xyChart"></div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -111,19 +124,46 @@ export default {
 
   created () {
     this.currentYear = String(new Date().getFullYear())
-    this.getCountSex()
-    this.getCountHege()
-    this.getCountItem()
-    this.getCountItemXx()
-    this.getCountXueyuan(this.currentYear)
+    this.getZsCount()
+    this.getZsRegionCount()
+    this.getZsSexCount()
+    this.getZsYearCount(this.currentYear)
   },
 
   mounted () {
   },
 
   methods: {
-    getCountSex () {
-      this.api.countSex({ type: this.type }).then(res => {
+    getZsCount () {
+      this.api.getZsCount().then(res => {
+        if (res.success) {
+          let legend = []
+          let data = []
+          for (let item of res.data) {
+            legend.push(item.categoryName)
+            data.push({ name: item.categoryName, value: item.total })
+          }
+          this.drawPieChart('classChart', legend, '各类型比例', data)
+        }
+      })
+    },
+
+    getZsRegionCount () {
+      this.api.getZsRegionCount().then(res => {
+        if (res.success) {
+          let legend = []
+          let data = []
+          for (let i in res.data) {
+            legend.push(i)
+            data.push({ name: i, value: res.data[i] })
+          }
+          this.drawPieChart('areaChart', legend, '各区域比例', data)
+        }
+      })
+    },
+
+    getZsSexCount () {
+      this.api.getZsSexCount().then(res => {
         if (res.success) {
           let data = []
           for (let i in res.data) {
@@ -134,29 +174,26 @@ export default {
       })
     },
 
-    handleSelect () {
-      this.getCountSex()
-    },
-
-    getCountHege () {
-      if (this.endAgeHege < this.startAgeHege) {
-        return this.$message.error('请选择正确的年龄范围')
-      }
-      this.api.countTotal({ start: this.startAgeHege, end: this.endAgeHege }).then(res => {
+    getZsYearCount (year) {
+      this.api.getZsYearCount({ year: year }).then(res => {
         if (res.success) {
           let data = []
           for (let i in res.data) {
-            if (i === 'nanHg') {
-              data.unshift({ name: '男生合格数', value: res.data[i] })
+            if (i === 'addInfo') {
+              data.push({ name: '新增', value: res.data[i] })
             }
-            if (i === 'nvHg') {
-              data.unshift({ name: '女生合格数', value: res.data[i] })
+            if (i === 'reduceInfo') {
+              data.push({ name: '流失', value: res.data[i] })
             }
           }
-          console.log(data)
-          this.drawPieChart('hegeChart', ['男生合格数', '女生合格数'], '合格比例', data)
+          this.drawPieChart('yearChart', ['新增', '流失'], '新增流失比例', data)
         }
       })
+    },
+
+    handleChange (val) {
+      const year = String(val.getFullYear())
+      this.getZsYearCount(year)
     },
 
     drawPieChart (element, legendData, seriesName, seriesData) {
@@ -300,11 +337,6 @@ export default {
           }
         ]
       })
-    },
-
-    handleChange (val) {
-      const year = String(val.getFullYear())
-      this.getCountXueyuan(year)
     },
 
     getCountXueyuan (year) {

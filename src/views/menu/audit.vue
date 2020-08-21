@@ -7,8 +7,16 @@
     >
       <template #searchItem>
         <div class="search-item">
-          <span>机构名称</span>
-          <el-input v-model="listQuery.deptName" placeholder="请输入分类名称"></el-input>
+          <span>姓名</span>
+          <el-input v-model="listQuery.name" placeholder="请输入姓名"></el-input>
+        </div>
+        <div class="search-item">
+          <span>证书编号</span>
+          <el-input v-model="listQuery.code" placeholder="请输入证书编号"></el-input>
+        </div>
+        <div class="search-item">
+          <span>单位名称</span>
+          <el-input v-model="listQuery.deptName" placeholder="请输入单位名称"></el-input>
         </div>
         <div class="search-item">
           <span>证书类型</span>
@@ -56,7 +64,7 @@
         </el-table-column>
         <el-table-column
           prop="deptName"
-          label="机构名称"
+          label="单位名称"
           align="center">
         </el-table-column>
         <el-table-column
@@ -71,62 +79,6 @@
         </el-table-column>
       </template>
     </table-panel>
-    <el-dialog width="500px" title="证书审核" :visible.sync="dialog">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="审核结果" prop="auditStatus">
-          <el-radio v-model="form.sex" :label="1">男</el-radio>
-          <el-radio v-model="form.sex" :label="2">女</el-radio>
-        </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
-          <el-input v-model="form.idCard" maxlength="18" placeholder="请输入身份证号"></el-input>
-        </el-form-item>
-        <el-form-item label="头像" prop="icon">
-          <img-upload v-model="form.icon" />
-        </el-form-item>
-        <!-- <el-form-item label="证书" prop="path">
-          <img-upload v-model="form.path" />
-        </el-form-item> -->
-        <el-form-item label="证书类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择证书类型">
-            <el-option v-for="item in typeList" :key="item.id" :label="item.dictValue" :value="item.dictValue"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="证书分类" prop="categoryId">
-          <el-select v-model="form.categoryId" placeholder="请选择证书分类">
-            <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
-        </el-form-item>
-        <el-form-item label="机构名称" prop="deptName">
-          <el-input v-model="form.deptName" placeholder="请输入机构名称"></el-input>
-        </el-form-item>
-        <el-form-item label="证书编号" prop="code">
-          <el-input v-model="form.code" placeholder="请输入证书编号"></el-input>
-        </el-form-item>
-        <el-form-item label="证书开始有效期" prop="stTime">
-          <el-date-picker
-            v-model="form.stTime"
-            type="date"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            range-separator="至"
-            placeholder="选择开始日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="证书结束有效期" prop="sxTime">
-          <el-date-picker
-            v-model="form.sxTime"
-            type="date"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            range-separator="至"
-            placeholder="选择结束日期">
-          </el-date-picker>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialog = false">取 消</el-button>
-        <el-button type="primary" @click="handleAdd">确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -142,21 +94,7 @@ export default {
   data () {
     return {
       listQuery: {},
-      dialog: false,
       form: {
-      },
-      action: 'add',
-      rules: {
-        name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
-        idCard: [{ required: true, message: '请输入身份证号', trigger: 'blur' }],
-        icon: [{ required: true, message: '请上次头像', trigger: 'blur' }],
-        type: [{ required: true, message: '请选择证书类型', trigger: 'blur' }],
-        categoryId: [{ required: true, message: '请选择证书分类', trigger: 'blur' }],
-        deptName: [{ required: true, message: '请输入机构名称', trigger: 'blur' }],
-        code: [{ required: true, message: '请输入证书编号', trigger: 'blur' }],
-        stTime: [{ required: true, message: '请选择证书开始有效期', trigger: 'blur' }],
-        sxTime: [{ required: true, message: '请选择证书结束有效期', trigger: 'blur' }]
       },
       categoryList: [],
       typeList: [],
@@ -175,11 +113,9 @@ export default {
 
   computed: {
     btnDisabled () {
-      if (this.selectList.length) {
-        return false
-      } else {
-        return true
-      }
+      return this.selectList.some(item => {
+        return item.auditStatus === 1 || item.auditStatus === 2
+      })
     }
   },
 
@@ -201,6 +137,7 @@ export default {
     },
 
     toAudit () {
+      if (!this.selectList.length) return this.$message.error('请勾选选项')
       this.$confirm('是否审核通过?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -221,6 +158,7 @@ export default {
     },
 
     disAudit () {
+      if (!this.selectList.length) return this.$message.error('请勾选选项')
       this.$confirm('是否审核不通过?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -237,39 +175,6 @@ export default {
             this.$refs.table.getList()
           }
         })
-      })
-    },
-
-    toEdit () {
-      this.action = 'edit'
-      this.dialog = true
-      const { id, name, type } = this.selectList[0]
-      this.form = { id, name, type }
-    },
-
-    handleAdd () {
-      this.$refs.form.validate((valid) => {
-        if (valid) {
-          if (this.action === 'add') {
-            this.api.saveCerd(this.form).then((res) => {
-              if (res.success) {
-                this.$message.success('新增成功')
-                this.dialog = false
-                this.form = {}
-                this.$refs.table.getList()
-              }
-            })
-          } else {
-            this.api.updatezsCategory(this.form).then((res) => {
-              if (res.success) {
-                this.$message.success('新增成功')
-                this.dialog = false
-                this.form = {}
-                this.$refs.table.getList()
-              }
-            })
-          }
-        }
       })
     },
 

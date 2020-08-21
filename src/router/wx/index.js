@@ -34,5 +34,17 @@ export default [
     name: 'wxPrimaryRecord',
     component: () => import('@/views/wx/primary-record.vue'),
     meta: { title: '录入数据' }
+  },
+  {
+    path: '/wx/cred/search',
+    name: 'WxCredSearch',
+    component: () => import('@/views/wx/cred-search.vue'),
+    meta: { title: '证书搜索' }
+  },
+  {
+    path: '/wx/cred',
+    name: 'WxCred',
+    component: () => import('@/views/wx/cred.vue'),
+    meta: { title: '证书详情' }
   }
 ]

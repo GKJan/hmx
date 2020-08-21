@@ -1,5 +1,9 @@
 <template>
   <div class="cred-container">
+    <!-- <el-tabs type="card" @tab-click="handleTab">
+      <el-tab-pane label="个人证书"></el-tab-pane>
+      <el-tab-pane label="机构证书"></el-tab-pane>
+    </el-tabs> -->
     <table-panel
       ref="table"
       :apiMethod="api.getCredPage"
@@ -7,8 +11,16 @@
     >
       <template #searchItem>
         <div class="search-item">
-          <span>机构名称</span>
-          <el-input v-model="listQuery.deptName" placeholder="请输入分类名称"></el-input>
+          <span>姓名</span>
+          <el-input v-model="listQuery.name" placeholder="请输入姓名"></el-input>
+        </div>
+        <div class="search-item">
+          <span>证书编号</span>
+          <el-input v-model="listQuery.code" placeholder="请输入证书编号"></el-input>
+        </div>
+        <div class="search-item">
+          <span>单位名称</span>
+          <el-input v-model="listQuery.deptName" placeholder="请输入单位名称"></el-input>
         </div>
         <div class="search-item">
           <span>证书类型</span>
@@ -24,6 +36,7 @@
         <el-button type="success" icon="el-icon-plus" @click="action = 'add';form = {};dialog = true">新增</el-button>
         <el-button type="warning" icon="el-icon-edit-outline" :disabled="editDisabled" @click="toEdit">编辑</el-button>
         <el-button type="danger" :disabled="delDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button>
+        <el-button type="warning" icon="el-icon-view" :disabled="editDisabled" @click="toDetail">预览</el-button>
       </template>
       <template #tableColumn>
         <el-table-column
@@ -57,7 +70,7 @@
         </el-table-column>
         <el-table-column
           prop="deptName"
-          label="机构名称"
+          label="单位名称"
           align="center">
         </el-table-column>
         <el-table-column
@@ -69,6 +82,11 @@
     </table-panel>
     <el-dialog width="500px" :title="action === 'add' ? '新增分类' : '编辑分类'" :visible.sync="dialog">
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+        <el-form-item label="证书类型" prop="type">
+          <el-select v-model="form.type" placeholder="请选择证书类型" @change="handleChange">
+            <el-option v-for="item in typeList" :key="item.id" :label="item.dictValue" :value="item.dictValue"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
@@ -79,25 +97,19 @@
         <el-form-item label="身份证号" prop="idCard">
           <el-input v-model="form.idCard" maxlength="18" placeholder="请输入身份证号"></el-input>
         </el-form-item>
-        <el-form-item label="头像" prop="icon">
+        <el-form-item label="照片" prop="icon">
           <img-upload v-model="form.icon" />
         </el-form-item>
         <!-- <el-form-item label="证书" prop="path">
           <img-upload v-model="form.path" />
         </el-form-item> -->
-        <el-form-item label="证书类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择证书类型">
-            <el-option v-for="item in typeList" :key="item.id" :label="item.dictValue" :value="item.dictValue"></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="证书分类" prop="categoryId">
           <el-select v-model="form.categoryId" placeholder="请选择证书分类">
             <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        </el-form-item>
-        <el-form-item label="机构名称" prop="deptName">
-          <el-input v-model="form.deptName" placeholder="请输入机构名称"></el-input>
+        <el-form-item label="单位名称" prop="deptName">
+          <el-input v-model="form.deptName" placeholder="请输入单位名称"></el-input>
         </el-form-item>
         <el-form-item label="证书编号" prop="code">
           <el-input v-model="form.code" placeholder="请输入证书编号"></el-input>
@@ -119,6 +131,11 @@
             range-separator="至"
             placeholder="选择结束日期">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item label="所属区域" prop="areaId">
+          <el-select v-model="form.areaId" placeholder="请选择所属区域">
+            <el-option v-for="item in areaList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -149,23 +166,26 @@ export default {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         idCard: [{ required: true, message: '请输入身份证号', trigger: 'blur' }],
-        icon: [{ required: true, message: '请上次头像', trigger: 'blur' }],
+        icon: [{ required: true, message: '请上次照片', trigger: 'blur' }],
         type: [{ required: true, message: '请选择证书类型', trigger: 'blur' }],
         categoryId: [{ required: true, message: '请选择证书分类', trigger: 'blur' }],
-        deptName: [{ required: true, message: '请输入机构名称', trigger: 'blur' }],
+        areaId: [{ required: true, message: '请选择所属区域', trigger: 'blur' }],
+        deptName: [{ required: true, message: '请输入单位名称', trigger: 'blur' }],
         code: [{ required: true, message: '请输入证书编号', trigger: 'blur' }],
         stTime: [{ required: true, message: '请选择证书开始有效期', trigger: 'blur' }],
         sxTime: [{ required: true, message: '请选择证书结束有效期', trigger: 'blur' }]
       },
       categoryList: [],
       typeList: [],
+      areaList: [],
       selectList: []
     }
   },
 
   created () {
     this.getType()
-    this.getCategory()
+    // this.getCategory()
+    this.getArea()
   },
 
   mounted () {
@@ -198,10 +218,23 @@ export default {
       })
     },
 
+    handleChange () {
+      this.$set(this.form, 'categoryId', '')
+      this.getCategory()
+    },
+
     getCategory () {
-      this.api.getzsCategoryList().then(res => {
+      this.api.getzsCategoryPage({ size: 20, type: this.form.type }).then(res => {
         if (res.success) {
-          this.categoryList = res.data
+          this.categoryList = res.data.records
+        }
+      })
+    },
+
+    getArea () {
+      this.api.getRegionList().then(res => {
+        if (res.success) {
+          this.areaList = res.data
         }
       })
     },
@@ -209,27 +242,32 @@ export default {
     toEdit () {
       this.action = 'edit'
       this.dialog = true
-      const { id, name, type } = this.selectList[0]
-      this.form = { id, name, type }
+      const { id, name, sex, idCard, icon, categoryId, deptName, code, stTime, sxTime, areaId } = this.selectList[0]
+      this.form = { id, name, sex, idCard, icon, categoryId, deptName, code, stTime, sxTime, areaId }
+      this.$set(this.form, 'type', this.selectList[0].categoryType)
+      this.getCategory()
+    },
+
+    toDetail () {
+      this.$router.push({ path: '/cred/img', query: { id: this.selectList[0].id }})
     },
 
     handleAdd () {
-      console.log(this.form)
       this.$refs.form.validate((valid) => {
         if (valid) {
           if (this.action === 'add') {
             this.api.saveCerd(this.form).then((res) => {
               if (res.success) {
-                this.$message.success('新增成功')
+                this.$message.success('新增成功，审核通过后可查看')
                 this.dialog = false
                 this.form = {}
                 this.$refs.table.getList()
               }
             })
           } else {
-            this.api.updatezsCategory(this.form).then((res) => {
+            this.api.updateCerd(this.form).then((res) => {
               if (res.success) {
-                this.$message.success('新增成功')
+                this.$message.success('编辑成功')
                 this.dialog = false
                 this.form = {}
                 this.$refs.table.getList()
@@ -250,7 +288,7 @@ export default {
         for (let item of this.selectList) {
           ids.push(item.id)
         }
-        this.api.delzsCategory({ ids: ids.toString() }).then(res => {
+        this.api.delCerd({ ids: ids.toString() }).then(res => {
           if (res.success) {
             this.$message.success('删除成功')
             this.$refs.table.listQuery.current = 1

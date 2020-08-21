@@ -704,8 +704,8 @@ let echarts = require('echarts/lib/echarts')
 require('echarts/lib/chart/radar')
 // 引入提示框组件
 require('echarts/lib/component/tooltip')
-import JsPDF from "jspdf"
-import html2Canvas from "html2canvas"
+import JsPDF from 'jspdf'
+import html2Canvas from 'html2canvas'
 
 export default {
   data () {

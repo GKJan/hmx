@@ -66,16 +66,28 @@ export default [
     meta: { title: '证书管理' }
   },
   {
+    path: '/cred/img',
+    name: 'CredImg',
+    component: () => import('@/views/menu/cred-img.vue'),
+    meta: { title: '证书预览' }
+  },
+  {
     path: '/audit',
     name: 'Audit',
     component: () => import('@/views/menu/audit.vue'),
     meta: { title: '证书审核管理' }
   },
   {
-    path: '/certificate',
-    name: 'Certificate',
-    component: () => import('@/views/menu/certificate.vue'),
-    meta: { title: '证书类型管理' }
+    path: '/cred/class',
+    name: 'CredClass',
+    component: () => import('@/views/menu/cred-class.vue'),
+    meta: { title: '证书分类管理' }
+  },
+  {
+    path: '/cred/tj',
+    name: 'CredTj',
+    component: () => import('@/views/menu/cred-tj.vue'),
+    meta: { title: '证书数据统计' }
   },
   {
     path: '/statistic',

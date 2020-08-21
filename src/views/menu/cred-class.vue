@@ -79,7 +79,7 @@ export default {
       },
       action: 'add',
       rules: {
-        name: [{ required: true, message: '请输入园区名称', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入分类名称', trigger: 'blur' }],
         type: [{ required: true, message: '请选择证书类型', trigger: 'blur' }]
       },
       typeList: [],
