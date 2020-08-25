@@ -50,6 +50,14 @@ export default {
     })
   },
 
+  wxSaveCerd (params) {
+    return request({
+      url: '/zsInfo/wechatSave',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+
   updateCerd (params) {
     return request({
       url: '/zsInfo/update',

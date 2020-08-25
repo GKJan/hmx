@@ -21,7 +21,7 @@ export default [
     path: '/wx/search',
     name: 'WxSearch',
     component: () => import('@/views/wx/search.vue'),
-    meta: { title: '报告搜索' }
+    meta: { title: '报告查询' }
   },
   {
     path: '/wx/record',
@@ -36,10 +36,16 @@ export default [
     meta: { title: '录入数据' }
   },
   {
+    path: '/wx/apply',
+    name: 'WxCredApply',
+    component: () => import('@/views/wx/apply.vue'),
+    meta: { title: '证书申请' }
+  },
+  {
     path: '/wx/cred/search',
     name: 'WxCredSearch',
     component: () => import('@/views/wx/cred-search.vue'),
-    meta: { title: '证书搜索' }
+    meta: { title: '证书查询' }
   },
   {
     path: '/wx/cred',

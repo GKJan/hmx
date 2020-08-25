@@ -6,11 +6,15 @@
       <span>{{ userInfo.username }}</span>
     </div>
     <div class="menu" @click="toSearch">
-      <span>搜索报告</span>
+      <span>报告查询</span>
+      <span class="arrow">></span>
+    </div>
+    <div class="menu" @click="$router.push('/wx/apply')">
+      <span>证书申请</span>
       <span class="arrow">></span>
     </div>
     <div class="menu" @click="toSearchCred">
-      <span>搜索证书</span>
+      <span>证书查询</span>
       <span class="arrow">></span>
     </div>
     <div class="menu" @click="toRecord">

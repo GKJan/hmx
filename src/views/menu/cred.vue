@@ -10,24 +10,30 @@
       @handleSelectionChange="handleSelectionChange"
     >
       <template #searchItem>
-        <div class="search-item">
+        <!-- <div class="search-item">
           <span>姓名</span>
           <el-input v-model="listQuery.name" placeholder="请输入姓名"></el-input>
-        </div>
+        </div> -->
         <div class="search-item">
-          <span>证书编号</span>
-          <el-input v-model="listQuery.code" placeholder="请输入证书编号"></el-input>
+          <span>证书分类</span>
+          <el-select v-model="listQuery.categoryId" clearable placeholder="请选择证书分类">
+            <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </div>
         <div class="search-item">
           <span>单位名称</span>
           <el-input v-model="listQuery.deptName" placeholder="请输入单位名称"></el-input>
         </div>
         <div class="search-item">
+          <span>证书编号</span>
+          <el-input v-model="listQuery.code" placeholder="请输入证书编号"></el-input>
+        </div>
+        <!-- <div class="search-item">
           <span>证书类型</span>
           <el-select v-model="listQuery.categoryType" clearable placeholder="请选择证书类型">
             <el-option v-for="item in typeList" :key="item.id" :label="item.dictValue" :value="item.dictValue"></el-option>
           </el-select>
-        </div>
+        </div> -->
         <div class="search-item">
           <el-button type="primary" icon="el-icon-search" @click="$refs.table.getList()">搜索</el-button>
         </div>
@@ -43,7 +49,7 @@
           type="selection"
           align="center">
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="name"
           label="姓名"
           align="center">
@@ -57,6 +63,11 @@
           label="性别"
           align="center">
           <template slot-scope="scope">{{ scope.row.state === 1 ? '男' : '女' }}</template>
+        </el-table-column> -->
+        <el-table-column
+          prop="deptName"
+          label="单位名称"
+          align="center">
         </el-table-column>
         <el-table-column
           prop="code"
@@ -69,11 +80,6 @@
           align="center">
         </el-table-column>
         <el-table-column
-          prop="deptName"
-          label="单位名称"
-          align="center">
-        </el-table-column>
-        <el-table-column
           label="证书有效期"
           align="center">
           <template slot-scope="scope">{{ scope.row.stTime }} ~ {{ scope.row.sxTime }}</template>
@@ -82,12 +88,12 @@
     </table-panel>
     <el-dialog width="500px" :title="action === 'add' ? '新增分类' : '编辑分类'" :visible.sync="dialog">
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="证书类型" prop="type">
+        <!-- <el-form-item label="证书类型" prop="type">
           <el-select v-model="form.type" placeholder="请选择证书类型" @change="handleChange">
             <el-option v-for="item in typeList" :key="item.id" :label="item.dictValue" :value="item.dictValue"></el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item label="姓名" prop="name">
+        </el-form-item> -->
+        <!-- <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="性别" prop="sex">
@@ -99,7 +105,7 @@
         </el-form-item>
         <el-form-item label="照片" prop="icon">
           <img-upload v-model="form.icon" />
-        </el-form-item>
+        </el-form-item> -->
         <!-- <el-form-item label="证书" prop="path">
           <img-upload v-model="form.path" />
         </el-form-item> -->
@@ -118,7 +124,7 @@
           <el-date-picker
             v-model="form.stTime"
             type="date"
-            value-format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd"
             range-separator="至"
             placeholder="选择开始日期">
           </el-date-picker>
@@ -127,7 +133,7 @@
           <el-date-picker
             v-model="form.sxTime"
             type="date"
-            value-format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd"
             range-separator="至"
             placeholder="选择结束日期">
           </el-date-picker>
@@ -160,6 +166,7 @@ export default {
       listQuery: {},
       dialog: false,
       form: {
+        type: '机构证书'
       },
       action: 'add',
       rules: {
@@ -183,8 +190,8 @@ export default {
   },
 
   created () {
-    this.getType()
-    // this.getCategory()
+    // this.getType()
+    this.getCategory()
     this.getArea()
   },
 
