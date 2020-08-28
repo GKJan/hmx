@@ -2,6 +2,16 @@
   <div class="login-container">
     <div class="login-form">
       <el-form ref="form" :model="form" :rules="rules" label-width="95px">
+        <el-form-item label="报告来源" prop="source">
+          <el-select v-model="form.source" placeholder="请选择报告来源">
+            <el-option
+              v-for="item in sources"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="选择场次" prop="sportId">
           <el-select v-model="form.sportId" placeholder="请选择场次">
             <el-option
@@ -32,10 +42,12 @@ export default {
   data () {
     return {
       show: false,
+      sources: ['幼儿园', '小学', '篮球'],
       form: {
       },
       results: [],
       rules: {
+        source: [{ required: true, message: '请选择来源', trigger: 'change' }],
         sportId: [{ required: true, message: '请选择场次', trigger: 'change' }],
         childName: [{ required: true, message: '请输入小朋友姓名', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入家长手机号', trigger: 'blur' }]
@@ -58,15 +70,39 @@ export default {
     search () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.api.getWxReport(this.form).then((res) => {
-            if (res.data.length) {
-              // this.$router.push({ path: '/wx', query: { info: JSON.stringify(res.data) }})
-              this.results = res.data
-              this.show = true
-            } else {
-              this.$toast('没有符合条件的报告')
-            }
-          })
+          const form = {
+            sportId: this.form.sportId,
+            childName: this.form.childName,
+            phone: this.form.phone
+          }
+          if (this.form.source === '幼儿园') {
+            this.api.getWxReport(form).then((res) => {
+              if (res.data.length) {
+                this.results = res.data
+                this.show = true
+              } else {
+                this.$toast('没有符合条件的报告')
+              }
+            })
+          } else if (this.form.source === '小学') {
+            this.api.getXxWxReport(form).then((res) => {
+              if (res.data.length) {
+                this.results = res.data
+                this.show = true
+              } else {
+                this.$toast('没有符合条件的报告')
+              }
+            })
+          } else {
+            this.api.getBasketWxReport(form).then((res) => {
+              if (res.data.length) {
+                this.results = res.data
+                this.show = true
+              } else {
+                this.$toast('没有符合条件的报告')
+              }
+            })
+          }
         }
       })
     },
@@ -78,7 +114,13 @@ export default {
         forbidClick: true,
       })
       // this.$router.push({ path: '/wx', query: { id: item.id }})
-      window.location.href = '/wx?id=' + item.id
+      if (this.form.source === '幼儿园') {
+        window.location.href = '/wx?id=' + item.id
+      } else if (this.form.source === '小学') {
+        window.location.href = '/wx/primaryReport?id=' + item.id
+      } else {
+        window.location.href = '/wx/basketReport?id=' + item.id
+      }
     }
   }
 }

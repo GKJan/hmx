@@ -16,6 +16,10 @@
           </el-input>
         </el-form-item>
       </el-form>
+      <div class="other">
+        <span></span>
+        <span @click="toApply">证书申请</span>
+      </div>
       <el-button @click="submit" class="login-btn" type="primary">登录</el-button>
     </div>
   </div>
@@ -47,6 +51,10 @@ export default {
   methods: {
     togglePwd () {
       this.showPwd = !this.showPwd
+    },
+
+    toApply () {
+      this.$router.push('/wx/apply')
     },
 
     submit () {
@@ -83,6 +91,16 @@ export default {
     }
     .title {
       margin: 0 0 15px;
+    }
+    .other {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: -15px 0 10px;
+      span {
+        font-size: 14px;
+        color: #409EFF;
+      }
     }
     .login-btn {
       width: 100%;

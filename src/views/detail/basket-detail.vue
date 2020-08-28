@@ -49,9 +49,6 @@
                 </template>
               </div>
             </div>
-            <div class="height">
-              预测身高：{{ info.resultHeight }}cm
-            </div>
           </div>
         </div>
         <div class="box">
@@ -64,17 +61,20 @@
           </div>
         </div>
         <div class="other">
-          <div class="left">
-            <span>移动技术：{{ info.remove }}秒</span>
-            <span>原地双手胸前传接球：{{ info.pass }}个</span>
-            <span>原地单手肩上投篮：{{ info.shoot }}个</span>
+          <!-- <div class="left">
+            <span>拍球：{{ info.racket }}个</span>
+            <span>传球：{{ info.pass }}个</span>
+            <span>投篮：{{ info.shoot }}个</span>
+          </div> -->
+          <div class="left1">
+            <img src="../../assets/primary/left1.png">
           </div>
           <div class="right">
             <div class="lf">
-              <span>八项体质总成绩：</span>
-              <span>(满分：100分)</span>
+              <span>五项总成绩：</span>
+              <span>(满分：25分)</span>
             </div>
-            <div class="md">{{ total }}</div>
+            <div class="md">{{ info.total }}</div>
             <div class="rg">分</div>
           </div>
         </div>
@@ -85,268 +85,107 @@
           <img src="../../assets/primary/title.png" class="left">
           <img src="../../assets/primary/web.png" class="right">
         </div>
-        <div class="title">1.体态测试</div>
-        <div class="box-content">
-          <div class="box-small">
-            <div class="small-title">项目1：身高</div>
-            <div class="tushi">
-              <div class="shiji">
-                <div></div>
-                <span>实际测量</span>
-              </div>
-              <div class="pingjun">
-                <div></div>
-                <span>全国平均值</span>
-              </div>
-            </div>
-            <div class="zhanshi">
-              <span class="left">{{ info.height }}cm</span>
-              <template v-if="info.sex === 1">
-                <img v-if="info.height < info.hightAvg" src="../../assets/wx/小鹅通评估报告-39.png">
-                <img v-else-if="info.height > info.hightAvg" src="../../assets/wx/小鹅通评估报告-41.png">
-                <img v-else src="../../assets/wx/小鹅通评估报告-40.png">
-              </template>
-              <template v-else>
-                <img v-if="info.height < info.hightAvg" src="../../assets/wx/小鹅通评估报告-36.png">
-                <img v-else-if="info.height > info.hightAvg" src="../../assets/wx/小鹅通评估报告-37.png">
-                <img v-else src="../../assets/wx/小鹅通评估报告-38.png">
-              </template>
-              <span class="right">{{ info.hightAvg }}cm</span>
-            </div>
-            <div class="text" v-if="info.heightScore < 6">
-              数据显示儿童身高偏低，建议咨询相关生长发育的专家及教师，注重幼儿营养均衡，定期保证幼儿一定量和强度的运动，建议晚间10:30前必须入睡，保证优质睡眠。
-            </div>
-            <div class="text" v-else-if="info.heightScore >= 8">
-              幼儿处于身体发育比较好的水平，但也不能大意，因为儿童时期决定不了成年后的身高，如果有营养及体育锻炼，才能保障孩子打下坚实的基础。希望继续保持良好的作息、运动和饮食习惯。
-            </div>
-            <div class="text" v-else>
-              儿童身高处于正常发育水平，但如果想让孩子长高，注重幼儿营养均衡，定期保证幼儿一定量和强度的运动，建议晚间10:30前必须入睡，保证优质睡眠。
-            </div>
-          </div>
-          <div class="box-small">
-            <div class="small-title">项目2：BMI</div>
-            <div class="tushi">
-              <div class="shiji">
-                <div></div>
-                <span>实际测量：{{ info.ibm }}</span>
-              </div>
-              <div class="pingjun">
-                <div></div>
-                <span>全国平均值：{{ info.bmiAvg }}</span>
-              </div>
-            </div>
-            <div class="zhanshi">
-              <div class="method">
-                <span>计算公式：</span>
-                <img src="../../assets/img/method.png" class="method">
-              </div>
-            </div>
-            <div class="text" v-if="info.ibmScore === 2">
-              特别注意一个警惕信号，如果孩子没有病态并导致这个情况，要么孩子过胖、要么过廋，过胖唯一解决孩子的方式是少吃多动，建立合理的饮食，少摄入脂肪，多进行一些有氧运动。过廋是因为身体的吸收能量过少导致，适当的运动可以让孩子身体机能活力增强，新陈代谢加快，促进胃腺的活动，增加孩子饥饿感，并增强食欲。
-            </div>
-            <div class="text" v-else-if="info.ibmScore === 10">
-              体态非常优秀，希望继续保持，保持良好的饮食习惯和睡眠习惯，有规律的进行周期性运动。
-            </div>
-            <div class="text" v-else>
-              身体发育正常，但与正常值有点偏，建议加强运动，合理饮食，保证良好的作息习惯，使身体肌肉的质量增加，增强协调性和灵敏性，是儿童时期最重要的砝码。
-            </div>
-          </div>
-        </div>
-        <div class="title">2.体质测试</div>
-        <div class="box-content">
-          <div class="box-small">
-            <div class="small-title">项目1：肺活量</div>
-            <div class="tushi">
-              <div class="shiji">
-                <div></div>
-                <span>实际测量</span>
-              </div>
-              <div class="pingjun">
-                <div></div>
-                <span>全国平均值</span>
-              </div>
-            </div>
-            <div class="zhanshi">
-              <div class="feihuo">
-                <img src="../../assets/primary/fh1.png">
-                <span class="left">{{ info.feiHl }}ml</span>
-              </div>
-              <div class="feihuo">
-                <img src="../../assets/primary/fh2.png">
-                <span class="right">{{ info.feiHlAvg }}ml</span>
-              </div>
-            </div>
-            <div class="cssd">测试手段：肺活量测量仪</div>
-            <div class="text" v-if="info.feiHlScore < 12">
-              数据显示儿童肺活量值偏低，建议定期保证儿童进行一定的运动量活动，例如扩胸运动、篮球、游泳等活动锻炼，增强心肺功能及新陈代谢能力，建议定期进行肺活量测试。
-            </div>
-            <div class="text" v-else-if="info.feiHlScore >= 16">
-              数据显示儿童肺活量值偏于中等水平，建议定期保证儿童进行一定的运动量活动，例如扩胸运动、篮球、游泳等活动锻炼，保持继续增强心肺功能及新陈代谢能力。
-            </div>
-            <div class="text" v-else>
-              儿童肺活量处于比较好的水平，希望继续保持良好的运动习惯、运动和饮食习惯，增强运动能力，提高心肺功能。
-            </div>
-          </div>
-          <div class="box-small">
-            <div class="small-title">项目2：10X4折返跑</div>
-            <div class="tushi">
-              <div class="shiji">
-                <div></div>
-                <span>实际测量</span>
-              </div>
-              <div class="pingjun">
-                <div></div>
-                <span>全国平均值</span>
-              </div>
-            </div>
-            <div class="zhanshi">
-              <div class="long">
-                <img v-if="info.sensitives > info.sensitiveAvg" src="../../assets/primary/long1.png" class="long1">
-                <img v-else-if="info.sensitives < info.sensitiveAvg" src="../../assets/primary/long1.png" class="long2">
-                <img v-else src="../../assets/primary/long1.png" class="long3">
-                <span class="left">{{ info.sensitives }}s</span>
-                <img v-if="info.sensitives > info.sensitiveAvg" src="../../assets/primary/long2.png" class="long2">
-                <img v-else-if="info.sensitives < info.sensitiveAvg" src="../../assets/primary/long2.png" class="long1">
-                <img v-else src="../../assets/primary/long2.png" class="long3">
-                <span class="right">{{ info.sensitiveAvg }}s</span>
-              </div>
-            </div>
-            <div class="cssd">测试手段：站立式起跑</div>
-            <div class="text" v-if="info.sensitiveScore < 12">
-              数据显示儿童速度及综合身体素质偏低，建议定期保证幼儿进行下肢一定运动的量和强度，多进行爆发力的训练、灵敏协调能力的训练以及下肢力量跳跃的训练，定期进行10×4折返跑速度的的测试。
-            </div>
-            <div class="text" v-else-if="info.sensitiveScore >= 16">
-              幼儿处于下肢力量和速度素质发展比较好的水平，希望继续保持良好的运动习惯、开发多种下肢力量性和协调性练习，增强运动和把持良好的饮食习惯。
-            </div>
-            <div class="text" v-else>
-              数据显示儿童10×4折返跑的身体综合数据数据处于中等水平，建议定期保证幼儿进行下肢一定运动的量和强度，多进行爆发力的训练、灵敏协调能力的训练以及下肢力量跳跃的训练。
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="part-item">
-        <div class="header">
-          <img src="../../assets/primary/title.png" class="left">
-          <img src="../../assets/primary/web.png" class="right">
-        </div>
-        <div class="box-content">
-          <div class="box-small">
-            <div class="small-title">项目3：坐位体前屈</div>
-            <div class="tushi">
-              <div class="shiji">
-                <div></div>
-                <span>实际测量</span>
-              </div>
-              <div class="pingjun">
-                <div></div>
-                <span>全国平均值</span>
-              </div>
-            </div>
-            <div class="zhanshi">
-              <div class="long">
-                <img v-if="info.flexibility > info.flexibilityAvg" src="../../assets/primary/long1.png" class="long1">
-                <img v-else-if="info.flexibility < info.flexibilityAvg" src="../../assets/primary/long1.png" class="long2">
-                <img v-else src="../../assets/primary/long1.png" class="long3">
-                <span class="left">{{ info.flexibility }}cm</span>
-                <img v-if="info.flexibility > info.flexibilityAvg" src="../../assets/primary/long2.png" class="long2">
-                <img v-else-if="info.flexibility < info.flexibilityAvg" src="../../assets/primary/long2.png" class="long1">
-                <img v-else src="../../assets/primary/long2.png" class="long3">
-                <span class="right">{{ info.flexibilityAvg }}cm</span>
-              </div>
-            </div>
-            <div class="cssd">测试手段： 使用坐位体前屈测试仪</div>
-            <div class="text" v-if="info.flexibilityScore < 12">
-              数据显示儿童柔韧性偏弱，建议定期保证幼儿进行一系列有关柔韧性的运动，例如关节拉伸的节奏操、操节运动等音乐游戏，也可以游戏化的进行不负重的关节拉伸锻炼，并且定期进行平衡性的测试。
-            </div>
-            <div class="text" v-else-if="info.flexibilityScore >= 16">
-              儿童柔韧性处于发展比较好的水平，希望继续保持良好的运动习惯、继续进行多种与柔韧能力相关的游戏练习。
-            </div>
-            <div class="text" v-else>
-              儿童柔韧性处于中等水平，建议继续保持幼儿相关的运动方式，有条件可以开展例如关节拉伸的节奏操、操节运动等音乐游戏。
-            </div>
-          </div>
-          <div class="box-small">
-            <div class="small-title">项目4：一分钟跳绳</div>
-            <div class="tushi">
-              <div class="shiji">
-                <div></div>
-                <span>实际测量</span>
-              </div>
-              <div class="pingjun">
-                <div></div>
-                <span>全国平均值</span>
-              </div>
-            </div>
-            <div class="zhanshi">
-              <div class="feihuo">
-                <img src="../../assets/primary/ts1.png" class="ts">
-                <span class="left">{{ info.tiaos }}个</span>
-              </div>
-              <div class="feihuo">
-                <img src="../../assets/primary/ts2.png" class="ts">
-                <span class="right">{{ info.tiaosAvg }}个</span>
-              </div>
-            </div>
-            <div class="text" v-if="info.tiaosScore < 12">
-              数据显示儿童速度及综合身体素质偏低，建议定期保证幼儿进行下肢一定运动的量和强度，同时可以进行双脚起跳的训练、摇绳续联及耐力性训练，提升跳绳的耐力和节奏性把控，定期进行跳绳的测试。
-            </div>
-            <div class="text" v-else-if="info.tiaosScore >= 16">
-              儿童处于身体综合素质发展比较好的水平，希望继续保持良好的运动习惯、开发多种下肢力量性和协调性练习，继续增强耐力训练和节奏感练习，增强运动和保持良好的饮食习惯。
-            </div>
-            <div class="text" v-else>
-              数据显示儿童速度及综合身体素质偏低，建议定期保证幼儿进行下肢一定运动的量和强度，同时可以进行双脚起跳的训练、摇绳续联及耐力性训练，提升跳绳的耐力和节奏性把控。
-            </div>
-          </div>
-        </div>
         <div class="title">篮球技能</div>
         <div class="box-content">
-          <div class="box-mini">
-            <div class="mini-title">移动技术</div>
-            <div class="my-result">我的成绩：{{ info.remove }}个，评价：{{ removeScore  }}</div>
-            <div class="pingyu" v-if="info.removeScore < 12">
-              数据显示儿童移动技能偏弱，建议开展一系列移动步伐的训练，追逐类、比赛类都是移动性练习手段，并且定期为孩子测量步伐多方位移动性测试。
+          <div class="box-small">
+            <div class="small-title">项目1：30秒胯下O字绕滚球</div>
+            <div class="tushi">
+              <div class="shiji">
+                <div></div>
+                <span>我的成绩：{{ info.rall }}</span>
+              </div>
+              <div class="pingjun">
+                <div></div>
+                <span>超过全国：{{ info.rallScore | scoreFilter }}</span>
+              </div>
             </div>
-            <div class="pingyu" v-else-if="info.removeScore >= 16">
-              儿童下肢移动处于发展比较好的水平，希望继续保持良好的运动习惯、继续进行多种与移动能力相关的游戏练习，注重多种形式的组合。
+            <div class="zhanshi">
+              <div class="basket">
+                <img src="../../assets/primary/lq1.png" class="lq1">
+              </div>
             </div>
-            <div class="pingyu" v-else>
-              数据显示儿童移动技能中等水平，建议可以继续开展一系列移动步伐的训练，追逐类、比赛类都是移动性练习手段的锻炼。
-            </div>
-            <img src="../../assets/primary/lq.png">
           </div>
-          <div class="box-mini">
-            <div class="mini-title">原地双手胸前传接球</div>
-            <div class="my-result">我的成绩：{{ info.pass }}个，评价：{{ passScore  }}</div>
-            <div class="pingyu" v-if="info.passScore < 24">
-              数据显示幼儿传球力量及精准度能力偏弱，建议开展一系列上肢力量传球准确度的游戏、亲子传球比远和比准活动都是传球命中的一种练习手段，并且定期为孩子测量传球精准度。
+          <div class="box-small">
+            <div class="small-title">项目2：30秒原地单手运球</div>
+            <div class="tushi">
+              <div class="shiji">
+                <div></div>
+                <span>我的成绩：{{ info.dsDribble }}</span>
+              </div>
+              <div class="pingjun">
+                <div></div>
+                <span>超过全国：{{ info.dsDribbleScore | scoreFilter }}</span>
+              </div>
             </div>
-            <div class="pingyu" v-else-if="info.passScore >= 32">
-              儿童传球精准度能力及上肢力量处于发展比较好的水平，希望继续保持良好的传球锻炼，注重多种技能形式的组合。
+            <div class="zhanshi">
+              <div class="basket">
+                <img src="../../assets/primary/lq1.png" class="lq1">
+              </div>
             </div>
-            <div class="pingyu" v-else>
-              儿童传球精准度能力级上肢力量处于中等水平，建议继续保持儿童一系列传球准确度及上肢力量的游戏，亲子传球比远和比准活动。
-            </div>
-            <img src="../../assets/primary/lq.png">
-          </div>
-          <div class="box-mini">
-            <div class="mini-title">原地单手肩上投篮</div>
-            <div class="my-result">我的成绩：{{ info.shoot }}个，评价：{{ shootScore  }}</div>
-            <div class="pingyu" v-if="info.shootScore < 24">
-              数据显示儿童投篮精准度能力偏弱，建议开展一系列投掷准确度的游戏，投目标、上肢力量训练都是投篮精准度的一种练习手段，注重儿童的上肢力量锻炼，并且定期为孩子测量投篮精准度。
-            </div>
-            <div class="pingyu" v-else-if="info.shootScore >= 32">
-              儿童投篮精准度能力处于发展比较好的水平，希望继续保持良好的投篮运动习惯注重多种技能形式的组合。
-            </div>
-            <div class="pingyu" v-else>
-              数据显示儿童投篮精准度能力偏弱，建议开展一系列投掷准确度的游戏，投目标、上肢力量训练都是投篮精准度的一种练习手段，注重儿童的上肢力量锻炼。
-            </div>
-            <img src="../../assets/primary/lq.png">
           </div>
         </div>
-        <img src="../../assets/primary/text.png" class="logo">
+        <div class="box-content">
+          <div class="box-small">
+            <div class="small-title">项目3：拍球/运球</div>
+            <div class="tushi">
+              <div class="shiji">
+                <div></div>
+                <span>我的成绩：{{ info.bat }}</span>
+              </div>
+              <div class="pingjun">
+                <div></div>
+                <span>超过全国：{{ info.batScore | scoreFilter }}</span>
+              </div>
+            </div>
+            <div class="zhanshi">
+              <div class="basket">
+                <img src="../../assets/primary/lq2.png" class="lq2">
+              </div>
+            </div>
+          </div>
+          <div class="box-small">
+            <div class="small-title">项目4：传球进圈</div>
+            <div class="tushi">
+              <div class="shiji">
+                <div></div>
+                <span>我的成绩：{{ info.pass }}</span>
+              </div>
+              <div class="pingjun">
+                <div></div>
+                <span>超过全国：{{ info.passScore | scoreFilter }}</span>
+              </div>
+            </div>
+            <div class="zhanshi">
+              <div class="basket">
+                <img src="../../assets/primary/lq3.png" class="lq3">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box-content">
+          <div class="box-small">
+            <div class="small-title">项目5：原地投篮</div>
+            <div class="tushi">
+              <div class="shiji">
+                <div></div>
+                <span>我的成绩：{{ info.shoot }}</span>
+              </div>
+              <div class="pingjun">
+                <div></div>
+                <span>超过全国：{{ info.shootScore | scoreFilter }}</span>
+              </div>
+            </div>
+            <div class="zhanshi">
+              <div class="basket">
+                <img src="../../assets/primary/lq4.png" class="lq4">
+              </div>
+            </div>
+          </div>
+          <div class="right1">
+            <img src="../../assets/primary/left1.png">
+          </div>
+        </div>
       </div>
-      
 
     </div>
   </div>
@@ -374,64 +213,45 @@ export default {
   },
 
   computed: {
-    // bmiResult () {
-    //   if (this.info.ibmScore === 1) {
-    //     if (this.info.ibm > this.info.bmiAvg) {
-    //       return '过胖'
-    //     } else {
-    //       return '过瘦'
-    //     }
-    //   }
-    //   if (this.info.ibmScore === 3) {
-    //     if (this.info.ibm > this.info.bmiAvg) {
-    //       return '偏胖'
-    //     } else {
-    //       return '偏瘦'
-    //     }
-    //   }
-    //   if (this.info.ibmScore === 5) {
-    //     return '正常'
-    //   }
-    // },
     pingyu () {
-      if (this.total >= 90) {
-        return '儿童身体素质发展水平非常优秀，心肺功能性及灵敏协调性以及柔韧及反应能力非常棒，希望继续保持锻炼，在空余时间可以陪孩子参加各种各样的体育游戏活动。'
+      if (this.total >= 85) {
+        return '幼儿身体素质发展水平处于优秀水平，但也要关注相关的指标数据的变化和提升，希望继续周期性有规划的保持锻炼，保证锻炼的科学性和有效性，在空余时间可以陪孩子参加各种各样的体育游戏活动。'
       }
-      if (this.total >= 79 && this.total <= 89) {
-        return '数据显示身体素质的综合性相对较好，但部分身体素质依然有较大的提升空间，希望继续保持孩子的运动，尽可能在额外的时间增加多项运动的练习，保护好孩子对运动的兴趣。'
+      if (this.total >= 75 && this.total <= 84) {
+        return '幼儿身体素质处于中等发展水平，数据显示身体素质的综合性相对较好，但部分身体素质依然有较大的提升空间，希望继续保持孩子的运动，尽可能在额外的时间增加多项运动的练习，保护好孩子对运动的兴趣。'
       }
-      if (this.total >= 61 && this.total <= 78) {
-        return '幼儿身体素质数据显示，身体素质发展整体处于中等稍微偏低水平，部分身体素质有较大的提升空间，特别关注分值比较低的身体素质指标，建议针对指标的数据，可以多让孩子参加各种各样的体育活动以弥补，提升其综合性的身体素质水平。'
+      if (this.total >= 65 && this.total <= 74) {
+        return '幼儿身体素质发展整体处于中等稍微偏低水平，孩子的部分身体素质有较大的提升空间，特别关注分值比较低的身体素质指标，建议针对指标的数据，可以多让孩子参加各种各样的体育活动以弥补，提升其综合性的身体素质水平。'
       }
-      if (this.total >= 42 && this.total <= 60) {
+      if (this.total >= 50 && this.total <= 64) {
         return '根据测试数据显示，孩子的身体素质存在一些小问题，我们建议可以进一步定期进行相关的身体素质的测试，并且有目的有计划的进行相关的运动安排，以期为了孩子身体素质的正常发展提供有效措施，为了孩子的健康，我们共同努力。'
       }
-      if (this.total < 42) {
-        return '根据测试数据显示，孩子的身体素质存在很大问题，我们建议进行相关专家咨询，并及时为孩子进行运动的处方、营养的搭配和合理的作息，并且建议定期到医院进行问诊和咨询，为了孩子的健康，我们共同努力。'
+      if (this.total < 49) {
+        return '根据测试数据显示，孩子的身体素质存在很大问题，我们建议进行相关专家咨询，并及时为孩子进行运动的处方、营养的搭配和合理的作息，，并且建议定期到医院进行问诊和咨询，为了孩子的健康，我们共同努力。'
       }
     },
-    removeScore () {
-      if (this.info.racketScore < 12) {
+    racketScore () {
+      if (this.info.racketScore < 24) {
         return '及格'
-      } else if (this.info.racketScore >= 16) {
+      } else if (this.info.racketScore >= 40) {
         return '优秀'
       } else {
         return '良好'
       }
     },
     passScore () {
-      if (this.info.passScore < 24) {
+      if (this.info.passScore < 18) {
         return '及格'
-      } else if (this.info.passScore >= 32) {
+      } else if (this.info.passScore >= 30) {
         return '优秀'
       } else {
         return '良好'
       }
     },
     shootScore () {
-      if (this.info.shootScore < 24) {
+      if (this.info.shootScore < 18) {
         return '及格'
-      } else if (this.info.shootScore >= 32) {
+      } else if (this.info.shootScore >= 30) {
         return '优秀'
       } else {
         return '良好'
@@ -439,30 +259,50 @@ export default {
     }
   },
 
+  filters: {
+    scoreFilter (score) {
+      if (score == 1) {
+        return '10%'
+      }
+      if (score == 2) {
+        return '30%'
+      }
+      if (score == 3) {
+        return '60%'
+      }
+      if (score == 4) {
+        return '75%'
+      }
+      if (score == 5) {
+        return '90%'
+      }
+    }
+  },
+
   created () {
-    this.api.getXxDetail({ id: this.$route.query.id }).then(res => {
+    this.api.getBasketDetail({ id: this.$route.query.id }).then(res => {
       this.info = res.data
-      this.total = res.data.heightScore + res.data.ibmScore +  res.data.feiHlScore +  res.data.tiaosScore + res.data.flexibilityScore +  res.data.sensitiveScore
+      this.total = res.data.batScore + res.data.dsDribbleScore + res.data.passScore + res.data.rallScore + res.data.shootScore
       // this.infoData = [res.data.height, res.data.ibm, res.data.legs, res.data.szLimb, res.data.coordinate, res.data.balance, res.data.flexibility, res.data.sensitives]
-      this.infoData = [res.data.heightScore, res.data.ibmScore, res.data.feiHlScore, res.data.tiaosScore, res.data.flexibilityScore, res.data.sensitiveScore]
+      this.infoData = [res.data.batScore, res.data.dsDribbleScore, res.data.passScore, res.data.rallScore, res.data.shootScore]
       this.compareData = [
         {
-          name: '身高', my: res.data.height, avg: res.data.hightAvg, unit: 'cm'
+          name: '总分', my: res.data.total, avg: 12, unit: ''
         },
         {
-          name: 'BMI', my: res.data.ibm, avg: res.data.bmiAvg, unit: ''
+          name: '滚球', my: res.data.rallScore, avg: 2, unit: ''
         },
         {
-          name: '肺活量', my: res.data.feiHl, avg: res.data.feiHlAvg, unit: 'ml'
+          name: '单手运球', my: res.data.dsDribbleScore, avg: 2, unit: ''
         },
         {
-          name: '跳绳', my: res.data.tiaos, avg: res.data.tiaosAvg, unit: '个/分钟'
+          name: '运球', my: res.data.batScore, avg: 2, unit: ''
         },
         {
-          name: '柔韧性', my: res.data.flexibility, avg: res.data.flexibilityAvg, unit: 'cm'
+          name: '传球', my: res.data.passScore, avg: 2, unit: ''
         },
         {
-         name: '灵敏性',  my: res.data.sensitiveAvg, avg: res.data.sensitives, unit: 'cm'
+          name: '投篮', my: res.data.shootScore, avg: 2, unit: ''
         }
       ]
     })
@@ -485,12 +325,11 @@ export default {
               }
             },
             indicator: [
-              {text: '身高', max: 10},
-              {text: 'BMI', max: 10},
-              {text: '肺活量', max: 20},
-              {text: '跳绳', max: 20},
-              {text: '柔韧性', max: 20},
-              {text: '灵敏性', max: 20}
+              {text: '滚球', max: 5},
+              {text: '单手运球', max: 5},
+              {text: '运球', max: 5},
+              {text: '传球', max: 5},
+              {text: '投篮', max: 5}
             ]
           }
         ],
@@ -587,7 +426,7 @@ export default {
     margin: 0 auto;
     .info-item {
       height: 1094px;
-      background-image: url('../../assets/primary/cover.jpg');
+      background-image: url('../../assets/primary/cover2.jpg');
       background-size: 100% 100%;
       position: relative;
       span {
@@ -619,7 +458,7 @@ export default {
       }
     }
     .part-item {
-      height: 1074px;
+      height: 1094px;
       padding-bottom: 20px;
       background-color: #f5f5f5;
       // margin-top: 20px;
@@ -740,11 +579,6 @@ export default {
               }
             }
           }
-          .height {
-            font-size: 16px;
-            color: #062f87;
-            padding: 0 0 10px 20px;
-          }
         }
         .box-title {
           padding: 10px 0 5px;
@@ -789,6 +623,15 @@ export default {
           span {
             font-size: 16px;
             color: #062f87;
+          }
+        }
+        .left1 {
+          position: relative;
+          img {
+            position: absolute;
+            width: 312px;
+            height: 134px;
+            left: -35px;
           }
         }
         .right {
@@ -895,6 +738,24 @@ export default {
               font-size: 16px;
               color: #062f87;
             }
+            .basket {
+              .lq1 {
+                width: 128px;
+                height: 160px;
+              }
+              .lq2 {
+                width: 274px;
+                height: 163px;
+              }
+              .lq3 {
+                width: 177px;
+                height: 162px;
+              }
+              .lq4 {
+                width: 234px;
+                height: 169px;
+              }
+            }
             .method {
               display: flex;
               flex-direction: column;
@@ -939,6 +800,17 @@ export default {
                 height: 75px;
               }
             }
+            .time {
+              width: 200px;
+              padding: 10px 0;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              img {
+                width: 46px;
+                height: 46px;
+              }
+            }
           }
           .cssd {
             font-size: 16px;
@@ -970,6 +842,45 @@ export default {
             line-height: 30px;
             text-align: center;
           }
+          .tushi {
+            padding: 5px 0;
+            border: 1px solid #062f87;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 10px 0;
+            .shiji {
+              display: flex;
+              align-items: center;
+              div {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: #fcd700;
+              }
+              span {
+                color: #fcd700;
+                font-size: 14px;
+                margin-left: 10px;
+              }
+            }
+            .pingjun {
+              display: flex;
+              align-items: center;
+              div {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: #062f87;
+              }
+              span {
+                color: #062f87;
+                font-size: 14px;
+                margin-left: 10px;
+              }
+            }
+          }
           .my-result {
             color: #062f87;
             font-size: 18px;
@@ -988,12 +899,23 @@ export default {
             margin: 0 auto;
           }
         }
+        .right1 {
+          position: relative;
+          img {
+            width: 330px;
+            height: 134px;
+            transform: rotate(180deg);
+            position: absolute;
+            right: -35px;
+            bottom: 60px;
+          }
+        }
       }
       .logo {
         width: 400px;
         height: 60px;
         display: block;
-        // margin: 50px auto 0;
+        margin: 50px auto 0;
       }
     }
   }

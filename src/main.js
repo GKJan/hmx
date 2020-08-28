@@ -18,7 +18,7 @@ router.beforeEach((to, from, next) => {
   // if (to.meta && to.meta.title) {
   //   document.title = to.meta.title
   // }
-  if (to.path === '/login' || to.path === '/wx' || to.path === '/wx/login') {
+  if (to.path === '/login' || to.path === '/wx' || to.path === '/wx/login' || to.path === '/wx/apply') {
     return next()
   }
   if (localStorage.getItem('userInfo')) {

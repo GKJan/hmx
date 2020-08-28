@@ -65,9 +65,9 @@
         </div>
         <div class="other">
           <div class="left">
-            <span>移动技术：{{ info.remove }}秒</span>
-            <span>原地双手胸前传接球：{{ info.pass }}个</span>
-            <span>原地单手肩上投篮：{{ info.shoot }}个</span>
+            <span>拍球：{{ info.racket }}个</span>
+            <span>传球：{{ info.pass }}个</span>
+            <span>投篮：{{ info.shoot }}个</span>
           </div>
           <div class="right">
             <div class="lf">
@@ -155,40 +155,7 @@
         <div class="title">2.体质测试</div>
         <div class="box-content">
           <div class="box-small">
-            <div class="small-title">项目1：肺活量</div>
-            <div class="tushi">
-              <div class="shiji">
-                <div></div>
-                <span>实际测量</span>
-              </div>
-              <div class="pingjun">
-                <div></div>
-                <span>全国平均值</span>
-              </div>
-            </div>
-            <div class="zhanshi">
-              <div class="feihuo">
-                <img src="../../assets/primary/fh1.png">
-                <span class="left">{{ info.feiHl }}ml</span>
-              </div>
-              <div class="feihuo">
-                <img src="../../assets/primary/fh2.png">
-                <span class="right">{{ info.feiHlAvg }}ml</span>
-              </div>
-            </div>
-            <div class="cssd">测试手段：肺活量测量仪</div>
-            <div class="text" v-if="info.feiHlScore < 12">
-              数据显示儿童肺活量值偏低，建议定期保证儿童进行一定的运动量活动，例如扩胸运动、篮球、游泳等活动锻炼，增强心肺功能及新陈代谢能力，建议定期进行肺活量测试。
-            </div>
-            <div class="text" v-else-if="info.feiHlScore >= 16">
-              数据显示儿童肺活量值偏于中等水平，建议定期保证儿童进行一定的运动量活动，例如扩胸运动、篮球、游泳等活动锻炼，保持继续增强心肺功能及新陈代谢能力。
-            </div>
-            <div class="text" v-else>
-              儿童肺活量处于比较好的水平，希望继续保持良好的运动习惯、运动和饮食习惯，增强运动能力，提高心肺功能。
-            </div>
-          </div>
-          <div class="box-small">
-            <div class="small-title">项目2：10X4折返跑</div>
+            <div class="small-title">项目1：下肢力量</div>
             <div class="tushi">
               <div class="shiji">
                 <div></div>
@@ -201,25 +168,60 @@
             </div>
             <div class="zhanshi">
               <div class="long">
-                <img v-if="info.sensitives > info.sensitiveAvg" src="../../assets/primary/long1.png" class="long1">
-                <img v-else-if="info.sensitives < info.sensitiveAvg" src="../../assets/primary/long1.png" class="long2">
+                <img v-if="info.legs > info.legsAvg" src="../../assets/primary/long1.png" class="long1">
+                <img v-else-if="info.legs < info.legsAvg" src="../../assets/primary/long1.png" class="long2">
                 <img v-else src="../../assets/primary/long1.png" class="long3">
-                <span class="left">{{ info.sensitives }}s</span>
-                <img v-if="info.sensitives > info.sensitiveAvg" src="../../assets/primary/long2.png" class="long2">
-                <img v-else-if="info.sensitives < info.sensitiveAvg" src="../../assets/primary/long2.png" class="long1">
+                <span class="left">{{ info.legs }}cm</span>
+                <img v-if="info.legs > info.legsAvg" src="../../assets/primary/long2.png" class="long2">
+                <img v-else-if="info.legs < info.legsAvg" src="../../assets/primary/long2.png" class="long1">
                 <img v-else src="../../assets/primary/long2.png" class="long3">
-                <span class="right">{{ info.sensitiveAvg }}s</span>
+                <span class="right">{{ info.legsAvg }}cm</span>
               </div>
             </div>
-            <div class="cssd">测试手段：站立式起跑</div>
-            <div class="text" v-if="info.sensitiveScore < 12">
-              数据显示儿童速度及综合身体素质偏低，建议定期保证幼儿进行下肢一定运动的量和强度，多进行爆发力的训练、灵敏协调能力的训练以及下肢力量跳跃的训练，定期进行10×4折返跑速度的的测试。
+            <div class="cssd">测试手段： 立定跳远</div>
+            <div class="text" v-if="info.legsScore < 6">
+              数据显示幼儿下肢力量偏低，建议定期保证幼儿一定运动的量和强度，多带动幼儿进行跑、跳等动作，玩多种下肢力量性游戏，定期进行下肢力量的测试。
             </div>
-            <div class="text" v-else-if="info.sensitiveScore >= 16">
-              幼儿处于下肢力量和速度素质发展比较好的水平，希望继续保持良好的运动习惯、开发多种下肢力量性和协调性练习，增强运动和把持良好的饮食习惯。
+            <div class="text" v-else-if="info.legsScore >= 8">
+              幼儿处于下肢力量发育比较好的水平，希望继续保持良好的运动习惯、运动和饮食习惯。
             </div>
             <div class="text" v-else>
-              数据显示儿童10×4折返跑的身体综合数据数据处于中等水平，建议定期保证幼儿进行下肢一定运动的量和强度，多进行爆发力的训练、灵敏协调能力的训练以及下肢力量跳跃的训练。
+              幼儿下肢力量数据处于中等水平，建议定期保证幼儿一定运动的量和强度，多带动幼儿进行跑、跳等动作，玩多种下肢力量性游戏进行下肢力量的提升。
+            </div>
+          </div>
+          <div class="box-small">
+            <div class="small-title">项目2：上肢力量</div>
+            <div class="tushi">
+              <div class="shiji">
+                <div></div>
+                <span>实际测量</span>
+              </div>
+              <div class="pingjun">
+                <div></div>
+                <span>全国平均值</span>
+              </div>
+            </div>
+            <div class="zhanshi">
+              <div class="long">
+                <img v-if="info.szLimb > info.limbAvg" src="../../assets/primary/long1.png" class="long1">
+                <img v-else-if="info.szLimb < info.limbAvg" src="../../assets/primary/long1.png" class="long2">
+                <img v-else src="../../assets/primary/long1.png" class="long3">
+                <span class="left">{{ info.szLimb }}m</span>
+                <img v-if="info.szLimb > info.limbAvg" src="../../assets/primary/long2.png" class="long2">
+                <img v-else-if="info.szLimb < info.limbAvg" src="../../assets/primary/long2.png" class="long1">
+                <img v-else src="../../assets/primary/long2.png" class="long3">
+                <span class="right">{{ info.limbAvg }}m</span>
+              </div>
+            </div>
+            <div class="cssd">测试手段： 网球掷投</div>
+            <div class="text" v-if="info.limbScore < 6">
+              数据显示幼儿上肢力量偏低，建议定期保证幼儿进行上肢一定运动的量和强度，鼓励爸爸多与幼儿进行力量性的互动，多带动幼儿进行投掷、吊爬、悬垂、推小车等多种上肢力量性游戏，定期进行上肢力量的测试。
+            </div>
+            <div class="text" v-else-if="info.limbScore >= 8">
+              幼儿处于上肢力量发育比较好的水平，希望继续保持良好的运动习惯、开发多种上肢力量性练习，运动和饮食习惯。
+            </div>
+            <div class="text" v-else>
+              幼儿上肢力量数据处于中等水平，建议定期保证幼儿进行上肢一定运动的量和强度，鼓励爸爸多与幼儿进行力量性的互动，多带动幼儿进行投掷、吊爬、悬垂等玩多种上肢力量性游戏。
             </div>
           </div>
         </div>
@@ -232,7 +234,71 @@
         </div>
         <div class="box-content">
           <div class="box-small">
-            <div class="small-title">项目3：坐位体前屈</div>
+            <div class="small-title">项目3：协调性</div>
+            <div class="tushi">
+              <div class="shiji">
+                <div></div>
+                <span>实际测量</span>
+              </div>
+              <div class="pingjun">
+                <div></div>
+                <span>全国平均值</span>
+              </div>
+            </div>
+            <div class="zhanshi">
+              <div class="time">
+                <img src="../../assets/primary/time1.png">
+                <span class="left">{{ info.coordinate }}s</span>
+                <img src="../../assets/primary/time2.png">
+                <span class="right">{{ info.coordinateAvg }}s</span>
+              </div>
+            </div>
+            <div class="cssd">测试手段：双脚连续跳</div>
+            <div class="text" v-if="info.coordinateScore < 6">
+              数据显示幼儿协调性数据偏低，建议定期保证幼儿进行上肢一定相关协调性开发的运动，例如打篮球、踢毽子、跳格子、跳绳等协调性的开发，并且定期进行协调性的测试。
+            </div>
+            <div class="text" v-else-if="info.coordinateScore >= 8">
+              幼儿处于协调性处于发展比较好的水平，希望继续保持良好的运动习惯、继续进行多种与协调性相关的游戏练习。
+            </div>
+            <div class="text" v-else>
+              幼儿协调性数据处于中等水平，建议继续保持幼儿相关的运动方式，有条件可以开展例如打篮球、踢毽子、跳格子、跳绳等协调性的运动。
+            </div>
+          </div>
+          <div class="box-small">
+            <div class="small-title">项目4：平衡性</div>
+            <div class="tushi">
+              <div class="shiji">
+                <div></div>
+                <span>实际测量</span>
+              </div>
+              <div class="pingjun">
+                <div></div>
+                <span>全国平均值</span>
+              </div>
+            </div>
+            <div class="zhanshi">
+              <div class="time">
+                <img src="../../assets/primary/time1.png">
+                <span class="left">{{ info.balance }}s</span>
+                <img src="../../assets/primary/time2.png">
+                <span class="right">{{ info.balanceAvg }}s</span>
+              </div>
+            </div>
+            <div class="cssd">测试手段：走平衡木</div>
+            <div class="text" v-if="info.balanceScore < 6">
+              数据显示幼儿平衡能力偏弱，建议定期保证幼儿进行一系列有关平衡性的运动，例如走独木庄、单脚站立、单脚跳、走台阶等平衡能力的游戏，并且定期进行平衡性的测试。
+            </div>
+            <div class="text" v-else-if="info.balanceScore >= 8">
+              幼儿处于平衡能力处于发展比较好的水平，希望继续保持良好的运动习惯、继续进行多种与平衡能力相关的游戏练习。
+            </div>
+            <div class="text" v-else>
+              幼儿平衡能力处于中等水平，建议继续保持幼儿相关的运动方式，有条件可以开展例如走独木庄、单脚站立、单脚跳、走台阶等平衡能力的游戏运动。
+            </div>
+          </div>
+        </div>
+        <div class="box-content">
+          <div class="box-small">
+            <div class="small-title">项目5：柔韧性</div>
             <div class="tushi">
               <div class="shiji">
                 <div></div>
@@ -255,19 +321,19 @@
                 <span class="right">{{ info.flexibilityAvg }}cm</span>
               </div>
             </div>
-            <div class="cssd">测试手段： 使用坐位体前屈测试仪</div>
-            <div class="text" v-if="info.flexibilityScore < 12">
-              数据显示儿童柔韧性偏弱，建议定期保证幼儿进行一系列有关柔韧性的运动，例如关节拉伸的节奏操、操节运动等音乐游戏，也可以游戏化的进行不负重的关节拉伸锻炼，并且定期进行平衡性的测试。
+            <div class="cssd">测试手段：坐位体前屈</div>
+            <div class="text" v-if="info.flexibilityScore < 6">
+              数据显示幼儿柔韧性偏弱，建议定期保证幼儿进行一系列有关柔韧性的运动，例如关节拉伸的节奏操、操节运动等音乐游戏，也可以游戏化的进行不负重的关节拉伸锻炼，并且定期进行平衡性的测试。
             </div>
-            <div class="text" v-else-if="info.flexibilityScore >= 16">
-              儿童柔韧性处于发展比较好的水平，希望继续保持良好的运动习惯、继续进行多种与柔韧能力相关的游戏练习。
+            <div class="text" v-else-if="info.flexibilityScore >= 8">
+              幼儿柔韧性处于发展比较好的水平，希望继续保持良好的运动习惯、继续进行多种与柔韧能力相关的游戏练习。
             </div>
             <div class="text" v-else>
-              儿童柔韧性处于中等水平，建议继续保持幼儿相关的运动方式，有条件可以开展例如关节拉伸的节奏操、操节运动等音乐游戏。
+              幼儿柔韧性处于中等水平，建议继续保持幼儿相关的运动方式，有条件可以开展例如关节拉伸的节奏操、操节运动等音乐游戏。
             </div>
           </div>
           <div class="box-small">
-            <div class="small-title">项目4：一分钟跳绳</div>
+            <div class="small-title">项目6：灵敏性</div>
             <div class="tushi">
               <div class="shiji">
                 <div></div>
@@ -279,72 +345,71 @@
               </div>
             </div>
             <div class="zhanshi">
-              <div class="feihuo">
-                <img src="../../assets/primary/ts1.png" class="ts">
-                <span class="left">{{ info.tiaos }}个</span>
-              </div>
-              <div class="feihuo">
-                <img src="../../assets/primary/ts2.png" class="ts">
-                <span class="right">{{ info.tiaosAvg }}个</span>
+              <div class="time">
+                <img src="../../assets/primary/time1.png">
+                <span class="left">{{ info.sensitives }}s</span>
+                <img src="../../assets/primary/time2.png">
+                <span class="right">{{ info.sensitiveAvg }}s</span>
               </div>
             </div>
-            <div class="text" v-if="info.tiaosScore < 12">
-              数据显示儿童速度及综合身体素质偏低，建议定期保证幼儿进行下肢一定运动的量和强度，同时可以进行双脚起跳的训练、摇绳续联及耐力性训练，提升跳绳的耐力和节奏性把控，定期进行跳绳的测试。
+            <div class="cssd">测试手段：走平衡木</div>
+            <div class="text" v-if="info.sensitiveScore < 6">
+              数据显示幼儿灵敏性偏弱，建议定期保证幼儿进行一系列有关灵敏性的运动，例如猫捉老鼠、跳格子、追逐类的游戏，并且定期进行灵敏性的测试。
             </div>
-            <div class="text" v-else-if="info.tiaosScore >= 16">
-              儿童处于身体综合素质发展比较好的水平，希望继续保持良好的运动习惯、开发多种下肢力量性和协调性练习，继续增强耐力训练和节奏感练习，增强运动和保持良好的饮食习惯。
+            <div class="text" v-else-if="info.sensitiveScore >= 8">
+              幼儿灵敏性处于发展比较好的水平，希望继续保持良好的运动习惯、继续进行多种与灵敏能力相关的游戏练习。
             </div>
             <div class="text" v-else>
-              数据显示儿童速度及综合身体素质偏低，建议定期保证幼儿进行下肢一定运动的量和强度，同时可以进行双脚起跳的训练、摇绳续联及耐力性训练，提升跳绳的耐力和节奏性把控。
+              幼儿灵敏性处于中等水平，建议继续保持幼儿进行一系列有关灵敏性的运动，例如猫捉老鼠、跳格子、追逐类的游戏。
             </div>
           </div>
         </div>
         <div class="title">篮球技能</div>
         <div class="box-content">
           <div class="box-mini">
-            <div class="mini-title">移动技术</div>
-            <div class="my-result">我的成绩：{{ info.remove }}个，评价：{{ removeScore  }}</div>
-            <div class="pingyu" v-if="info.removeScore < 12">
-              数据显示儿童移动技能偏弱，建议开展一系列移动步伐的训练，追逐类、比赛类都是移动性练习手段，并且定期为孩子测量步伐多方位移动性测试。
+            <div class="mini-title">项目一：拍球</div>
+            <div class="my-result">我的成绩：{{ info.racket }}个，评价：{{ racketScore  }}</div>
+            <div class="pingyu" v-if="info.racketScore < 24">
+              数据显示幼儿拍球能力偏弱，建议开展一系列拍球的游戏，追逐类、比赛类都是拍球熟练的一种练习手段，并且定期为孩子测量拍球的熟练程度测试。
             </div>
-            <div class="pingyu" v-else-if="info.removeScore >= 16">
-              儿童下肢移动处于发展比较好的水平，希望继续保持良好的运动习惯、继续进行多种与移动能力相关的游戏练习，注重多种形式的组合。
+            <div class="pingyu" v-else-if="info.racketScore >= 40">
+              幼儿拍球能力处于发展比较好的水平，希望继续保持良好的运动习惯、继续进行多种与拍球能力相关的游戏练习，注重多种形式的组合，开发非优势肢体的拍球能力。
             </div>
             <div class="pingyu" v-else>
-              数据显示儿童移动技能中等水平，建议可以继续开展一系列移动步伐的训练，追逐类、比赛类都是移动性练习手段的锻炼。
+              幼儿拍球能力处于中等水平，建议继续保持幼儿进行一系列拍球的游戏，追逐类、比赛类拍球游戏，注重多种形式的组合，开发非优势肢体的拍球能力。
             </div>
             <img src="../../assets/primary/lq.png">
           </div>
           <div class="box-mini">
-            <div class="mini-title">原地双手胸前传接球</div>
+            <div class="mini-title">项目二：传球</div>
             <div class="my-result">我的成绩：{{ info.pass }}个，评价：{{ passScore  }}</div>
-            <div class="pingyu" v-if="info.passScore < 24">
-              数据显示幼儿传球力量及精准度能力偏弱，建议开展一系列上肢力量传球准确度的游戏、亲子传球比远和比准活动都是传球命中的一种练习手段，并且定期为孩子测量传球精准度。
+            <div class="pingyu" v-if="info.passScore < 18">
+              数据显示幼儿传球命中精准度能力偏弱，建议开展一系列传球准确度的游戏，上肢力量锻炼、亲子传球比远和比准活动都是传球命中的一种练习手段，注重幼儿的上肢力量锻炼，并且定期为孩子测量传球精准度。
             </div>
-            <div class="pingyu" v-else-if="info.passScore >= 32">
-              儿童传球精准度能力及上肢力量处于发展比较好的水平，希望继续保持良好的传球锻炼，注重多种技能形式的组合。
+            <div class="pingyu" v-else-if="info.passScore >= 30">
+              幼儿传球精准度能力处于发展比较好的水平，希望继续保持良好的传球锻炼注重多种技能形式的组合。
             </div>
             <div class="pingyu" v-else>
-              儿童传球精准度能力级上肢力量处于中等水平，建议继续保持儿童一系列传球准确度及上肢力量的游戏，亲子传球比远和比准活动。
+              幼儿传球精准度能力能力处于中等水平，建议继续保持幼儿一系列传球准确度的游戏，上肢力量锻炼、亲子传球比远和比准活动，注重幼儿的上肢力量锻炼。
             </div>
             <img src="../../assets/primary/lq.png">
           </div>
           <div class="box-mini">
-            <div class="mini-title">原地单手肩上投篮</div>
+            <div class="mini-title">项目三：投篮</div>
             <div class="my-result">我的成绩：{{ info.shoot }}个，评价：{{ shootScore  }}</div>
-            <div class="pingyu" v-if="info.shootScore < 24">
-              数据显示儿童投篮精准度能力偏弱，建议开展一系列投掷准确度的游戏，投目标、上肢力量训练都是投篮精准度的一种练习手段，注重儿童的上肢力量锻炼，并且定期为孩子测量投篮精准度。
+            <div class="pingyu" v-if="info.shootScore < 18">
+              数据显示幼儿投篮精准度能力偏弱，建议开展一系列投掷准确度的游戏，投目标、亲子投篮活动都是投篮精准度的一种练习手段，注重幼儿的上肢力量锻炼，并且定期为孩子测量投篮精准度。
             </div>
-            <div class="pingyu" v-else-if="info.shootScore >= 32">
-              儿童投篮精准度能力处于发展比较好的水平，希望继续保持良好的投篮运动习惯注重多种技能形式的组合。
+            <div class="pingyu" v-else-if="info.shootScore >= 30">
+              幼儿投篮精准度能力处于发展比较好的水平，希望继续保持良好的投篮运动习惯注重多种技能形式的组合。
             </div>
             <div class="pingyu" v-else>
-              数据显示儿童投篮精准度能力偏弱，建议开展一系列投掷准确度的游戏，投目标、上肢力量训练都是投篮精准度的一种练习手段，注重儿童的上肢力量锻炼。
+              幼儿投篮精准度能力能力处于中等水平，建议继续保持幼儿进行一系列投掷准确度的游戏，投目标、亲子投篮活动都是投篮精准度的一种练习手段，注重幼儿的上肢力量锻炼。
             </div>
             <img src="../../assets/primary/lq.png">
           </div>
         </div>
-        <img src="../../assets/primary/text.png" class="logo">
+        <!-- <img src="../../assets/primary/text.png" class="logo"> -->
       </div>
       
 
@@ -394,44 +459,44 @@ export default {
     //   }
     // },
     pingyu () {
-      if (this.total >= 90) {
-        return '儿童身体素质发展水平非常优秀，心肺功能性及灵敏协调性以及柔韧及反应能力非常棒，希望继续保持锻炼，在空余时间可以陪孩子参加各种各样的体育游戏活动。'
+      if (this.total >= 85) {
+        return '幼儿身体素质发展水平处于优秀水平，但也要关注相关的指标数据的变化和提升，希望继续周期性有规划的保持锻炼，保证锻炼的科学性和有效性，在空余时间可以陪孩子参加各种各样的体育游戏活动。'
       }
-      if (this.total >= 79 && this.total <= 89) {
-        return '数据显示身体素质的综合性相对较好，但部分身体素质依然有较大的提升空间，希望继续保持孩子的运动，尽可能在额外的时间增加多项运动的练习，保护好孩子对运动的兴趣。'
+      if (this.total >= 75 && this.total <= 84) {
+        return '幼儿身体素质处于中等发展水平，数据显示身体素质的综合性相对较好，但部分身体素质依然有较大的提升空间，希望继续保持孩子的运动，尽可能在额外的时间增加多项运动的练习，保护好孩子对运动的兴趣。'
       }
-      if (this.total >= 61 && this.total <= 78) {
-        return '幼儿身体素质数据显示，身体素质发展整体处于中等稍微偏低水平，部分身体素质有较大的提升空间，特别关注分值比较低的身体素质指标，建议针对指标的数据，可以多让孩子参加各种各样的体育活动以弥补，提升其综合性的身体素质水平。'
+      if (this.total >= 65 && this.total <= 74) {
+        return '幼儿身体素质发展整体处于中等稍微偏低水平，孩子的部分身体素质有较大的提升空间，特别关注分值比较低的身体素质指标，建议针对指标的数据，可以多让孩子参加各种各样的体育活动以弥补，提升其综合性的身体素质水平。'
       }
-      if (this.total >= 42 && this.total <= 60) {
+      if (this.total >= 50 && this.total <= 64) {
         return '根据测试数据显示，孩子的身体素质存在一些小问题，我们建议可以进一步定期进行相关的身体素质的测试，并且有目的有计划的进行相关的运动安排，以期为了孩子身体素质的正常发展提供有效措施，为了孩子的健康，我们共同努力。'
       }
-      if (this.total < 42) {
-        return '根据测试数据显示，孩子的身体素质存在很大问题，我们建议进行相关专家咨询，并及时为孩子进行运动的处方、营养的搭配和合理的作息，并且建议定期到医院进行问诊和咨询，为了孩子的健康，我们共同努力。'
+      if (this.total < 49) {
+        return '根据测试数据显示，孩子的身体素质存在很大问题，我们建议进行相关专家咨询，并及时为孩子进行运动的处方、营养的搭配和合理的作息，，并且建议定期到医院进行问诊和咨询，为了孩子的健康，我们共同努力。'
       }
     },
-    removeScore () {
-      if (this.info.racketScore < 12) {
+    racketScore () {
+      if (this.info.racketScore < 24) {
         return '及格'
-      } else if (this.info.racketScore >= 16) {
+      } else if (this.info.racketScore >= 40) {
         return '优秀'
       } else {
         return '良好'
       }
     },
     passScore () {
-      if (this.info.passScore < 24) {
+      if (this.info.passScore < 18) {
         return '及格'
-      } else if (this.info.passScore >= 32) {
+      } else if (this.info.passScore >= 30) {
         return '优秀'
       } else {
         return '良好'
       }
     },
     shootScore () {
-      if (this.info.shootScore < 24) {
+      if (this.info.shootScore < 18) {
         return '及格'
-      } else if (this.info.shootScore >= 32) {
+      } else if (this.info.shootScore >= 30) {
         return '优秀'
       } else {
         return '良好'
@@ -440,11 +505,11 @@ export default {
   },
 
   created () {
-    this.api.getXxDetail({ id: this.$route.query.id }).then(res => {
+    this.api.getDetail({ id: this.$route.query.id }).then(res => {
       this.info = res.data
-      this.total = res.data.heightScore + res.data.ibmScore +  res.data.feiHlScore +  res.data.tiaosScore + res.data.flexibilityScore +  res.data.sensitiveScore
+      this.total = res.data.heightScore + res.data.ibmScore +  res.data.legsScore +  res.data.limbScore +  res.data.coordinateScore +  res.data.balanceScore +  res.data.flexibilityScore +  res.data.sensitiveScore
       // this.infoData = [res.data.height, res.data.ibm, res.data.legs, res.data.szLimb, res.data.coordinate, res.data.balance, res.data.flexibility, res.data.sensitives]
-      this.infoData = [res.data.heightScore, res.data.ibmScore, res.data.feiHlScore, res.data.tiaosScore, res.data.flexibilityScore, res.data.sensitiveScore]
+      this.infoData = [res.data.heightScore, res.data.ibmScore, res.data.legsScore, res.data.limbScore, res.data.coordinateScore, res.data.balanceScore, res.data.flexibilityScore, res.data.sensitiveScore]
       this.compareData = [
         {
           name: '身高', my: res.data.height, avg: res.data.hightAvg, unit: 'cm'
@@ -453,16 +518,22 @@ export default {
           name: 'BMI', my: res.data.ibm, avg: res.data.bmiAvg, unit: ''
         },
         {
-          name: '肺活量', my: res.data.feiHl, avg: res.data.feiHlAvg, unit: 'ml'
+          name: '下肢力量', my: res.data.legs, avg: res.data.legsAvg, unit: 'cm'
         },
         {
-          name: '跳绳', my: res.data.tiaos, avg: res.data.tiaosAvg, unit: '个/分钟'
+          name: '上肢力量', my: res.data.szLimb, avg: res.data.limbAvg, unit: 'm'
+        },
+        {
+          name: '协调性', my: res.data.coordinate, avg: res.data.coordinateAvg, unit: 's'
+        },
+        {
+          name: '平衡性', my: res.data.balance, avg: res.data.balanceAvg, unit: 's'
         },
         {
           name: '柔韧性', my: res.data.flexibility, avg: res.data.flexibilityAvg, unit: 'cm'
         },
         {
-         name: '灵敏性',  my: res.data.sensitiveAvg, avg: res.data.sensitives, unit: 'cm'
+         name: '灵敏性',  my: res.data.sensitives, avg: res.data.sensitiveAvg, unit: 's'
         }
       ]
     })
@@ -485,12 +556,14 @@ export default {
               }
             },
             indicator: [
-              {text: '身高', max: 10},
-              {text: 'BMI', max: 10},
-              {text: '肺活量', max: 20},
-              {text: '跳绳', max: 20},
-              {text: '柔韧性', max: 20},
-              {text: '灵敏性', max: 20}
+              {text: '身高', max: 20},
+              {text: 'BMI', max: 20},
+              {text: '下肢力量', max: 10},
+              {text: '上肢力量', max: 10},
+              {text: '协调性', max: 10},
+              {text: '平衡性', max: 10},
+              {text: '柔韧性', max: 10},
+              {text: '灵敏性', max: 10}
             ]
           }
         ],
@@ -582,11 +655,11 @@ export default {
   .buttons {
     position: fixed;
   }
-  .wrapper { // *1.3
-    width: 770px;
+  .wrapper { // *1.4
+    width: 829px;
     margin: 0 auto;
     .info-item {
-      height: 1094px;
+      height: 1178px;
       background-image: url('../../assets/primary/cover.jpg');
       background-size: 100% 100%;
       position: relative;
@@ -597,29 +670,29 @@ export default {
         position: absolute;
       }
       .text1 {
-        bottom: 520px;
-        left: 230px;
-      }
-      .text2 {
-        bottom: 520px;
-        left: 560px;
-      }
-      .text3 {
-        bottom: 445px;
+        bottom: 555px;
         left: 260px;
       }
+      .text2 {
+        bottom: 555px;
+        left: 600px;
+      }
+      .text3 {
+        bottom: 480px;
+        left: 285px;
+      }
       .text4 {
-        bottom: 375px;
-        left: 250px;
+        bottom: 405px;
+        left: 275px;
         font-size: 30px;
       }
       .text5 {
-        bottom: 375px;
-        left: 600px;
+        bottom: 405px;
+        left: 630px;
       }
     }
     .part-item {
-      height: 1074px;
+      height: 1158px;
       padding-bottom: 20px;
       background-color: #f5f5f5;
       // margin-top: 20px;
@@ -628,7 +701,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       .header {
-        width: 740px;
+        width: 799px;
         padding: 10px 15px;
         border-bottom: 3px solid #062f87;
         display: flex;
@@ -939,6 +1012,17 @@ export default {
                 height: 75px;
               }
             }
+            .time {
+              width: 200px;
+              padding: 10px 0;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              img {
+                width: 46px;
+                height: 46px;
+              }
+            }
           }
           .cssd {
             font-size: 16px;
@@ -993,7 +1077,7 @@ export default {
         width: 400px;
         height: 60px;
         display: block;
-        // margin: 50px auto 0;
+        margin: 50px auto 0;
       }
     }
   }

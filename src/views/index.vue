@@ -291,9 +291,9 @@ export default {
     for (let item of this.menulist) {
       routes.push(item.path)
     }
-    if (!routes.includes(this.$route.path)) {
-      return this.$router.go(-1)
-    }
+    // if (!routes.includes(this.$route.path)) {
+    //   return this.$router.go(-1)
+    // }
   },
 
   methods: {

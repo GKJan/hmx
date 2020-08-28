@@ -6,6 +6,18 @@ export default [
     meta: { title: '报告详情' }
   },
   {
+    path: '/wx/primaryReport',
+    name: 'WXPrimaryReport',
+    component: () => import('@/views/wx/primary-report.vue'),
+    meta: { title: '报告详情' }
+  },
+  {
+    path: '/wx/basketReport',
+    name: 'WXBasketReport',
+    component: () => import('@/views/wx/basket-report.vue'),
+    meta: { title: '报告详情' }
+  },
+  {
     path: '/wx/login',
     name: 'WxLogin',
     component: () => import('@/views/wx/login.vue'),

@@ -37,7 +37,7 @@
       </template>
     </div>
 
-    <div class="img-wrapper2" id="wrapper" v-else>
+    <div class="img-wrapper2" id="wrapper" v-else-if="type === 3">
       <img :src="cover" class="base">
       <img :src="photoPath" class="photo">
       <div class="name">{{ detail.name }}</div>
@@ -45,6 +45,10 @@
         <span>{{ time.year }}</span>
         <span>{{ time.month }}</span>
       </div>
+    </div>
+
+    <div class="img-wrapper3" v-else>
+      <img :src="cover" class="base">
     </div>
   </div>
 </template>
@@ -74,28 +78,25 @@ export default {
         if (res.success) {
           if (res.data.categoryName === '星伙伴教练员') {
             this.cover = require('../../assets/img/星伙伴教练员.jpg')
-          }
-          if (res.data.categoryName === '俱乐部星教练') {
+          } else if (res.data.categoryName === '俱乐部星教练') {
             this.cover = require('../../assets/img/俱乐部星教练.jpg')
-          }
-          if (res.data.categoryName === '星宝贝督导师') {
+          } else if (res.data.categoryName === '星宝贝督导师') {
             this.cover = require('../../assets/img/星宝贝督导师.jpg')
-          }
-          if (res.data.categoryName === '星伙伴(代理)') {
+          } else if (res.data.categoryName === '星伙伴(代理)') {
             this.cover = require('../../assets/img/星伙伴.jpg')
             this.type = 2
-          }
-          if (res.data.categoryName === '初级教练') {
+          } else if (res.data.categoryName === '初级教练') {
             this.cover = require('../../assets/img/初级教练.jpg')
             this.type = 3
-          }
-          if (res.data.categoryName === '初级校长') {
+          } else if (res.data.categoryName === '初级校长') {
             this.cover = require('../../assets/img/初级校长.jpg')
             this.type = 3
-          }
-          if (res.data.categoryName === '初级课程顾问') {
+          } else if (res.data.categoryName === '初级课程顾问') {
             this.cover = require('../../assets/img/初级课程顾问.jpg')
             this.type = 3
+          } else {
+            this.cover = process.env.VUE_APP_baseApi + '/upload/loadImgDataByFileName?fileName=' + res.data.path
+            this.type = 4
           }
           this.detail = res.data
           this.time = {
@@ -280,7 +281,7 @@ export default {
     .name {
       position: absolute;
       bottom: 255px;
-      left: 58px;
+      left: 55px;
       font-size: 16px;
       font-weight: 600;
     }
@@ -294,6 +295,13 @@ export default {
       left: 112px;
       font-size: 14px;
       font-weight: 600;
+    }
+  }
+  .img-wrapper3 {
+    margin-left: 20px;
+    position: relative;
+    .base {
+      max-width: 850px;
     }
   }
 }

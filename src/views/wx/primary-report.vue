@@ -1,10 +1,5 @@
 <template>
   <div class="report-container">
-    <div class="buttons">
-      <el-button type="info" icon="el-icon-refresh-left" @click="$router.go(-1)">返回</el-button>
-      <div style="margin: 10px 0;"></div>
-      <el-button :loading="btnLoading" type="success" icon="el-icon-takeaway-box" @click="handlePrint">导出PDF</el-button>
-    </div>
     <div class="wrapper" id="content">
       <div class="info-item">
         <span class="text1">{{ info.name }}</span>
@@ -65,13 +60,13 @@
         </div>
         <div class="other">
           <div class="left">
-            <span>移动技术：{{ info.remove }}秒</span>
-            <span>原地双手胸前传接球：{{ info.pass }}个</span>
-            <span>原地单手肩上投篮：{{ info.shoot }}个</span>
+            <span>移动：{{ info.remove }}秒</span>
+            <span>传接球：{{ info.pass }}个</span>
+            <span>投篮：{{ info.shoot }}个</span>
           </div>
           <div class="right">
             <div class="lf">
-              <span>八项体质总成绩：</span>
+              <span>八项总成绩：</span>
               <span>(满分：100分)</span>
             </div>
             <div class="md">{{ total }}</div>
@@ -302,7 +297,7 @@
         <div class="title">篮球技能</div>
         <div class="box-content">
           <div class="box-mini">
-            <div class="mini-title">移动技术</div>
+            <div class="mini-title">移动</div>
             <div class="my-result">我的成绩：{{ info.remove }}个，评价：{{ removeScore  }}</div>
             <div class="pingyu" v-if="info.removeScore < 12">
               数据显示儿童移动技能偏弱，建议开展一系列移动步伐的训练，追逐类、比赛类都是移动性练习手段，并且定期为孩子测量步伐多方位移动性测试。
@@ -316,7 +311,7 @@
             <img src="../../assets/primary/lq.png">
           </div>
           <div class="box-mini">
-            <div class="mini-title">原地双手胸前传接球</div>
+            <div class="mini-title">传接球</div>
             <div class="my-result">我的成绩：{{ info.pass }}个，评价：{{ passScore  }}</div>
             <div class="pingyu" v-if="info.passScore < 24">
               数据显示幼儿传球力量及精准度能力偏弱，建议开展一系列上肢力量传球准确度的游戏、亲子传球比远和比准活动都是传球命中的一种练习手段，并且定期为孩子测量传球精准度。
@@ -330,7 +325,7 @@
             <img src="../../assets/primary/lq.png">
           </div>
           <div class="box-mini">
-            <div class="mini-title">原地单手肩上投篮</div>
+            <div class="mini-title">投篮</div>
             <div class="my-result">我的成绩：{{ info.shoot }}个，评价：{{ shootScore  }}</div>
             <div class="pingyu" v-if="info.shootScore < 24">
               数据显示儿童投篮精准度能力偏弱，建议开展一系列投掷准确度的游戏，投目标、上肢力量训练都是投篮精准度的一种练习手段，注重儿童的上肢力量锻炼，并且定期为孩子测量投篮精准度。
@@ -578,91 +573,87 @@ export default {
 <style lang="scss" scoped>
 .report-container {
   background-color: #fff;
-  padding: 10px;
-  .buttons {
-    position: fixed;
-  }
-  .wrapper { // *1.3
-    width: 770px;
-    margin: 0 auto;
+  .wrapper {
+    width: 100%;
     .info-item {
-      height: 1094px;
+      height: 142vw;
       background-image: url('../../assets/primary/cover.jpg');
       background-size: 100% 100%;
       position: relative;
       span {
-        font-size: 32px;
+        font-size: 16px;
         // font-weight: 600;
         color: #304890;
         position: absolute;
       }
       .text1 {
-        bottom: 520px;
-        left: 230px;
+        bottom: 67vw;
+        left: 32vw;
       }
       .text2 {
-        bottom: 520px;
-        left: 560px;
+        bottom: 67vw;
+        left: 72vw;
       }
       .text3 {
-        bottom: 445px;
-        left: 260px;
+        bottom: 57vw;
+        left: 34vw;
       }
       .text4 {
-        bottom: 375px;
-        left: 250px;
-        font-size: 30px;
+        bottom: 49vw;
+        left: 32vw;
+        font-size: 14px;
       }
       .text5 {
-        bottom: 375px;
-        left: 600px;
+        bottom: 49vw;
+        left: 78vw;
       }
     }
     .part-item {
-      height: 1074px;
+      height: 880px;
       padding-bottom: 20px;
       background-color: #f5f5f5;
-      // margin-top: 20px;
+      margin-top: 10px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
       .header {
-        width: 740px;
-        padding: 10px 15px;
-        border-bottom: 3px solid #062f87;
+        width: 96%;
+        padding: 10px 2%;
+        border-bottom: 2px solid #062f87;
         display: flex;
         align-items: center;
         justify-content: space-between;
         .left {
-          width: 172px;
-          height: 20px;
+          width: 110px;
+          height: 14px;
         }
         .right {
-          width: 212px;
-          height: 20px;
+          width: 140px;
+          height: 14px;
         }
       }
       .title {
-        width: 370px;
-        height: 80px;
+        width: 280px;
+        height: 60px;
         // margin: 20px auto 0;
         position: relative;
         background-image: url('../../assets/primary/box.png');
         background-size: 100% 100%;
-        font-size: 48px;
+        font-size: 28px;
         font-weight: 600;
         color: #062f87;
-        line-height: 80px;
+        line-height: 65px;
         text-align: center;
       }
       .box {
-        width: 680px;
+        width: 340px;
         // margin: 20px auto;
-        padding: 10px;
-        border: 4px solid #062f87;
-        border-radius: 0 0 20px 20px;
+        padding: 5px;
+        border: 3px solid #062f87;
+        border-radius: 0 0 10px 10px;
         .tushi {
+          margin-top: 10px;
           padding: 5px 0;
           border: 2px solid #062f87;
           border-radius: 20px;
@@ -673,13 +664,13 @@ export default {
             display: flex;
             align-items: center;
             div {
-              width: 160px;
-              height: 8px;
+              width: 70px;
+              height: 6px;
               background-color: #fcd700;
             }
             span {
               color: #fcd700;
-              font-size: 18px;
+              font-size: 15px;
               margin-left: 10px;
             }
           }
@@ -687,63 +678,64 @@ export default {
             display: flex;
             align-items: center;
             div {
-              width: 160px;
-              height: 8px;
+              width: 70px;
+              height: 6px;
               background-color: #062f87;
             }
             span {
               color: #062f87;
-              font-size: 18px;
+              font-size: 15px;
               margin-left: 10px;
             }
           }
         }
         .content {
-          padding: 0 20px 0 0;
+          padding: 0 15px 0 0;
           display: flex;
           justify-content: space-between;
           flex-wrap: wrap;
-          margin-top: 15px;
+          margin-top: 10px;
           .item {
-            width: 300px;
-            margin-bottom: 20px;
+            width: 160px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             span {
-              width: 140px;
-              font-size: 16px;
+              width: 80px;
+              font-size: 14px;
               color: #062f87;
               text-align: right;
+              flex-shrink: 0;
             }
             .compare {
               margin-left: 10px;
               .top1 {
-                width: 120px;
+                width: 60px;
                 height: 7px;
                 background-color: #fcd700;
               }
               .top2 {
-                width: 135px;
+                width: 70px;
                 height: 7px;
                 background-color: #fcd700;
               }
               .top3 {
-                width: 150px;
+                width: 80px;
                 height: 7px;
                 background-color: #fcd700;
               }
               .bottom {
-                width: 135px;
+                width: 70px;
                 height: 7px;
                 background-color: #062f87;
-                margin-top: 5px;
+                margin-top: 3px;
               }
             }
           }
           .height {
-            font-size: 16px;
+            font-size: 14px;
             color: #062f87;
-            padding: 0 0 10px 20px;
+            padding-left: 20px;
           }
         }
         .box-title {
@@ -751,93 +743,265 @@ export default {
           text-align: center;
           background-color: #062f87;
           img {
-            width: 530px;
-            height: 32px;
+            width: 270px;
+            height: 16px;
           }
         }
         .result-content {
           display: flex;
-          justify-content: space-between;
+          flex-direction: column;
+          align-items: center;
+          // justify-content: space-between;
           #chart {
-            width: 380px;
-            height: 380px;
+            width: 340px;
+            height: 340px;
           }
           .pingyu {
-            width: 300px;
-            padding-top: 25px;
-            font-size: 16px;
+            // width: 100px;
+            margin-top: -25px;
+            font-size: 14px;
             color: #062f87;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-indent: 2em;
           }
         }
       }
       .other {
-        width: 700px;
+        width: 360px;
         // margin: 20px auto 0;
         display: flex;
         justify-content: space-between;
         .left {
-          width: 300px;
-          height: 130px;
+          width: 130px;
+          height: 70px;
           padding: 0 10px;
-          border: 4px solid #062f87;
-          border-radius: 0 0 20px 20px;
+          border: 3px solid #062f87;
+          border-radius: 0 0 10px 10px;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
           span {
-            font-size: 16px;
+            font-size: 15px;
             color: #062f87;
           }
         }
+        .left1 {
+          position: relative;
+          img {
+            position: absolute;
+            width: 145px;
+            height: 60px;
+            left: 0;
+            top: 10px;
+          }
+        }
         .right {
-          width: 320px;
-          height: 130px;
-          padding: 0 10px;
-          border: 4px solid #f0a818;
+          width: 190px;
+          height: 70px;
+          // padding: 0 10px;
+          border: 3px solid #f0a818;
           background-color: #f0a818;
           display: flex;
           align-items: center;
           justify-content: space-around;
           color: #fff;
-          border-radius: 0 0 20px 20px;
+          border-radius: 0 0 10px 10px;
           .lf {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             display: flex;
             flex-direction: column;
           }
           .md {
-            font-size: 88px;
+            font-size: 38px;
             font-weight: bold;
           }
           .rg {
-            font-size: 26px;
+            font-size: 14px;
             font-weight: 600;
           }
         }
       }
       .box-content {
-        width: 700px;
+        width: 350px;
         // margin: 20px auto 0;
         display: flex;
         justify-content: space-between;
         .box-small {
-          width: 320px;
-          padding: 8px;
-          border: 3px solid #062f87;
-          border-radius: 0 0 20px 20px;
+          width: 160px;
+          padding: 4px;
+          border: 2px solid #062f87;
+          border-radius: 0 0 10px 10px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           .small-title {
-            height: 35px;
+            height: 20px;
             background-color: #062f87;
-            font-size: 20px;
+            font-size: 12px;
             font-weight: 600;
             color: #fcd700;
-            line-height: 35px;
+            line-height: 20px;
+            text-align: center;
+          }
+          .tushi {
+            padding: 3px 15px;
+            border: 1px solid #062f87;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            // justify-content: space-around;
+            margin: 10px 0;
+            .shiji {
+              display: flex;
+              align-items: center;
+              div {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: #fcd700;
+              }
+              span {
+                color: #fcd700;
+                font-size: 12px;
+                margin-left: 10px;
+              }
+            }
+            .pingjun {
+              display: flex;
+              align-items: center;
+              div {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: #062f87;
+              }
+              span {
+                color: #062f87;
+                font-size: 12px;
+                margin-left: 10px;
+              }
+            }
+          }
+          .zhanshi {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            .left {
+              font-size: 12px;
+              color: #fcd700;
+            }
+            img {
+              width: 70px;
+              height: 95px;
+            }
+            .right {
+              font-size: 12px;
+              color: #062f87;
+            }
+            .basket {
+              .lq1 {
+                width: 75px;
+                height: 95px;
+              }
+              .lq2 {
+                width: 145px;
+                height: 95px;
+              }
+              .lq3 {
+                width: 95px;
+                height: 95px;
+              }
+              .lq4 {
+                width: 145px;
+                height: 95px;
+              }
+            }
+            .method {
+              display: flex;
+              flex-direction: column;
+              span {
+                font-size: 14px;
+                font-weight: 600;
+                color: #062f87;
+              }
+              img {
+                width: 140px;
+                height: 75px;
+                margin-top: 10px;
+              }
+            }
+            .feihuo {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              img {
+                width: 60px;
+                height: 55px;
+              }
+              .ts {
+                width: 60px;
+                height: 90px;
+              }
+            }
+            .long {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              .long1 {
+                width: 130px;
+                height: 40px;
+              }
+              .long2 {
+                width: 110px;
+                height: 40px;
+              }
+              .long3 {
+                width: 120px;
+                height: 40px;
+              }
+            }
+            .time {
+              width: 100px;
+              padding: 10px 0;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              img {
+                width: 23px;
+                height: 23px;
+              }
+            }
+          }
+          .cssd {
+            font-size: 12px;
+            font-weight: 600;
+            color: #062f87;
+            text-align: center;
+            // margin-top: 10px;
+          }
+          .text {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #062f87;
+          }
+        }
+        .box-mini {
+          width: 106px;
+          padding: 3px;
+          border: 2px solid #062f87;
+          border-radius: 0 0 10px 10px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .mini-title {
+            height: 20px;
+            background-color: #062f87;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fcd700;
+            line-height: 20px;
             text-align: center;
           }
           .tushi {
@@ -879,113 +1043,33 @@ export default {
               }
             }
           }
-          .zhanshi {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            .left {
-              font-size: 16px;
-              color: #fcd700;
-            }
-            img {
-              width: 140px;
-              height: 190px;
-            }
-            .right {
-              font-size: 16px;
-              color: #062f87;
-            }
-            .method {
-              display: flex;
-              flex-direction: column;
-              span {
-                font-size: 16px;
-                font-weight: 600;
-                color: #062f87;
-              }
-              img {
-                width: 185px;
-                height: 100px;
-                margin-top: 10px;
-              }
-            }
-            .feihuo {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              img {
-                width: 120px;
-                height: 105px;
-              }
-              .ts {
-                width: 115px;
-                height: 190px;
-              }
-            }
-            .long {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              .long1 {
-                width: 260px;
-                height: 75px;
-              }
-              .long2 {
-                width: 220px;
-                height: 75px;
-              }
-              .long3 {
-                width: 240px;
-                height: 75px;
-              }
-            }
-          }
-          .cssd {
-            font-size: 16px;
-            font-weight: 600;
-            color: #062f87;
-            text-align: center;
-            // margin-top: 10px;
-          }
-          .text {
-            margin-top: 10px;
-            font-size: 15px;
-            color: #062f87;
-          }
-        }
-        .box-mini {
-          width: 212px;
-          padding: 5px;
-          border: 3px solid #062f87;
-          border-radius: 0 0 20px 20px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .mini-title {
-            height: 30px;
-            background-color: #062f87;
-            font-size: 18px;
-            font-weight: 600;
-            color: #fcd700;
-            line-height: 30px;
-            text-align: center;
-          }
           .my-result {
             color: #062f87;
-            font-size: 18px;
+            font-size: 12px;
             font-weight: 600;
             margin-top: 10px;
           }
           .pingyu {
             color: #062f87;
-            font-size: 16px;
+            font-size: 12px;
             margin: 10px 0;
           }
           img {
-            width: 160px;
-            height: 55px;
+            width: 80px;
+            height: 28px;
             display: block;
             margin: 0 auto;
+          }
+        }
+        .right1 {
+          position: relative;
+          img {
+            width: 160px;
+            height: 75px;
+            transform: rotate(180deg);
+            position: absolute;
+            right: 0;
+            bottom: 60px;
           }
         }
       }
@@ -993,7 +1077,7 @@ export default {
         width: 400px;
         height: 60px;
         display: block;
-        // margin: 50px auto 0;
+        margin: 50px auto 0;
       }
     }
   }

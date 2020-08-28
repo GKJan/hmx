@@ -38,8 +38,14 @@ export default [
   {
     path: '/report/detail',
     name: 'ReportDetail',
-    component: () => import('@/views/detail/detail.vue'),
+    component: () => import('@/views/detail/new-detail.vue'),
     meta: { title: '报告详情(幼儿园)' }
+  },
+  {
+    path: '/report/basketDetail',
+    name: 'ReportBasketDetail',
+    component: () => import('@/views/detail/basket-detail.vue'),
+    meta: { title: '报告详情(篮球)' }
   },
   {
     path: '/user',

@@ -804,16 +804,16 @@ export default {
           my: res.data.szLimb, avg: res.data.limbAvg
         },
         {
-          my: res.data.coordinateAvg, avg: res.data.coordinate
+          my: res.data.coordinate, avg: res.data.coordinateAvg
         },
         {
-          my: res.data.balanceAvg, avg: res.data.balance
+          my: res.data.balance, avg: res.data.balanceAvg
         },
         {
           my: res.data.flexibility, avg: res.data.flexibilityAvg
         },
         {
-          my: res.data.sensitiveAvg, avg: res.data.sensitives
+          my: res.data.sensitives, avg: res.data.sensitiveAvg
         }
       ]
     })

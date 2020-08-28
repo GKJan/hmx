@@ -442,7 +442,7 @@ export default {
     },
 
     handleReport () {
-      this.$router.push({ path: '/report/primaryDetail', query: { id: this.selectList1[0].id }})
+      this.$router.push({ path: '/report/basketDetail', query: { id: this.selectList1[0].id }})
     },
 
     handleDown () {

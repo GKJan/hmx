@@ -45,13 +45,13 @@
     </table-panel>
     <el-dialog width="500px" :title="action === 'add' ? '新增分类' : '编辑分类'" :visible.sync="dialog">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="分类名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入分类名称"></el-input>
-        </el-form-item>
         <el-form-item label="证书类型" prop="type">
           <el-select v-model="form.type" placeholder="请选择证书类型">
             <el-option v-for="item in typeList" :key="item.id" :label="item.dictValue" :value="item.dictValue"></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="分类名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入分类名称"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
