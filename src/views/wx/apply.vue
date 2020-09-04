@@ -85,7 +85,7 @@ export default {
 
   methods: {
     getCategory () {
-      this.api.getzsCategoryPage({ size: 20, type: this.form.type }).then(res => {
+      this.api.getzsCategoryWxPage({ size: 20, type: this.form.type }).then(res => {
         if (res.success) {
           this.categoryList = res.data.records
         }
@@ -93,7 +93,7 @@ export default {
     },
 
     getArea () {
-      this.api.getRegionList().then(res => {
+      this.api.getWxRegionList().then(res => {
         if (res.success) {
           this.areaList = res.data
         }

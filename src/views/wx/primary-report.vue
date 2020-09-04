@@ -963,7 +963,7 @@ export default {
               }
             }
             .time {
-              width: 100px;
+              width: 110px;
               padding: 10px 0;
               display: flex;
               align-items: center;

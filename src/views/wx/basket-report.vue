@@ -57,7 +57,7 @@
           </div>
           <div class="result-content">
             <div id="chart"></div>
-            <div class="pingyu">{{ pingyu }}</div>
+            <!-- <div class="pingyu">{{ pingyu }}</div> -->
           </div>
         </div>
         <div class="other">
@@ -80,7 +80,7 @@
         </div>
       </div>
 
-      <div class="part-item" style="height: 750px;">
+      <div class="part-item">
         <div class="header">
           <img src="../../assets/primary/title.png" class="left">
           <img src="../../assets/primary/web.png" class="right">
@@ -126,7 +126,7 @@
         </div>
         <div class="box-content">
           <div class="box-small">
-            <div class="small-title">项目3：拍球/运球</div>
+            <div class="small-title">项目3：拍球,直线/障碍运球</div>
             <div class="tushi">
               <div class="shiji">
                 <div></div>
@@ -144,7 +144,7 @@
             </div>
           </div>
           <div class="box-small">
-            <div class="small-title">项目4：传球进圈</div>
+            <div class="small-title">项目4：抛/传球进圈</div>
             <div class="tushi">
               <div class="shiji">
                 <div></div>
@@ -293,13 +293,13 @@ export default {
           name: '滚球', my: res.data.rallScore, avg: 2, unit: ''
         },
         {
-          name: '单手运球', my: res.data.dsDribbleScore, avg: 2, unit: ''
+          name: '原地单手运球', my: res.data.dsDribbleScore, avg: 2, unit: ''
         },
         {
-          name: '运球', my: res.data.batScore, avg: 2, unit: ''
+          name: '拍球,直线/障碍运球', my: res.data.batScore, avg: 2, unit: ''
         },
         {
-          name: '传球', my: res.data.passScore, avg: 2, unit: ''
+          name: '抛/传球', my: res.data.passScore, avg: 2, unit: ''
         },
         {
           name: '投篮', my: res.data.shootScore, avg: 2, unit: ''
@@ -326,9 +326,9 @@ export default {
             },
             indicator: [
               {text: '滚球', max: 5},
-              {text: '单手运球', max: 5},
-              {text: '运球', max: 5},
-              {text: '传球', max: 5},
+              {text: '原地单手运球', max: 5},
+              {text: '拍球,直线/障碍运球', max: 5},
+              {text: '抛/传球', max: 5},
               {text: '投篮', max: 5}
             ]
           }
@@ -453,7 +453,7 @@ export default {
       }
     }
     .part-item {
-      height: 880px;
+      height: 780px;
       padding-bottom: 20px;
       background-color: #f5f5f5;
       margin-top: 10px;
@@ -594,6 +594,7 @@ export default {
           #chart {
             width: 340px;
             height: 340px;
+            margin: -20px auto -40px;
           }
           .pingyu {
             // width: 100px;

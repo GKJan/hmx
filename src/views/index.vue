@@ -3,7 +3,7 @@
     <div class="layout-header">
       <div class="header-left">
         <img src="../assets/img/logo.png">
-        <span>华蒙星体测系统</span>
+        <span>华蒙星业务系统</span>
       </div>
       <!-- {{ userInfo.areaName }} -->
       <div class="header-right">
@@ -72,215 +72,355 @@ export default {
   created () {
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
     this.form.id = this.userInfo.id
-    if (this.userInfo.role === 1) { // 1管理员2录入员3园区管理员4 师资部 5总部管理员
+    if (this.userInfo.role === 1) { // 1总管理员2录入员3园区管理员4师资部5证书主管6体测主管
       this.menulist = [
         {
           id: '1',
-          name: '园区管理',
-          path: '/park',
-          children: [],
-          icon: 'icon-yuanqu'
-        },
-        {
-          id: '2',
-          name: '场次管理',
-          path: '/session',
-          children: [],
-          icon: 'icon-changci'
-        },
-        {
-          id: '3',
-          name: '信息报告(幼儿园)',
-          path: '/report',
-          children: [],
-          icon: 'icon-baogao'
-        },
-        {
-          id: '7',
-          name: '信息报告(小学)',
-          path: '/primaryReport',
-          children: [],
-          icon: 'icon-baogao'
-        },
-        {
-          id: '9',
-          name: '信息报告(篮球)',
-          path: '/basketReport',
-          children: [],
-          icon: 'icon-baogao'
-        },
-        {
-          id: '4',
-          name: '用户管理',
-          path: '/user',
-          children: [],
-          icon: 'icon-user'
-        },
-        {
-          id: '5',
-          name: '日志管理',
-          path: '/log',
-          children: [],
-          icon: 'icon-rizhi'
-        },
-        {
-          id: '10',
-          name: '证书管理',
-          path: '/cred',
-          children: [],
-          icon: 'icon-zhengshu'
-        },
-        {
-          id: '11',
-          name: '证书审核管理',
-          path: '/audit',
-          children: [],
-          icon: 'icon-zhengshu'
-        },
-        {
-          id: '6',
-          name: '证书分类管理',
-          path: '/cred/class',
-          children: [],
-          icon: 'icon-zhengshu'
+          name: '体测业务',
+          path: '',
+          children: [
+            {
+              id: '2',
+              name: '园区管理',
+              path: '/park',
+              children: [],
+              icon: 'icon-yuanqu'
+            },
+            {
+              id: '3',
+              name: '场次管理',
+              path: '/session',
+              children: [],
+              icon: 'icon-changci'
+            },
+            {
+              id: '4',
+              name: '体测报告(幼儿园)',
+              path: '/report',
+              children: [],
+              icon: 'icon-baogao'
+            },
+            {
+              id: '5',
+              name: '体测报告(小学)',
+              path: '/primaryReport',
+              children: [],
+              icon: 'icon-baogao'
+            },
+            {
+              id: '6',
+              name: '体测报告(篮球)',
+              path: '/basketReport',
+              children: [],
+              icon: 'icon-baogao'
+            },
+            {
+              id: '7',
+              name: '数据统计',
+              path: '/statistic',
+              children: [],
+              icon: 'icon-tongji'
+            }
+          ],
+          icon: 'icon-list'
         },
         {
           id: '8',
-          name: '数据统计',
-          path: '/statistic',
-          children: [],
-          icon: 'icon-tongji'
+          name: '证书管理',
+          path: '',
+          children: [
+            {
+              id: '9',
+              name: '证书列表',
+              path: '/cred',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
+              id: '10',
+              name: '证书审核管理',
+              path: '/audit',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
+              id: '11',
+              name: '证书分类管理',
+              path: '/cred/class',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
+              id: '12',
+              name: '证书数据统计',
+              path: '/cred/tj',
+              children: [],
+              icon: 'icon-tongji'
+            }
+          ],
+          icon: 'icon-zhengshu'
         },
         {
-          id: '12',
-          name: '证书数据统计',
-          path: '/cred/tj',
-          children: [],
-          icon: 'icon-tongji'
+          id: '13',
+          name: '系统管理',
+          path: '',
+          children: [
+            {
+              id: '14',
+              name: '用户管理',
+              path: '/user',
+              children: [],
+              icon: 'icon-user'
+            },
+            {
+              id: '15',
+              name: '日志管理',
+              path: '/log',
+              children: [],
+              icon: 'icon-rizhi'
+            }
+          ],
+          icon: 'icon-sys'
         }
       ]
     } else if (this.userInfo.role === 2 ) {
       this.menulist = [
         {
-          id: '3',
-          name: '信息报告(幼儿园)',
-          path: '/report',
-          children: [],
-          icon: 'icon-baogao'
-        },
-        {
-          id: '7',
-          name: '信息报告(小学)',
-          path: '/primaryReport',
-          children: [],
-          icon: 'icon-baogao'
-        },
-        {
-          id: '9',
-          name: '信息报告(篮球)',
-          path: '/basketReport',
-          children: [],
-          icon: 'icon-baogao'
+          id: '1',
+          name: '体测业务',
+          path: '',
+          children: [
+            {
+              id: '3',
+              name: '信息报告(幼儿园)',
+              path: '/report',
+              children: [],
+              icon: 'icon-baogao'
+            },
+            {
+              id: '7',
+              name: '信息报告(小学)',
+              path: '/primaryReport',
+              children: [],
+              icon: 'icon-baogao'
+            },
+            {
+              id: '9',
+              name: '信息报告(篮球)',
+              path: '/basketReport',
+              children: [],
+              icon: 'icon-baogao'
+            }
+          ],
+          icon: 'icon-list'
         }
       ]
     } else if (this.userInfo.role === 3 ) {
       this.menulist = [
         {
-          id: '2',
-          name: '场次管理',
-          path: '/session',
-          children: [],
-          icon: 'icon-changci'
+          id: '1',
+          name: '体测业务',
+          path: '',
+          children: [
+            {
+              id: '2',
+              name: '场次管理',
+              path: '/session',
+              children: [],
+              icon: 'icon-changci'
+            },
+            {
+              id: '3',
+              name: '信息报告(幼儿园)',
+              path: '/report',
+              children: [],
+              icon: 'icon-baogao'
+            },
+            {
+              id: '7',
+              name: '信息报告(小学)',
+              path: '/primaryReport',
+              children: [],
+              icon: 'icon-baogao'
+            },
+            {
+              id: '9',
+              name: '信息报告(篮球)',
+              path: '/basketReport',
+              children: [],
+              icon: 'icon-baogao'
+            }
+          ],
+          icon: 'icon-list'
         },
         {
-          id: '3',
-          name: '信息报告(幼儿园)',
-          path: '/report',
-          children: [],
-          icon: 'icon-baogao'
-        },
-        {
-          id: '7',
-          name: '信息报告(小学)',
-          path: '/primaryReport',
-          children: [],
-          icon: 'icon-baogao'
-        },
-        {
-          id: '9',
-          name: '信息报告(篮球)',
-          path: '/basketReport',
-          children: [],
-          icon: 'icon-baogao'
-        },
-        {
-          id: '4',
-          name: '用户管理',
-          path: '/user',
-          children: [],
-          icon: 'icon-user'
+          id: '13',
+          name: '系统管理',
+          path: '',
+          children: [
+            {
+              id: '4',
+              name: '用户管理',
+              path: '/user',
+              children: [],
+              icon: 'icon-user'
+            }
+          ],
+          icon: 'icon-sys'
         }
       ]
     } else if (this.userInfo.role === 4) {
       this.menulist = [
         {
-          id: '10',
+          id: '8',
           name: '证书管理',
-          path: '/cred',
-          children: [],
-          icon: 'icon-zhengshu'
-        },
-        {
-          id: '11',
-          name: '证书审核管理',
-          path: '/audit',
-          children: [],
-          icon: 'icon-zhengshu'
-        },
-        {
-          id: '6',
-          name: '证书分类管理',
-          path: '/cred/class',
-          children: [],
+          path: '',
+          children: [
+            {
+              id: '10',
+              name: '证书列表',
+              path: '/cred',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
+              id: '11',
+              name: '证书审核管理',
+              path: '/audit',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
+              id: '6',
+              name: '证书分类管理',
+              path: '/cred/class',
+              children: [],
+              icon: 'icon-zhengshu'
+            }
+          ],
           icon: 'icon-zhengshu'
         }
       ]
     } else if (this.userInfo.role === 5) {
       this.menulist = [
         {
-          id: '10',
+          id: '8',
           name: '证书管理',
-          path: '/cred',
-          children: [],
+          path: '',
+          children: [
+            {
+              id: '10',
+              name: '证书管理',
+              path: '/cred',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
+              id: '11',
+              name: '证书审核管理',
+              path: '/audit',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
+              id: '6',
+              name: '证书分类管理',
+              path: '/cred/class',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
+              id: '12',
+              name: '数据统计',
+              path: '/cred/tj',
+              children: [],
+              icon: 'icon-tongji'
+            }
+          ],
           icon: 'icon-zhengshu'
         },
         {
-          id: '11',
-          name: '证书审核管理',
-          path: '/audit',
-          children: [],
-          icon: 'icon-zhengshu'
+          id: '13',
+          name: '系统管理',
+          path: '',
+          children: [
+            {
+              id: '4',
+              name: '用户管理',
+              path: '/user',
+              children: [],
+              icon: 'icon-user'
+            }
+          ],
+          icon: 'icon-sys'
+        }
+      ]
+    } else if (this.userInfo.role === 6) {
+      this.menulist = [
+        {
+          id: '1',
+          name: '体测业务',
+          path: '',
+          children: [
+            // {
+            //   id: '2',
+            //   name: '园区管理',
+            //   path: '/park',
+            //   children: [],
+            //   icon: 'icon-yuanqu'
+            // },
+            // {
+            //   id: '3',
+            //   name: '场次管理',
+            //   path: '/session',
+            //   children: [],
+            //   icon: 'icon-changci'
+            // },
+            {
+              id: '4',
+              name: '体测报告(幼儿园)',
+              path: '/report',
+              children: [],
+              icon: 'icon-baogao'
+            },
+            {
+              id: '5',
+              name: '体测报告(小学)',
+              path: '/primaryReport',
+              children: [],
+              icon: 'icon-baogao'
+            },
+            {
+              id: '6',
+              name: '体测报告(篮球)',
+              path: '/basketReport',
+              children: [],
+              icon: 'icon-baogao'
+            },
+            {
+              id: '7',
+              name: '数据统计',
+              path: '/statistic',
+              children: [],
+              icon: 'icon-tongji'
+            }
+          ],
+          icon: 'icon-list'
         },
         {
-          id: '6',
-          name: '证书分类管理',
-          path: '/cred/class',
-          children: [],
-          icon: 'icon-zhengshu'
-        },
-        {
-          id: '4',
-          name: '用户管理',
-          path: '/user',
-          children: [],
-          icon: 'icon-user'
-        },
-        {
-          id: '12',
-          name: '证书数据统计',
-          path: '/cred/tj',
-          children: [],
-          icon: 'icon-tongji'
+          id: '13',
+          name: '系统管理',
+          path: '',
+          children: [
+            {
+              id: '14',
+              name: '用户管理',
+              path: '/user',
+              children: [],
+              icon: 'icon-user'
+            }
+          ],
+          icon: 'icon-sys'
         }
       ]
     }
@@ -326,7 +466,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url(http://at.alicdn.com/t/font_995795_py42tkwez4j.css);
+@import url(http://at.alicdn.com/t/font_995795_6dlm62j0g.css);
 
 .layout-container {
   .layout-header {

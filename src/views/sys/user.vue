@@ -59,12 +59,13 @@
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="form.phone" placeholder="请输入手机号" maxlength="11"></el-input>
         </el-form-item>
-        <el-form-item label="角色" prop="role" v-if="userInfo.role === 1 || (userInfo.role === 3 && action === 'add') || userInfo.role === 5">
+        <el-form-item label="角色" prop="role" v-if="userInfo.role === 1 || (userInfo.role === 3 && action === 'add') || userInfo.role === 5 || userInfo.role === 6">
           <el-radio-group v-model="form.role" @change="handleChange">
-            <el-radio v-if="userInfo.role === 1 || userInfo.role === 3" :label="2">录入员</el-radio>
+            <el-radio v-if="userInfo.role === 1 || userInfo.role === 3 || userInfo.role === 6" :label="2">录入员</el-radio>
             <el-radio v-if="userInfo.role === 1" :label="3">园区管理员</el-radio>
+            <el-radio v-if="userInfo.role === 1" :label="6">体测主管</el-radio>
             <el-radio v-if="userInfo.role === 1 || userInfo.role === 5" :label="4">师资部</el-radio>
-            <el-radio v-if="userInfo.role === 1" :label="5">总部管理员</el-radio>
+            <el-radio v-if="userInfo.role === 1" :label="5">证书主管</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="所属园区" prop="areaId" v-if="form.role === 1 || form.role === 2 || form.role === 3">
@@ -149,7 +150,7 @@ export default {
         return '师资部'
       }
       if (val === 5) {
-        return '总部管理员'
+        return '证书主管'
       }
     }
   },

@@ -33,7 +33,8 @@
             v-model="form.birth"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="选择出生年月">
+            placeholder="选择出生年月"
+            @change="handleChange">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="家长姓名" prop="parentName">
@@ -42,44 +43,26 @@
         <el-form-item label="家长手机号" prop="phone">
           <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
         </el-form-item>
-        <el-form-item label="学员身高(cm)" prop="height">
-          <el-input v-model="form.height" placeholder="请输入学员身高"></el-input>
+        <el-form-item label="30秒胯下O字绕滚球" prop="rall">
+          <el-input v-model="form.rall" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="学员体重(kg)" prop="weight">
-          <el-input v-model="form.weight" placeholder="请输入学员体重"></el-input>
+        <el-form-item label="30秒原地单手运球" prop="dsDribble">
+          <el-input v-model="form.dsDribble" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="父亲身高(cm)" prop="FHeight">
-          <el-input v-model="form.FHeight" placeholder="请输入父亲身高"></el-input>
+        <el-form-item v-if="childAge <= 3" label="8米折返动感1+1拍球" prop="bat">
+          <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="母亲身高(cm)" prop="MHeight">
-          <el-input v-model="form.MHeight" placeholder="请输入母亲身高"></el-input>
+        <el-form-item v-if="childAge === 4" label="10米行进间直线运球" prop="bat">
+          <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="立定跳远(cm)" prop="legs">
-          <el-input v-model="form.legs" placeholder="请输入"></el-input>
+        <el-form-item v-if="childAge >= 5" label="10米行进间绕障碍运球" prop="bat">
+          <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="网球掷远(m)" prop="szLimb">
-          <el-input v-model="form.szLimb" placeholder="请输入"></el-input>
+        <el-form-item label="传/抛球进圈" prop="pass">
+          <el-input v-model="form.pass" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="双脚连续跳(秒)" prop="coordinate">
-          <el-input v-model="form.coordinate" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="走平衡木(秒)" prop="balance">
-          <el-input v-model="form.balance" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="坐位体前屈(cm)" prop="flexibility">
-          <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="10米折返跑(秒)" prop="sensitives">
-          <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
-        </el-form-item>
-        <el-form-item label="拍球(个)">
-          <el-input v-model="form.racket" placeholder="请输入拍球个数"></el-input>
-        </el-form-item>
-        <el-form-item label="传球(个)">
-          <el-input v-model="form.pass" placeholder="请输入传球个数"></el-input>
-        </el-form-item>
-        <el-form-item label="投篮(个)">
-          <el-input v-model="form.shoot" placeholder="请输入投篮个数"></el-input>
+        <el-form-item label="原地投篮" prop="shoot">
+          <el-input v-model="form.shoot" placeholder="请输入"></el-input>
         </el-form-item>
       </el-form>
       <el-button @click="record" class="login-btn" type="primary">录入</el-button>
@@ -91,6 +74,7 @@
 export default {
   data () {
     return {
+      childAge: 0,
       form: {
       },
       rules: {
@@ -101,20 +85,12 @@ export default {
         xyType: [{ required: true, message: '请选择学员类型', trigger: 'change' }],
         birth: [{ required: true, message: '请选择出生年月', trigger: 'change' }],
         parentName: [{ required: true, message: '请输入家长姓名', trigger: 'blur' }],
-        phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-        height: [{ required: true, message: '请输入学员身高', trigger: 'blur' }],
-        weight: [{ required: true, message: '请输入学员体重', trigger: 'blur' }],
-        FHeight: [{ required: true, message: '请输入父亲身高', trigger: 'blur' }],
-        MHeight: [{ required: true, message: '请输入母亲身高', trigger: 'blur' }],
-        legs: [{ required: true, message: '请输入', trigger: 'blur' }],
-        szLimb: [{ required: true, message: '请输入', trigger: 'blur' }],
-        coordinate: [{ required: true, message: '请输入', trigger: 'blur' }],
-        balance: [{ required: true, message: '请输入', trigger: 'blur' }],
-        flexibility: [{ required: true, message: '请输入', trigger: 'blur' }],
-        sensitives: [{ required: true, message: '请输入', trigger: 'blur' }],
-        racket: [{ required: true, message: '请输入拍球个数', trigger: 'blur' }],
-        pass: [{ required: true, message: '请输入传球个数', trigger: 'blur' }],
-        shoot: [{ required: true, message: '请输入投篮个数', trigger: 'blur' }]
+        phone: [{ required: true, message: '请输入家长手机号', trigger: 'blur' }],
+        rall: [{ required: true, message: '请输入', trigger: 'blur' }],
+        dsDribble: [{ required: true, message: '请输入', trigger: 'blur' }],
+        bat: [{ required: true, message: '请输入', trigger: 'blur' }],
+        pass: [{ required: true, message: '请输入', trigger: 'blur' }],
+        shoot: [{ required: true, message: '请输入', trigger: 'blur' }]
       },
       sessionList: []
     }
@@ -133,10 +109,51 @@ export default {
       })
     },
 
+    handleChange (val) {
+      this.childAge = this.jsGetAge(val)
+    },
+    
+    jsGetAge (strBirthday) {       
+      let returnAge
+      let strBirthdayArr=strBirthday.split("-")
+      let birthYear = strBirthdayArr[0]
+      let birthMonth = strBirthdayArr[1]
+      let birthDay = strBirthdayArr[2]
+      let d = new Date()
+      let nowYear = d.getFullYear()
+      let nowMonth = d.getMonth() + 1
+      let nowDay = d.getDate()
+      if (nowYear === birthYear) {
+        returnAge = 0 // 同年 则为0岁
+      } else {
+        let ageDiff = nowYear - birthYear // 年之差
+        if (ageDiff > 0) {
+          if (nowMonth === birthMonth) {
+            let dayDiff = nowDay - birthDay // 日之差
+            if (dayDiff < 0) {
+              returnAge = ageDiff - 1
+            } else {
+              returnAge = ageDiff 
+            }
+          } else {
+            let monthDiff = nowMonth - birthMonth // 月之差
+            if (monthDiff < 0) {
+              returnAge = ageDiff - 1
+            } else {
+              returnAge = ageDiff
+            }
+          }
+        } else {
+          returnAge = -1 // 返回-1 表示出生日期输入错误 晚于今天
+        }
+      }
+      return returnAge // 返回周岁年龄
+    },
+
     record () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.api.addReport(this.form).then((res) => {
+          this.api.addBasketReport(this.form).then((res) => {
             if (res.success) {
               this.$toast('录入成功')
               setTimeout(() => {

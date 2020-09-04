@@ -10,6 +10,14 @@ export default {
     })
   },
 
+  getzsCategoryWxPage (params) {
+    return request({
+      url: '/zsCategory/appPage',
+      method: 'get',
+      params: params
+    })
+  },
+
   getzsCategoryList (params) {
     return request({
       url: '/zsCategory/list',

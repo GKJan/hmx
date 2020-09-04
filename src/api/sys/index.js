@@ -24,5 +24,13 @@ export default {
       method: 'get',
       params: params
     })
+  },
+
+  getWxRegionList (params) {
+    return request({
+      url: '/area/appRegionList',
+      method: 'get',
+      params: params
+    })
   }
 }

@@ -88,8 +88,8 @@
     </table-panel>
     <el-dialog width="500px" :title="action === 'add' ? '新增分类' : '编辑分类'" :visible.sync="dialog">
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="证书类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择证书类型" @change="handleChange">
+        <el-form-item label="证书类型" prop="categoryType">
+          <el-select v-model="form.categoryType" placeholder="请选择证书类型" @change="handleChange">
             <el-option v-for="item in typeList" :key="item.dictValue" :label="item.dictValue" :value="item.dictValue"></el-option>
           </el-select>
         </el-form-item>
@@ -98,7 +98,7 @@
             <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <template v-if="form.type === '个人证书'">
+        <template v-if="form.categoryType === '个人证书'">
           <el-form-item label="姓名">
             <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
           </el-form-item>
@@ -113,7 +113,7 @@
             <img-upload v-model="form.icon" />
           </el-form-item>
         </template>
-        <template v-if="form.type === '机构证书'">
+        <template v-if="form.categoryType === '机构证书'">
           <el-form-item label="单位名称">
             <el-input v-model="form.deptName" placeholder="请输入单位名称"></el-input>
           </el-form-item>
@@ -177,7 +177,7 @@ export default {
         sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         idCard: [{ required: true, message: '请输入身份证号', trigger: 'blur' }],
         icon: [{ required: true, message: '请上次照片', trigger: 'blur' }],
-        type: [{ required: true, message: '请选择证书类型', trigger: 'blur' }],
+        categoryType: [{ required: true, message: '请选择证书类型', trigger: 'blur' }],
         categoryId: [{ required: true, message: '请选择证书分类', trigger: 'blur' }],
         areaId: [{ required: true, message: '请选择所属区域', trigger: 'blur' }],
         deptName: [{ required: true, message: '请输入单位名称', trigger: 'blur' }],
@@ -202,8 +202,8 @@ export default {
   mounted () {
     this.listQuery = this.$refs.table.listQuery
     // setTimeout(() => {
-    //   this.form.type = '机构证书'
-    //   this.$set(this.form, 'type', '机构证书')
+    //   this.form.categoryType = '机构证书'
+    //   this.$set(this.form, 'categoryType', '机构证书')
     // }, 1000)
   },
 
@@ -239,7 +239,7 @@ export default {
     },
 
     getCategory () {
-      this.api.getzsCategoryPage({ size: 20, type: this.form.type }).then(res => {
+      this.api.getzsCategoryPage({ size: 20, type: this.form.categoryType }).then(res => {
         if (res.success) {
           this.categoryList = res.data.records
         }
@@ -265,9 +265,8 @@ export default {
     toEdit () {
       this.action = 'edit'
       this.dialog = true
-      const { id, name, sex, idCard, icon, categoryId, deptName, code, stTime, sxTime, areaId } = this.selectList[0]
-      this.form = { id, name, sex, idCard, icon, categoryId, deptName, code, stTime, sxTime, areaId }
-      this.$set(this.form, 'type', this.selectList[0].categoryType)
+      const { id, name, sex, idCard, icon, categoryId, deptName, code, stTime, sxTime, areaId, categoryType } = this.selectList[0]
+      this.form = { id, name, sex, idCard, icon, categoryId, deptName, code, stTime, sxTime, areaId, categoryType }
       this.getCategory()
     },
 

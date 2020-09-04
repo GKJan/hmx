@@ -24,7 +24,7 @@
         </div>
       </template>
       <template v-else>
-        <div class="name2">{{ detail.name }}</div>
+        <div class="name2">{{ detail.deptName }}</div>
         <div class="info2">
           <span>{{ detail.deptName }}</span>
           <span class="item2">{{ detail.code }}</span>
@@ -230,12 +230,12 @@ export default {
       }
     }
     .name2 {
-      font-size: 48px;
+      font-size: 42px;
       font-weight: 600;
-      color: #D87830;
+      // color: #D87830;
       position: absolute;
-      top: 245px;
-      left: 410px;
+      top: 250px;
+      left: 400px;
     }
     .info2 {
       position: absolute;

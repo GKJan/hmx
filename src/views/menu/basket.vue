@@ -211,7 +211,8 @@
             v-model="form.birth"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="选择出生年月">
+            placeholder="选择出生年月"
+            @change="handleChange">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="家长姓名" prop="parentName">
@@ -226,7 +227,13 @@
         <el-form-item label="30秒原地单手运球" prop="dsDribble">
           <el-input v-model="form.dsDribble" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="8米折返动感1+1拍球" prop="bat">
+        <el-form-item v-if="childAge <= 3" label="8米折返动感1+1拍球" prop="bat">
+          <el-input v-model="form.bat" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item v-if="childAge === 4" label="10米行进间直线运球" prop="bat">
+          <el-input v-model="form.bat" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item v-if="childAge >= 5" label="10米行进间绕障碍运球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="传/抛球进圈" prop="pass">
@@ -252,7 +259,8 @@
             v-model="form.birth"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="选择出生年月">
+            placeholder="选择出生年月"
+            @change="handleChange">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="家长姓名" prop="parentName">
@@ -267,7 +275,13 @@
         <el-form-item label="30秒原地单手运球" prop="dsDribble">
           <el-input v-model="form.dsDribble" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="8米折返动感1+1拍球" prop="bat">
+        <el-form-item v-if="childAge <= 3" label="8米折返动感1+1拍球" prop="bat">
+          <el-input v-model="form.bat" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item v-if="childAge === 4" label="10米行进间直线运球" prop="bat">
+          <el-input v-model="form.bat" placeholder="请输入"></el-input>
+        </el-form-item>
+        <el-form-item v-if="childAge >= 5" label="10米行进间绕障碍运球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="传/抛球进圈" prop="pass">
@@ -294,6 +308,7 @@ export default {
   },
   data () {
     return {
+      childAge: 0,
       tempUrl: '',
       listQuery1: {},
       listQuery2: {},
@@ -354,6 +369,47 @@ export default {
       this.api.getSessionList().then(res => {
         this.sessionList = res.data
       })
+    },
+
+    handleChange (val) {
+      this.childAge = this.jsGetAge(val)
+    },
+    
+    jsGetAge (strBirthday) {       
+      let returnAge
+      let strBirthdayArr=strBirthday.split("-")
+      let birthYear = strBirthdayArr[0]
+      let birthMonth = strBirthdayArr[1]
+      let birthDay = strBirthdayArr[2]
+      let d = new Date()
+      let nowYear = d.getFullYear()
+      let nowMonth = d.getMonth() + 1
+      let nowDay = d.getDate()
+      if (nowYear === birthYear) {
+        returnAge = 0 // 同年 则为0岁
+      } else {
+        let ageDiff = nowYear - birthYear // 年之差
+        if (ageDiff > 0) {
+          if (nowMonth === birthMonth) {
+            let dayDiff = nowDay - birthDay // 日之差
+            if (dayDiff < 0) {
+              returnAge = ageDiff - 1
+            } else {
+              returnAge = ageDiff 
+            }
+          } else {
+            let monthDiff = nowMonth - birthMonth // 月之差
+            if (monthDiff < 0) {
+              returnAge = ageDiff - 1
+            } else {
+              returnAge = ageDiff
+            }
+          }
+        } else {
+          returnAge = -1 // 返回-1 表示出生日期输入错误 晚于今天
+        }
+      }
+      return returnAge // 返回周岁年龄
     },
 
     handleAdd () {

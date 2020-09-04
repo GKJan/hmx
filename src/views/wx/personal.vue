@@ -9,20 +9,16 @@
       <span>报告查询</span>
       <span class="arrow">></span>
     </div>
-    <div class="menu" @click="$router.push('/wx/apply')">
+    <div class="menu" @click="toRecord">
+      <span>数据录入</span>
+      <span class="arrow">></span>
+    </div>
+    <!-- <div class="menu" @click="$router.push('/wx/apply')">
       <span>证书申请</span>
       <span class="arrow">></span>
-    </div>
+    </div> -->
     <div class="menu" @click="toSearchCred">
-      <span>证书查询</span>
-      <span class="arrow">></span>
-    </div>
-    <div class="menu" @click="toRecord">
-      <span>录入数据(幼儿园)</span>
-      <span class="arrow">></span>
-    </div>
-    <div class="menu" @click="toPriRecord">
-      <span>录入数据(小学)</span>
+      <span>证书相关</span>
       <span class="arrow">></span>
     </div>
     <div class="menu" @click="show = true">
@@ -42,6 +38,8 @@
         <el-button type="primary" @click="submit">确认修改</el-button>
       </div>
     </van-popup>
+    <van-action-sheet v-model="showS" :actions="actions" @select="onSelect" />
+    <van-action-sheet v-model="showC" :actions="actionsC" @select="onSelectC" />
   </div>
 </template>
 
@@ -50,6 +48,27 @@ export default {
   data () {
     return {
       show: false,
+      showS: false,
+      showC: false,
+      actions: [
+        {
+          name: '幼儿园'
+        },
+        {
+          name: '小学'
+        },
+        {
+          name: '篮球'
+        }
+      ],
+      actionsC: [
+        {
+          name: '证书申请'
+        },
+        {
+          name: '证书查询'
+        }
+      ],
       userInfo: {},
       form: {},
       rules: {
@@ -68,11 +87,33 @@ export default {
     },
 
     toSearchCred () {
-      this.$router.push('/wx/cred/search')
+      // this.$router.push('/wx/cred/search')
+      this.showC = true
+    },
+
+    onSelectC (val) {
+      if (val.name === '证书申请') {
+        this.$router.push('/wx/apply')
+      } else {
+        this.$router.push('/wx/cred/search')
+      }
+      this.showC = false
     },
 
     toRecord () {
-      this.$router.push('/wx/record')
+      // this.$router.push('/wx/record')
+      this.showS = true
+    },
+
+    onSelect (val) {
+      if (val.name === '幼儿园') {
+        this.$router.push('/wx/record')
+      } else if (val.name === '小学') {
+        this.$router.push('/wx/primaryRecord')
+      } else {
+        this.$router.push('/wx/basketRecord')
+      }
+      this.showS = false
     },
 
     toPriRecord () {

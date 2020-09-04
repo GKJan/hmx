@@ -24,6 +24,10 @@
         <el-form-item label="校区" prop="school">
           <el-input v-model="form.school" readonly placeholder="请输入校区"></el-input>
         </el-form-item>
+        <el-form-item label="学员类型" prop="xyType">
+          <el-radio v-model="form.xyType" label="华蒙星学员"></el-radio>
+          <el-radio v-model="form.xyType" label="非学员"></el-radio>
+        </el-form-item>
         <el-form-item label="出生年月" prop="birth">
           <el-date-picker
             v-model="form.birth"
@@ -88,6 +92,7 @@ export default {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
         school: [{ required: true, message: '请输入校区', trigger: 'blur' }],
+        xyType: [{ required: true, message: '请选择学员类型', trigger: 'change' }],
         birth: [{ required: true, message: '请选择出生年月', trigger: 'change' }],
         parentName: [{ required: true, message: '请输入家长姓名', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],

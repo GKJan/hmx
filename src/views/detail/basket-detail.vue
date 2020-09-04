@@ -102,6 +102,13 @@
             <div class="zhanshi">
               <div class="basket">
                 <img src="../../assets/primary/lq1.png" class="lq1">
+                <span v-if="info.rallScore <= 2">
+                  建议培养幼儿兴趣为主，加强身体的协助性，在家可以采用全蹲体前左右滚球，与家长面对面推地滚球的方式练习。测试时双眼看球，期待继续孩子进步
+                </span>
+                <span v-else-if="2 < info.rallScore <= 4">
+                  建议以发展幼儿手眼协助性为主，通过左右手交替的胯下滚球练习，提高球感和控球能力。相信孩子会取得更大的进步
+                </span>
+                <span v-else>每周坚持2-3次的球性练习，幼儿对球的感觉将越来越好，每次练习不小于15分钟，期待幼儿取得更大的进步</span>
               </div>
             </div>
           </div>
@@ -120,13 +127,22 @@
             <div class="zhanshi">
               <div class="basket">
                 <img src="../../assets/primary/lq1.png" class="lq1">
+                <span v-if="info.dsDribbleScore <= 2">
+                  培养幼儿成就感，前期家长可以握住孩子的手，帮幼儿找准节奏，再慢慢放手，采用7号或者5号球，节奏感会更易把握
+                </span>
+                <span v-else-if="2 < info.dsDribbleScore <= 4">
+                  在教幼儿时，给予幼儿及时肯定，一周练习3-5次，每次能连续拍20下，可采用5号球，有节奏地拍球
+                </span>
+                <span v-else>
+                  坚持每周练习2-3次，单次连续拍球1分钟以上，拍球范围尽量在1-2米之内
+                </span>
               </div>
             </div>
           </div>
         </div>
         <div class="box-content">
           <div class="box-small">
-            <div class="small-title">项目3：拍球/运球</div>
+            <div class="small-title">项目3：折返拍球/直线运球/障碍运球</div>
             <div class="tushi">
               <div class="shiji">
                 <div></div>
@@ -140,11 +156,20 @@
             <div class="zhanshi">
               <div class="basket">
                 <img src="../../assets/primary/lq2.png" class="lq2">
+                <span v-if="info.batScore <= 2">
+                  让幼儿原地熟悉连续拍球30下，可以原地拍一下球，往前走一步。随着水平提升逐渐增加距离，3米—5米—8米
+                </span>
+                <span v-else-if="2 < info.batScore <= 4">
+                  在原地熟悉连续拍球50下，尝试左右手交替运球。使幼儿以最快最舒服的运球方式，进行折返运球练习
+                </span>
+                <span v-else>
+                  保持每周练习2-3次，加快行进间推进球的速度，在控制球的基础上，将速度加快，可以指定不同路线返回
+                </span>
               </div>
             </div>
           </div>
           <div class="box-small">
-            <div class="small-title">项目4：传球进圈</div>
+            <div class="small-title">项目4：抛/传球进圈</div>
             <div class="tushi">
               <div class="shiji">
                 <div></div>
@@ -158,6 +183,15 @@
             <div class="zhanshi">
               <div class="basket">
                 <img src="../../assets/primary/lq3.png" class="lq3">
+                <span v-if="info.passScore <= 2">
+                  幼儿可以朝着目标 滚 或 抛 出球，利用简易游戏或比赛让幼儿产生兴趣，比如抛球入筐、地滚保龄球等。每周练习2-3次
+                </span>
+                <span v-else-if="2 < info.passScore <= 4">
+                  通过简易游戏或比赛让幼儿产生成就感，比如传球比准、定点投球等。每周练习2-3次
+                </span>
+                <span v-else>
+                  保持每周练习2-3次，适当通过手脚爬、手膝爬等爬行动作锻炼上肢力量，再同步进行抛/传球练习和游戏
+                </span>
               </div>
             </div>
           </div>
@@ -178,6 +212,15 @@
             <div class="zhanshi">
               <div class="basket">
                 <img src="../../assets/primary/lq4.png" class="lq4">
+                <span v-if="info.shootScore <= 2">
+                  保持每周练习2-3次，适当通过手脚爬、手膝爬等爬行动作锻炼上肢力量，再进行投篮相关练习，比如家长举起手，幼儿将球投到家长手上
+                </span>
+                <span v-else-if="2 < info.shootScore <= 4">
+                  通过简易游戏或比赛让幼儿产生成就感，比如传球比准、定点投球等，让幼儿进行定点投篮练习，每周2-3次
+                </span>
+                <span v-else>
+                  保持一周练习2-3次，建议设置高度适宜的篮筐（或替代品），让孩子进行定点投篮，注意动作发力点
+                </span>
               </div>
             </div>
           </div>
@@ -214,20 +257,32 @@ export default {
 
   computed: {
     pingyu () {
-      if (this.total >= 85) {
-        return '幼儿身体素质发展水平处于优秀水平，但也要关注相关的指标数据的变化和提升，希望继续周期性有规划的保持锻炼，保证锻炼的科学性和有效性，在空余时间可以陪孩子参加各种各样的体育游戏活动。'
+      if (this.info.age == 4) {
+        if (this.total <= 10) {
+          return '孩子身体协调性低于全国同年龄段孩子的平均水平，长期发展可能对孩子身心健康产生比较大影响'
+        } else if (10 < this.total <= 20) {
+          return '孩子身体协调性达到全国现年龄段孩子平均水平，让孩子在运动中学会坚持，发展兴趣，让孩子乐在其中'
+        } else {
+          return '孩子的身体协调性超越全国现年龄段孩子水平，继续通过运动发展孩子优势，让孩子找到更多自信'
+        }
       }
-      if (this.total >= 75 && this.total <= 84) {
-        return '幼儿身体素质处于中等发展水平，数据显示身体素质的综合性相对较好，但部分身体素质依然有较大的提升空间，希望继续保持孩子的运动，尽可能在额外的时间增加多项运动的练习，保护好孩子对运动的兴趣。'
+      if (this.info.age == 5) {
+        if (this.total <= 10) {
+          return '每周适当2-3次户外锻炼，有针对性加强身体 爬、走、跑、跳等动作的练习'
+        } else if (10 < this.total <= 20) {
+          return '坚持每周球性练习，让孩子持球环绕头、腰、膝盖、胯下转圈，动作由慢到快，巩固球性练习，打好基本功'
+        } else {
+          return '坚持每周2-3次基本球性练习，持球环绕头、腰、膝盖、胯下转圈，单次1分钟以上，每次练习5-10分钟'
+        }
       }
-      if (this.total >= 65 && this.total <= 74) {
-        return '幼儿身体素质发展整体处于中等稍微偏低水平，孩子的部分身体素质有较大的提升空间，特别关注分值比较低的身体素质指标，建议针对指标的数据，可以多让孩子参加各种各样的体育活动以弥补，提升其综合性的身体素质水平。'
-      }
-      if (this.total >= 50 && this.total <= 64) {
-        return '根据测试数据显示，孩子的身体素质存在一些小问题，我们建议可以进一步定期进行相关的身体素质的测试，并且有目的有计划的进行相关的运动安排，以期为了孩子身体素质的正常发展提供有效措施，为了孩子的健康，我们共同努力。'
-      }
-      if (this.total < 49) {
-        return '根据测试数据显示，孩子的身体素质存在很大问题，我们建议进行相关专家咨询，并及时为孩子进行运动的处方、营养的搭配和合理的作息，，并且建议定期到医院进行问诊和咨询，为了孩子的健康，我们共同努力。'
+      if (this.info.age == 6) {
+        if (this.total <= 10) {
+          return '户外运动时，结合篮球游戏，让孩子主动积极地参与游戏中，切记不要采用单一的训练'
+        } else if (10 < this.total <= 20) {
+          return '行进间运球由慢到快，运球平衡，并且灵活，10米快速运球一周练习5-8次'
+        } else {
+          return '结合传球、投篮、运球，有针对性完成篮球练习，多参与篮球比赛活动，让孩子在篮球运动中找到快乐、自信'
+        }
       }
     },
     racketScore () {
@@ -293,13 +348,13 @@ export default {
           name: '滚球', my: res.data.rallScore, avg: 2, unit: ''
         },
         {
-          name: '单手运球', my: res.data.dsDribbleScore, avg: 2, unit: ''
+          name: '原地单手运球', my: res.data.dsDribbleScore, avg: 2, unit: ''
         },
         {
-          name: '运球', my: res.data.batScore, avg: 2, unit: ''
+          name: '拍球,直线/障碍运球', my: res.data.batScore, avg: 2, unit: ''
         },
         {
-          name: '传球', my: res.data.passScore, avg: 2, unit: ''
+          name: '抛/传球', my: res.data.passScore, avg: 2, unit: ''
         },
         {
           name: '投篮', my: res.data.shootScore, avg: 2, unit: ''
@@ -326,9 +381,9 @@ export default {
             },
             indicator: [
               {text: '滚球', max: 5},
-              {text: '单手运球', max: 5},
-              {text: '运球', max: 5},
-              {text: '传球', max: 5},
+              {text: '原地单手运球', max: 5},
+              {text: '拍球,直线/障碍运球', max: 5},
+              {text: '抛/传球', max: 5},
               {text: '投篮', max: 5}
             ]
           }
@@ -458,7 +513,7 @@ export default {
       }
     }
     .part-item {
-      height: 1094px;
+      height: 1074px;
       padding-bottom: 20px;
       background-color: #f5f5f5;
       // margin-top: 20px;
@@ -593,13 +648,14 @@ export default {
           display: flex;
           justify-content: space-between;
           #chart {
-            width: 380px;
-            height: 380px;
+            width: 400px;
+            height: 400px;
+            margin: -20px 0 -60px;
           }
           .pingyu {
-            width: 300px;
+            width: 280px;
             padding-top: 25px;
-            font-size: 16px;
+            font-size: 18px;
             color: #062f87;
             letter-spacing: 2px;
             text-indent: 2em;
@@ -739,21 +795,31 @@ export default {
               color: #062f87;
             }
             .basket {
+              display: flex;
+              align-items: center;
+              img {
+                flex-shrink: 0;
+              }
               .lq1 {
-                width: 128px;
-                height: 160px;
+                width: 80px;
+                height: 100px;
               }
               .lq2 {
-                width: 274px;
-                height: 163px;
+                width: 160px;
+                height: 100px;
               }
               .lq3 {
-                width: 177px;
-                height: 162px;
+                width: 110px;
+                height: 100px;
               }
               .lq4 {
-                width: 234px;
-                height: 169px;
+                width: 155px;
+                height: 110px;
+              }
+              span {
+                font-size: 16px;
+                color: #062f87;
+                margin-left: 10px;
               }
             }
             .method {

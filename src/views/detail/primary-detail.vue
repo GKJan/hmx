@@ -71,7 +71,7 @@
           </div>
           <div class="right">
             <div class="lf">
-              <span>八项体质总成绩：</span>
+              <span>六项体质总成绩：</span>
               <span>(满分：100分)</span>
             </div>
             <div class="md">{{ total }}</div>
@@ -303,7 +303,7 @@
         <div class="box-content">
           <div class="box-mini">
             <div class="mini-title">移动技术</div>
-            <div class="my-result">我的成绩：{{ info.remove }}个，评价：{{ removeScore  }}</div>
+            <div class="my-result">我的成绩：{{ info.remove }}秒，评价：{{ removeScore  }}</div>
             <div class="pingyu" v-if="info.removeScore < 12">
               数据显示儿童移动技能偏弱，建议开展一系列移动步伐的训练，追逐类、比赛类都是移动性练习手段，并且定期为孩子测量步伐多方位移动性测试。
             </div>
@@ -411,9 +411,9 @@ export default {
       }
     },
     removeScore () {
-      if (this.info.racketScore < 12) {
+      if (this.info.removeScore < 12) {
         return '及格'
-      } else if (this.info.racketScore >= 16) {
+      } else if (this.info.removeScore >= 16) {
         return '优秀'
       } else {
         return '良好'

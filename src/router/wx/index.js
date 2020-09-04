@@ -2,7 +2,7 @@ export default [
   {
     path: '/wx',
     name: 'WX',
-    component: () => import('@/views/wx/index.vue'),
+    component: () => import('@/views/wx/report.vue'),
     meta: { title: '报告详情' }
   },
   {
@@ -45,6 +45,12 @@ export default [
     path: '/wx/primaryRecord',
     name: 'wxPrimaryRecord',
     component: () => import('@/views/wx/primary-record.vue'),
+    meta: { title: '录入数据' }
+  },
+  {
+    path: '/wx/basketRecord',
+    name: 'wxBasketRecord',
+    component: () => import('@/views/wx/basket-record.vue'),
     meta: { title: '录入数据' }
   },
   {
