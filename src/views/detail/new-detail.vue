@@ -113,10 +113,10 @@
               </template>
               <span class="right">{{ info.hightAvg }}cm</span>
             </div>
-            <div class="text" v-if="info.heightScore < 6">
+            <div class="text" v-if="info.heightScore < 12">
               数据显示儿童身高偏低，建议咨询相关生长发育的专家及教师，注重幼儿营养均衡，定期保证幼儿一定量和强度的运动，建议晚间10:30前必须入睡，保证优质睡眠。
             </div>
-            <div class="text" v-else-if="info.heightScore >= 8">
+            <div class="text" v-else-if="info.heightScore >= 16">
               幼儿处于身体发育比较好的水平，但也不能大意，因为儿童时期决定不了成年后的身高，如果有营养及体育锻炼，才能保障孩子打下坚实的基础。希望继续保持良好的作息、运动和饮食习惯。
             </div>
             <div class="text" v-else>
@@ -141,10 +141,10 @@
                 <img src="../../assets/img/method.png" class="method">
               </div>
             </div>
-            <div class="text" v-if="info.ibmScore === 2">
+            <div class="text" v-if="info.ibmScore === 4">
               特别注意一个警惕信号，如果孩子没有病态并导致这个情况，要么孩子过胖、要么过廋，过胖唯一解决孩子的方式是少吃多动，建立合理的饮食，少摄入脂肪，多进行一些有氧运动。过廋是因为身体的吸收能量过少导致，适当的运动可以让孩子身体机能活力增强，新陈代谢加快，促进胃腺的活动，增加孩子饥饿感，并增强食欲。
             </div>
-            <div class="text" v-else-if="info.ibmScore === 10">
+            <div class="text" v-else-if="info.ibmScore === 12">
               体态非常优秀，希望继续保持，保持良好的饮食习惯和睡眠习惯，有规律的进行周期性运动。
             </div>
             <div class="text" v-else>
@@ -472,7 +472,7 @@ export default {
         return '根据测试数据显示，孩子的身体素质存在一些小问题，我们建议可以进一步定期进行相关的身体素质的测试，并且有目的有计划的进行相关的运动安排，以期为了孩子身体素质的正常发展提供有效措施，为了孩子的健康，我们共同努力。'
       }
       if (this.total < 49) {
-        return '根据测试数据显示，孩子的身体素质存在很大问题，我们建议进行相关专家咨询，并及时为孩子进行运动的处方、营养的搭配和合理的作息，，并且建议定期到医院进行问诊和咨询，为了孩子的健康，我们共同努力。'
+        return '根据测试数据显示，孩子的身体素质存在很大问题，我们建议进行相关专家咨询，并及时为孩子进行运动的处方、营养的搭配和合理的作息，并且建议定期到医院进行问诊和咨询，为了孩子的健康，我们共同努力。'
       }
     },
     racketScore () {

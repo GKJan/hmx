@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
+    <img src="../../assets/primary/logo.png">
     <div class="login-form">
-      <img src="../../assets/img/logo.png">
       <div class="title">华蒙星儿童体质测查系统</div>
       <el-form ref="form" :model="form" :rules="rules">
         <el-form-item prop="username">
@@ -76,15 +76,16 @@ export default {
   min-height: 100%;
   // background: #F0F3F7 url('../../assets/img/bg.png') center/100%;
   display: flex;
+  // flex-direction: column;
   align-items: center;
   justify-content: center;
+  img {
+    width: 500px;
+    height: 230px;
+  }
   .login-form {
     width: 350px;
     text-align: center;
-    img {
-      width: 100px;
-      height: 100px;
-    }
     .title {
       margin: 0 0 20px;
     }

@@ -63,6 +63,11 @@
               align="center">
             </el-table-column>
             <el-table-column
+              label="性别"
+              align="center">
+              <template slot-scope="scope">{{ scope.row.sex === 1 ? '男' : '女' }}</template>
+            </el-table-column>
+            <el-table-column
               prop="age"
               label="年龄"
               align="center">
@@ -215,6 +220,13 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="校区" prop="school">
+          <el-input v-model="form.school" disabled placeholder="请输入校区"></el-input>
+        </el-form-item>
+        <el-form-item label="学员类型" prop="xyType">
+          <el-radio v-model="form.xyType" label="华蒙星学员"></el-radio>
+          <el-radio v-model="form.xyType" label="非学员"></el-radio>
+        </el-form-item>
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
@@ -224,13 +236,6 @@
             <el-radio :label="2">女</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="校区" prop="school">
-          <el-input v-model="form.school" disabled placeholder="请输入校区"></el-input>
-        </el-form-item>
-        <el-form-item label="学员类型" prop="xyType">
-          <el-radio v-model="form.xyType" label="华蒙星学员"></el-radio>
-          <el-radio v-model="form.xyType" label="非学员"></el-radio>
-        </el-form-item>
         <el-form-item label="出生年月" prop="birth">
           <el-date-picker
             v-model="form.birth"
@@ -238,12 +243,6 @@
             value-format="yyyy-MM-dd"
             placeholder="选择出生年月">
           </el-date-picker>
-        </el-form-item>
-        <el-form-item label="家长姓名" prop="parentName">
-          <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="家长手机号" prop="phone">
-          <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
         </el-form-item>
         <el-form-item label="学员身高(cm)" prop="height">
           <el-input v-model="form.height" placeholder="请输入学员身高"></el-input>
@@ -257,22 +256,28 @@
         <el-form-item label="母亲身高(cm)" prop="MHeight">
           <el-input v-model="form.MHeight" placeholder="请输入母亲身高"></el-input>
         </el-form-item>
+        <el-form-item label="家长姓名" prop="parentName">
+          <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="家长手机号" prop="phone">
+          <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
+        </el-form-item>
         <el-form-item label="立定跳远(cm)" prop="legs">
           <el-input v-model="form.legs" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="网球掷远(m)" prop="szLimb">
           <el-input v-model="form.szLimb" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="双脚连续跳(秒)" prop="coordinate">
+        <el-form-item label="双脚连续跳(s)" prop="coordinate">
           <el-input v-model="form.coordinate" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="走平衡木(秒)" prop="balance">
+        <el-form-item label="走平衡木(s)" prop="balance">
           <el-input v-model="form.balance" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="坐位体前屈(cm)" prop="flexibility">
           <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="10米折返跑(秒)" prop="sensitives">
+        <el-form-item label="10米折返跑(s)" prop="sensitives">
           <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="拍球(次)">
@@ -304,12 +309,6 @@
             placeholder="选择出生年月">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="家长姓名" prop="parentName">
-          <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="家长手机号" prop="phone">
-          <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
-        </el-form-item>
         <el-form-item label="学员身高(cm)" prop="height">
           <el-input v-model="form.height" placeholder="请输入学员身高"></el-input>
         </el-form-item>
@@ -322,22 +321,28 @@
         <el-form-item label="母亲身高(cm)" prop="MHeight">
           <el-input v-model="form.MHeight" placeholder="请输入母亲身高"></el-input>
         </el-form-item>
+        <el-form-item label="家长姓名" prop="parentName">
+          <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="家长手机号" prop="phone">
+          <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
+        </el-form-item>
         <el-form-item label="立定跳远(cm)" prop="legs">
           <el-input v-model="form.legs" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="网球掷远(m)" prop="szLimb">
           <el-input v-model="form.szLimb" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="双脚连续跳(秒)" prop="coordinate">
+        <el-form-item label="双脚连续跳(s)" prop="coordinate">
           <el-input v-model="form.coordinate" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="走平衡木(秒)" prop="balance">
+        <el-form-item label="走平衡木(s)" prop="balance">
           <el-input v-model="form.balance" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="坐位体前屈(cm)" prop="flexibility">
           <el-input v-model="form.flexibility" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="10米折返跑(秒)" prop="sensitives">
+        <el-form-item label="10米折返跑(s)" prop="sensitives">
           <el-input v-model="form.sensitives" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="拍球(次)">

@@ -32,5 +32,21 @@ export default {
       method: 'get',
       params: params
     })
+  },
+
+  getMsgPage (params) {
+    return request({
+      url: '/sysMsg/page',
+      method: 'get',
+      params: params
+    })
+  },
+
+  getMsgYidu (params) {
+    return request({
+      url: '/sysMsg/audit',
+      method: 'get',
+      params: params
+    })
   }
 }

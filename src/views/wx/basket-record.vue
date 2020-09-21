@@ -12,6 +12,18 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="校区" prop="school">
+          <el-input v-model="form.school" readonly placeholder="请输入校区"></el-input>
+        </el-form-item>
+        <el-form-item label="学员类型" prop="xyType">
+          <el-radio v-model="form.xyType" label="华蒙星学员"></el-radio>
+          <el-radio v-model="form.xyType" label="非学员"></el-radio>
+        </el-form-item>
+        <el-form-item label="班级" prop="type">
+          <el-radio v-model="form.type" :label="1">小班</el-radio>
+          <el-radio v-model="form.type" :label="2">中班</el-radio>
+          <el-radio v-model="form.type" :label="3">大班</el-radio>
+        </el-form-item>
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
@@ -21,14 +33,7 @@
             <el-radio :label="2">女</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="校区" prop="school">
-          <el-input v-model="form.school" readonly placeholder="请输入校区"></el-input>
-        </el-form-item>
-        <el-form-item label="学员类型" prop="xyType">
-          <el-radio v-model="form.xyType" label="华蒙星学员"></el-radio>
-          <el-radio v-model="form.xyType" label="非学员"></el-radio>
-        </el-form-item>
-        <el-form-item label="出生年月" prop="birth">
+        <!-- <el-form-item label="出生年月" prop="birth">
           <el-date-picker
             v-model="form.birth"
             type="date"
@@ -36,26 +41,26 @@
             placeholder="选择出生年月"
             @change="handleChange">
           </el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="家长姓名" prop="parentName">
           <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
         </el-form-item>
         <el-form-item label="家长手机号" prop="phone">
           <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
         </el-form-item>
-        <el-form-item label="30秒胯下O字绕滚球" prop="rall">
+        <el-form-item label="30秒胯下绕滚球" prop="rall">
           <el-input v-model="form.rall" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="30秒原地单手运球" prop="dsDribble">
           <el-input v-model="form.dsDribble" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item v-if="childAge <= 3" label="8米折返动感1+1拍球" prop="bat">
+        <el-form-item v-if="form.type == 1" label="8米折返动感1+1拍球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item v-if="childAge === 4" label="10米行进间直线运球" prop="bat">
+        <el-form-item v-if="form.type == 2" label="10米行进间直线运球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item v-if="childAge >= 5" label="10米行进间绕障碍运球" prop="bat">
+        <el-form-item v-if="form.type == 3" label="10米行进间绕障碍运球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="传/抛球进圈" prop="pass">
@@ -83,7 +88,7 @@ export default {
         sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
         school: [{ required: true, message: '请输入校区', trigger: 'blur' }],
         xyType: [{ required: true, message: '请选择学员类型', trigger: 'change' }],
-        birth: [{ required: true, message: '请选择出生年月', trigger: 'change' }],
+        type: [{ required: true, message: '请选择班级', trigger: 'change' }],
         parentName: [{ required: true, message: '请输入家长姓名', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入家长手机号', trigger: 'blur' }],
         rall: [{ required: true, message: '请输入', trigger: 'blur' }],

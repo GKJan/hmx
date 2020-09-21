@@ -181,10 +181,10 @@
               数据显示儿童肺活量值偏低，建议定期保证儿童进行一定的运动量活动，例如扩胸运动、篮球、游泳等活动锻炼，增强心肺功能及新陈代谢能力，建议定期进行肺活量测试。
             </div>
             <div class="text" v-else-if="info.feiHlScore >= 16">
-              数据显示儿童肺活量值偏于中等水平，建议定期保证儿童进行一定的运动量活动，例如扩胸运动、篮球、游泳等活动锻炼，保持继续增强心肺功能及新陈代谢能力。
+              儿童肺活量处于比较好的水平，希望继续保持良好的运动习惯、运动和饮食习惯，增强运动能力，提高心肺功能。
             </div>
             <div class="text" v-else>
-              儿童肺活量处于比较好的水平，希望继续保持良好的运动习惯、运动和饮食习惯，增强运动能力，提高心肺功能。
+              数据显示儿童肺活量值偏于中等水平，建议定期保证儿童进行一定的运动量活动，例如扩胸运动、篮球、游泳等活动锻炼，保持继续增强心肺功能及新陈代谢能力。
             </div>
           </div>
           <div class="box-small">
@@ -456,13 +456,13 @@ export default {
           name: '肺活量', my: res.data.feiHl, avg: res.data.feiHlAvg, unit: 'ml'
         },
         {
-          name: '跳绳', my: res.data.tiaos, avg: res.data.tiaosAvg, unit: '个/分钟'
+         name: '灵敏性',  my: res.data.sensitiveAvg, avg: res.data.sensitives, unit: 'cm'
         },
         {
           name: '柔韧性', my: res.data.flexibility, avg: res.data.flexibilityAvg, unit: 'cm'
         },
         {
-         name: '灵敏性',  my: res.data.sensitiveAvg, avg: res.data.sensitives, unit: 'cm'
+          name: '跳绳', my: res.data.tiaos, avg: res.data.tiaosAvg, unit: '个/分钟'
         }
       ]
     })
@@ -488,9 +488,9 @@ export default {
               {text: '身高', max: 10},
               {text: 'BMI', max: 10},
               {text: '肺活量', max: 20},
-              {text: '跳绳', max: 20},
+              {text: '灵敏性', max: 20},
               {text: '柔韧性', max: 20},
-              {text: '灵敏性', max: 20}
+              {text: '跳绳', max: 20}
             ]
           }
         ],

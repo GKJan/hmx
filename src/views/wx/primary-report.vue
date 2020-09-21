@@ -451,13 +451,13 @@ export default {
           name: '肺活量', my: res.data.feiHl, avg: res.data.feiHlAvg, unit: 'ml'
         },
         {
-          name: '跳绳', my: res.data.tiaos, avg: res.data.tiaosAvg, unit: '个/分钟'
+         name: '灵敏性',  my: res.data.sensitiveAvg, avg: res.data.sensitives, unit: 'cm'
         },
         {
           name: '柔韧性', my: res.data.flexibility, avg: res.data.flexibilityAvg, unit: 'cm'
         },
         {
-         name: '灵敏性',  my: res.data.sensitiveAvg, avg: res.data.sensitives, unit: 'cm'
+          name: '跳绳', my: res.data.tiaos, avg: res.data.tiaosAvg, unit: '个/分钟'
         }
       ]
     })
@@ -483,9 +483,9 @@ export default {
               {text: '身高', max: 10},
               {text: 'BMI', max: 10},
               {text: '肺活量', max: 20},
-              {text: '跳绳', max: 20},
+              {text: '灵敏性', max: 20},
               {text: '柔韧性', max: 20},
-              {text: '灵敏性', max: 20}
+              {text: '跳绳', max: 20}
             ]
           }
         ],

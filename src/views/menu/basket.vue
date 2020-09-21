@@ -58,15 +58,25 @@
               align="center">
             </el-table-column>
             <el-table-column
+              label="班级"
+              align="center">
+              <template slot-scope="scope">{{ scope.row.type == 1 ? '小班' : (scope.row.type == 2 ? '中班' : '大班') }}</template>
+            </el-table-column>
+            <el-table-column
               prop="name"
               label="姓名"
               align="center">
             </el-table-column>
             <el-table-column
+              label="性别"
+              align="center">
+              <template slot-scope="scope">{{ scope.row.sex === 1 ? '男' : '女' }}</template>
+            </el-table-column>
+            <!-- <el-table-column
               prop="age"
               label="年龄"
               align="center">
-            </el-table-column>
+            </el-table-column> -->
             <!-- <el-table-column
               prop="height"
               label="身高"
@@ -79,17 +89,17 @@
             </el-table-column> -->
             <el-table-column
               prop="rall"
-              label="滚球"
+              label="胯下绕/滚球"
               align="center">
             </el-table-column>
             <el-table-column
               prop="dsDribble"
-              label="运球"
+              label="原地单手运球"
               align="center">
             </el-table-column>
             <el-table-column
               prop="bat"
-              label="拍球"
+              label="直线/障碍运球"
               align="center">
             </el-table-column>
             <el-table-column
@@ -143,7 +153,7 @@
               align="center">
               <template slot-scope="scope">{{ scope.row.sex === 1 ? '男' : '女' }}</template>
             </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
               prop="birthday"
               label="出生年月"
               align="center">
@@ -152,7 +162,7 @@
               prop="age"
               label="年龄"
               align="center">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
               prop="parentName"
               label="家长姓名"
@@ -190,6 +200,18 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="校区" prop="school">
+          <el-input v-model="form.school" disabled placeholder="请输入校区"></el-input>
+        </el-form-item>
+        <el-form-item label="学员类型" prop="xyType">
+          <el-radio v-model="form.xyType" label="华蒙星学员"></el-radio>
+          <el-radio v-model="form.xyType" label="非学员"></el-radio>
+        </el-form-item>
+        <el-form-item label="班级" prop="type">
+          <el-radio v-model="form.type" :label="1">小班</el-radio>
+          <el-radio v-model="form.type" :label="2">中班</el-radio>
+          <el-radio v-model="form.type" :label="3">大班</el-radio>
+        </el-form-item>
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
@@ -199,14 +221,7 @@
             <el-radio :label="2">女</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="校区" prop="school">
-          <el-input v-model="form.school" disabled placeholder="请输入校区"></el-input>
-        </el-form-item>
-        <el-form-item label="学员类型" prop="xyType">
-          <el-radio v-model="form.xyType" label="华蒙星学员"></el-radio>
-          <el-radio v-model="form.xyType" label="非学员"></el-radio>
-        </el-form-item>
-        <el-form-item label="出生年月" prop="birth">
+        <!-- <el-form-item label="出生年月" prop="birth">
           <el-date-picker
             v-model="form.birth"
             type="date"
@@ -214,26 +229,26 @@
             placeholder="选择出生年月"
             @change="handleChange">
           </el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="家长姓名" prop="parentName">
           <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
         </el-form-item>
         <el-form-item label="家长手机号" prop="phone">
           <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
         </el-form-item>
-        <el-form-item label="30秒胯下O字绕滚球" prop="rall">
+        <el-form-item label="30秒胯下绕滚球" prop="rall">
           <el-input v-model="form.rall" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="30秒原地单手运球" prop="dsDribble">
           <el-input v-model="form.dsDribble" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item v-if="childAge <= 3" label="8米折返动感1+1拍球" prop="bat">
+        <el-form-item v-if="form.type == 1" label="8米折返动感1+1拍球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item v-if="childAge === 4" label="10米行进间直线运球" prop="bat">
+        <el-form-item v-if="form.type == 2" label="10米行进间直线运球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item v-if="childAge >= 5" label="10米行进间绕障碍运球" prop="bat">
+        <el-form-item v-if="form.type == 3" label="10米行进间绕障碍运球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="传/抛球进圈" prop="pass">
@@ -254,7 +269,7 @@
         <el-form-item label="姓名" prop="name">
           <el-input disabled v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
-        <el-form-item label="出生年月" prop="birth">
+        <!-- <el-form-item label="出生年月" prop="birth">
           <el-date-picker
             v-model="form.birth"
             type="date"
@@ -262,26 +277,26 @@
             placeholder="选择出生年月"
             @change="handleChange">
           </el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="家长姓名" prop="parentName">
           <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
         </el-form-item>
         <el-form-item label="家长手机号" prop="phone">
           <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
         </el-form-item>
-        <el-form-item label="30秒胯下O字绕滚球" prop="rall">
+        <el-form-item label="30秒胯下绕滚球" prop="rall">
           <el-input v-model="form.rall" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="30秒原地单手运球" prop="dsDribble">
           <el-input v-model="form.dsDribble" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item v-if="childAge <= 3" label="8米折返动感1+1拍球" prop="bat">
+        <el-form-item v-if="form.type == 1" label="8米折返动感1+1拍球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item v-if="childAge === 4" label="10米行进间直线运球" prop="bat">
+        <el-form-item v-if="form.type == 2" label="10米行进间直线运球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item v-if="childAge >= 5" label="10米行进间绕障碍运球" prop="bat">
+        <el-form-item v-if="form.type == 3" label="10米行进间绕障碍运球" prop="bat">
           <el-input v-model="form.bat" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="传/抛球进圈" prop="pass">
@@ -323,7 +338,7 @@ export default {
         sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
         school: [{ required: true, message: '请输入校区', trigger: 'blur' }],
         xyType: [{ required: true, message: '请选择学员类型', trigger: 'change' }],
-        birth: [{ required: true, message: '请选择出生年月', trigger: 'change' }],
+        type: [{ required: true, message: '请选择班级', trigger: 'change' }],
         parentName: [{ required: true, message: '请输入家长姓名', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入家长手机号', trigger: 'blur' }],
         rall: [{ required: true, message: '请输入', trigger: 'blur' }],
@@ -431,9 +446,9 @@ export default {
       this.editDialog = true
       this.api.getBasketDetail({ id: this.selectList1[0].id }).then(res => {
         if (res.success) {
-          const { id, name, parentName, phone, rall, dsDribble, bat, pass, shoot } = res.data
-          this.form = { id, name, parentName, phone, rall, dsDribble, bat, pass, shoot }
-          this.$set(this.form, 'birth', res.data.birthday)
+          const { id, sportId, school, xyType, type, name, sex, parentName, phone, rall, dsDribble, bat, pass, shoot } = res.data
+          this.form = { id, sportId, school, xyType, type, name, sex, parentName, phone, rall, dsDribble, bat, pass, shoot }
+          // this.$set(this.form, 'birth', res.data.birthday)
         }
       })
     },

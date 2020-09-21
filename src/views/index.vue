@@ -2,7 +2,7 @@
   <div class="layout-container">
     <div class="layout-header">
       <div class="header-left">
-        <img src="../assets/img/logo.png">
+        <img src="../assets/img/logoo.png">
         <span>华蒙星业务系统</span>
       </div>
       <!-- {{ userInfo.areaName }} -->
@@ -14,6 +14,7 @@
           <span>{{ userInfo.username }}</span>
           <span class="change" @click="dialog = true"><i class="el-icon-lock"></i>修改密码</span>
           <img src="../assets/img/close.png" class="close" @click="logout">
+          <div class="msg" v-if="userInfo.msgCount" @click="$router.push('/message')">{{userInfo.msgCount}}</div>
         </div>
       </div>
     </div>
@@ -480,14 +481,14 @@ export default {
       // justify-content: center;
       background-color: #545c64;
       img {
-        width: 30px;
+        width: 25px;
         height: 30px;
         margin-left: 10px;
       }
       span {
         font-size: 20px;
         color: #fff;
-        margin-left: 5px;
+        margin-left: 8px;
       }
     }
     .header-right {
@@ -501,11 +502,26 @@ export default {
         color: #666;
         display: flex;
         align-items: center;
+        position: relative;
         .avatar {
           width: 25px;
           height: 25px;
           border-radius: 50%;
           margin-right: 5px;
+        }
+        .msg {
+          width: 14px;
+          height: 14px;
+          border-radius: 50%;
+          background-color: red;
+          font-size: 10px;
+          color: #fff;
+          line-height: 14px;
+          text-align: center;
+          position: absolute;
+          top: -6px;
+          left: 15px;
+          cursor: pointer;
         }
         .change {
           font-size: 13px;

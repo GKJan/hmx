@@ -100,5 +100,11 @@ export default [
     name: 'Statistic',
     component: () => import('@/views/menu/statistic.vue'),
     meta: { title: '数据统计' }
+  },
+  {
+    path: '/message',
+    name: 'Message',
+    component: () => import('@/views/sys/message.vue'),
+    meta: { title: '系统消息' }
   }
 ]
