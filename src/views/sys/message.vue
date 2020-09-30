@@ -1,18 +1,20 @@
 <template>
   <div class="message-container">
     <div class="select">
+      <span>未读/已读消息：</span>
       <el-select v-model="listQuery.status" placeholder="已读/未读" @change="getList">
         <el-option v-for="item in duOption" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
-    <div class="list">
+    <div class="button">
+      <el-button type="warning" @click="handleRead">标记为已读</el-button>
+    </div>
+    <div class="list" v-if="listQuery.status == 2">
       <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-      <div style="margin: 15px 0;"></div>
       <el-checkbox-group v-model="checkedList" @change="handleCheckedChange">
         <el-checkbox v-for="item in msgList" :label="item.id" :key="item.id">
           <div class="item">
             <div class="left">
-              <!-- <i class="el-icon-chat-dot-square"></i> -->
               <el-button type="primary" plain size="mini">{{ item.type }}</el-button>
               <span>{{ item.msg }}</span>
             </div>
@@ -20,14 +22,15 @@
           </div>
         </el-checkbox>
       </el-checkbox-group>
-      <!-- <div class="item" v-for="item in msgList" :key="item.id">
+    </div>
+    <div class="list" v-else>
+      <div class="item" v-for="item in msgList" :key="item.id">
         <div class="left">
-          <i class="el-icon-chat-dot-square"></i>
           <el-button type="primary" plain size="mini">{{ item.type }}</el-button>
           <span>{{ item.msg }}</span>
         </div>
         <div class="right">{{ item.createTime }}</div>
-      </div> -->
+      </div>
     </div>
     <el-pagination
       @current-change="handleCurrentChange"
@@ -54,11 +57,12 @@ export default {
         }
       ],
       checkAll: false,
-      isIndeterminate: true,
+      isIndeterminate: false,
       checkedList: [],
+      checkedAllList: [],
       msgList: [],
       listQuery: {
-        size: 15,
+        size: 10,
         current: 1,
         status: 2
       },
@@ -72,11 +76,18 @@ export default {
 
   methods: {
     getList () {
+      this.isIndeterminate = false
+      this.checkedList = []
       this.api.getMsgPage(this.listQuery).then(res => {
         if (res.success) {
           this.total = res.data.total
           this.msgList = res.data.records
-          this.msgList = this.msgList.concat(res.data.records)
+          const ids = []
+          for (let item of res.data.records) {
+            ids.push(item.id)
+          }
+          this.checkedAllList = ids
+          // this.msgList = this.msgList.concat(res.data.records)
         }
       })
     },
@@ -87,13 +98,25 @@ export default {
     },
 
     handleCheckAllChange(val) {
-      this.checkedList = val ? cityOptions : []
+      this.checkedList = val ? this.checkedAllList : []
       this.isIndeterminate = false
     },
     handleCheckedChange(value) {
       let checkedCount = value.length
-      this.checkAll = checkedCount === this.cities.length
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length
+      this.checkAll = checkedCount === this.checkedAllList.length
+      this.isIndeterminate = checkedCount > 0 && checkedCount < this.checkedAllList.length
+    },
+
+    handleRead () {
+      if (!this.checkedList.length) {
+        return this.$message.error('请至少选择一条消息')
+      }
+      this.api.getMsgYidu({ ids: this.checkedList.toString() }).then(res => {
+        if (res.success) {
+          this.$message.success('标记已读成功')
+          this.getList()
+        }
+      })
     }
   }
 }
@@ -104,11 +127,17 @@ export default {
   background-color: #fff;
   .select {
     padding: 15px 0 10px 15px;
+    span {
+      font-size: 14px;
+    }
+  }
+  .button {
+    padding: 0 0 20px 20px;
   }
   .list {
-    padding: 0 10px;
+    padding: 0 10px 0 20px;
     .item {
-      width: 95%;
+      // width: 95%;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -138,7 +167,11 @@ export default {
   }
   .el-checkbox {
     width: 100%;
-    display: block;
+    display: flex;
+    align-items: center;
+  }
+  .el-checkbox__label {
+    flex: 1;
   }
   // .el-checkbox__label {
   //   width: 80%;

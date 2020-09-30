@@ -69,7 +69,13 @@ export default [
     path: '/cred',
     name: 'Cred',
     component: () => import('@/views/menu/cred.vue'),
-    meta: { title: '证书管理' }
+    meta: { title: '机构证书' }
+  },
+  {
+    path: '/cred-person',
+    name: 'CredPerson',
+    component: () => import('@/views/menu/cred-person.vue'),
+    meta: { title: '个人证书' }
   },
   {
     path: '/cred/img',

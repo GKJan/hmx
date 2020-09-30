@@ -104,5 +104,69 @@ export default {
       method: 'get',
       params: params
     })
-  }
+  },
+
+  getPersonCredPage (params) {
+    return request({
+      url: '/zsPersonal/page',
+      method: 'get',
+      params: params
+    })
+  },
+
+  savePersonCred (params) {
+    return request({
+      url: '/zsPersonal/save',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+
+  delPersonCred (params) {
+    return request({
+      url: '/zsPersonal/del',
+      method: 'get',
+      params: params
+    })
+  },
+
+  getPersonCredCode (params) {
+    return request({
+      url: '/zsCategory/getAcCode',
+      method: 'get',
+      params: params
+    })
+  },
+
+  getOrganCredPage (params) {
+    return request({
+      url: '/zsDept/page',
+      method: 'get',
+      params: params
+    })
+  },
+
+  saveOrganCred (params) {
+    return request({
+      url: '/zsDept/save',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+
+  // delPersonCred (params) {
+  //   return request({
+  //     url: '/zsPersonal/del',
+  //     method: 'get',
+  //     params: params
+  //   })
+  // },
+
+  // getPersonCredCode (params) {
+  //   return request({
+  //     url: '/zsCategory/getAcCode',
+  //     method: 'get',
+  //     params: params
+  //   })
+  // },
 }

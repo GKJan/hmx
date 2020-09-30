@@ -132,28 +132,35 @@ export default {
           children: [
             {
               id: '9',
-              name: '证书列表',
+              name: '机构证书',
               path: '/cred',
               children: [],
               icon: 'icon-zhengshu'
             },
             {
+              id: '15',
+              name: '个人证书',
+              path: '/cred-person',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
               id: '10',
-              name: '证书审核管理',
+              name: '审核管理',
               path: '/audit',
               children: [],
               icon: 'icon-zhengshu'
             },
             {
               id: '11',
-              name: '证书分类管理',
+              name: '分类管理',
               path: '/cred/class',
               children: [],
               icon: 'icon-zhengshu'
             },
             {
               id: '12',
-              name: '证书数据统计',
+              name: '数据统计',
               path: '/cred/tj',
               children: [],
               icon: 'icon-tongji'
@@ -279,21 +286,28 @@ export default {
           children: [
             {
               id: '10',
-              name: '证书列表',
+              name: '机构证书',
               path: '/cred',
               children: [],
               icon: 'icon-zhengshu'
             },
             {
+              id: '15',
+              name: '个人证书',
+              path: '/cred-person',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
               id: '11',
-              name: '证书审核管理',
+              name: '审核管理',
               path: '/audit',
               children: [],
               icon: 'icon-zhengshu'
             },
             {
               id: '6',
-              name: '证书分类管理',
+              name: '分类管理',
               path: '/cred/class',
               children: [],
               icon: 'icon-zhengshu'
@@ -311,21 +325,28 @@ export default {
           children: [
             {
               id: '10',
-              name: '证书管理',
+              name: '机构证书',
               path: '/cred',
               children: [],
               icon: 'icon-zhengshu'
             },
             {
+              id: '15',
+              name: '个人证书',
+              path: '/cred-person',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
               id: '11',
-              name: '证书审核管理',
+              name: '审核管理',
               path: '/audit',
               children: [],
               icon: 'icon-zhengshu'
             },
             {
               id: '6',
-              name: '证书分类管理',
+              name: '分类管理',
               path: '/cred/class',
               children: [],
               icon: 'icon-zhengshu'
@@ -481,7 +502,7 @@ export default {
       // justify-content: center;
       background-color: #545c64;
       img {
-        width: 25px;
+        width: 22px;
         height: 30px;
         margin-left: 10px;
       }

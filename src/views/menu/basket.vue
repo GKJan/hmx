@@ -72,11 +72,11 @@
               align="center">
               <template slot-scope="scope">{{ scope.row.sex === 1 ? '男' : '女' }}</template>
             </el-table-column>
-            <!-- <el-table-column
+            <el-table-column
               prop="age"
               label="年龄"
               align="center">
-            </el-table-column> -->
+            </el-table-column>
             <!-- <el-table-column
               prop="height"
               label="身高"
@@ -153,7 +153,7 @@
               align="center">
               <template slot-scope="scope">{{ scope.row.sex === 1 ? '男' : '女' }}</template>
             </el-table-column>
-            <!-- <el-table-column
+            <el-table-column
               prop="birthday"
               label="出生年月"
               align="center">
@@ -162,7 +162,7 @@
               prop="age"
               label="年龄"
               align="center">
-            </el-table-column> -->
+            </el-table-column>
             <el-table-column
               prop="parentName"
               label="家长姓名"
@@ -221,15 +221,20 @@
             <el-radio :label="2">女</el-radio>
           </el-radio-group>
         </el-form-item>
-        <!-- <el-form-item label="出生年月" prop="birth">
+        <el-form-item label="出生年月" prop="birth">
           <el-date-picker
             v-model="form.birth"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="选择出生年月"
-            @change="handleChange">
+            placeholder="选择出生年月">
           </el-date-picker>
-        </el-form-item> -->
+        </el-form-item>
+        <el-form-item label="身高(cm)" prop="height">
+          <el-input v-model="form.height" placeholder="请输入身高"></el-input>
+        </el-form-item>
+        <el-form-item label="体重(kg)" prop="weight">
+          <el-input v-model="form.weight" placeholder="请输入体重"></el-input>
+        </el-form-item>
         <el-form-item label="家长姓名" prop="parentName">
           <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
         </el-form-item>
@@ -266,10 +271,38 @@
 
     <el-dialog width="600px" title="修改数据" :visible.sync="editDialog">
       <el-form ref="form" :model="form" :rules="rules" label-width="155px">
-        <el-form-item label="姓名" prop="name">
-          <el-input disabled v-model="form.name" placeholder="请输入姓名"></el-input>
+        <el-form-item label="场次" prop="sportId">
+          <el-select v-model="form.sportId" placeholder="请选择场次">
+            <el-option
+              v-for="item in sessionList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
-        <!-- <el-form-item label="出生年月" prop="birth">
+        <el-form-item label="校区" prop="school">
+          <el-input v-model="form.school" disabled placeholder="请输入校区"></el-input>
+        </el-form-item>
+        <el-form-item label="学员类型" prop="xyType">
+          <el-radio v-model="form.xyType" label="华蒙星学员"></el-radio>
+          <el-radio v-model="form.xyType" label="非学员"></el-radio>
+        </el-form-item>
+        <el-form-item label="班级" prop="type">
+          <el-radio v-model="form.type" :label="1">小班</el-radio>
+          <el-radio v-model="form.type" :label="2">中班</el-radio>
+          <el-radio v-model="form.type" :label="3">大班</el-radio>
+        </el-form-item>
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" prop="sex">
+          <el-radio-group v-model="form.sex">
+            <el-radio :label="1">男</el-radio>
+            <el-radio :label="2">女</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="出生年月" prop="birth">
           <el-date-picker
             v-model="form.birth"
             type="date"
@@ -277,7 +310,13 @@
             placeholder="选择出生年月"
             @change="handleChange">
           </el-date-picker>
-        </el-form-item> -->
+        </el-form-item>
+        <el-form-item label="身高(cm)" prop="height">
+          <el-input v-model="form.height" placeholder="请输入身高"></el-input>
+        </el-form-item>
+        <el-form-item label="体重(kg)" prop="weight">
+          <el-input v-model="form.weight" placeholder="请输入体重"></el-input>
+        </el-form-item>
         <el-form-item label="家长姓名" prop="parentName">
           <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
         </el-form-item>
@@ -336,6 +375,8 @@ export default {
         sportId: [{ required: true, message: '请选择场次', trigger: 'change' }],
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
+        height: [{ required: true, message: '请输入身高', trigger: 'blur' }],
+        weight: [{ required: true, message: '请输入体重', trigger: 'blur' }],
         school: [{ required: true, message: '请输入校区', trigger: 'blur' }],
         xyType: [{ required: true, message: '请选择学员类型', trigger: 'change' }],
         type: [{ required: true, message: '请选择班级', trigger: 'change' }],
@@ -446,9 +487,9 @@ export default {
       this.editDialog = true
       this.api.getBasketDetail({ id: this.selectList1[0].id }).then(res => {
         if (res.success) {
-          const { id, sportId, school, xyType, type, name, sex, parentName, phone, rall, dsDribble, bat, pass, shoot } = res.data
-          this.form = { id, sportId, school, xyType, type, name, sex, parentName, phone, rall, dsDribble, bat, pass, shoot }
-          // this.$set(this.form, 'birth', res.data.birthday)
+          const { id, sportId, school, xyType, type, name, sex, height, weight, parentName, phone, rall, dsDribble, bat, pass, shoot } = res.data
+          this.form = { id, sportId, school, xyType, type, name, sex, height, weight, parentName, phone, rall, dsDribble, bat, pass, shoot }
+          this.$set(this.form, 'birth', res.data.birthday)
         }
       })
     },

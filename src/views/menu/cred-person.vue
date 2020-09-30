@@ -5,9 +5,8 @@
       <el-tab-pane label="机构证书"></el-tab-pane>
     </el-tabs> -->
     <table-panel
-      v-loading="loading"
       ref="table"
-      :apiMethod="api.getOrganCredPage"
+      :apiMethod="api.getPersonCredPage"
       @handleSelectionChange="handleSelectionChange"
     >
       <template #searchItem>
@@ -17,24 +16,24 @@
             <el-option v-for="item in typeList" :key="item.id" :label="item.dictValue" :value="item.dictValue"></el-option>
           </el-select>
         </div> -->
-        <div class="search-item">
-          <span>加盟类型</span>
-          <el-select v-model="listQuery.categoryId" clearable placeholder="请选择加盟类型">
+        <!-- <div class="search-item">
+          <span>证书分类</span>
+          <el-select v-model="listQuery.categoryId" clearable placeholder="请选择证书分类">
             <el-option v-for="item in queryCategoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </div>
-        <!-- <div class="search-item">
+        <div class="search-item">
           <span>姓名</span>
           <el-input v-model="listQuery.name" placeholder="请输入姓名"></el-input>
         </div> -->
         <!-- <div class="search-item">
-          <span>机构名称</span>
+          <span>单位名称</span>
           <el-input v-model="listQuery.deptName" placeholder="请输入单位名称"></el-input>
-        </div>
-        <div class="search-item">
-          <span>证书编号</span>
-          <el-input v-model="listQuery.code" placeholder="请输入证书编号"></el-input>
         </div> -->
+        <div class="search-item">
+          <span>证书名称</span>
+          <el-input v-model="listQuery.zsName" placeholder="请输入证书名称"></el-input>
+        </div>
         <div class="search-item">
           <el-button type="primary" icon="el-icon-search" @click="$refs.table.getList()">搜索</el-button>
         </div>
@@ -50,24 +49,19 @@
           type="selection"
           align="center">
         </el-table-column>
-        <!-- <el-table-column
+        <el-table-column
           prop="name"
           label="姓名"
           align="center">
         </el-table-column>
-        <el-table-column
-          prop="idCard"
-          label="身份证号"
-          align="center">
-        </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           label="性别"
           align="center">
           <template slot-scope="scope">{{ scope.row.state === 1 ? '男' : '女' }}</template>
         </el-table-column> -->
         <el-table-column
-          prop="deptName"
-          label="机构名称"
+          prop="categoryId"
+          label="证书分类"
           align="center">
         </el-table-column>
         <el-table-column
@@ -76,89 +70,106 @@
           align="center">
         </el-table-column>
         <el-table-column
-          prop="categoryType"
-          label="证书类型"
+          prop="zsName"
+          label="证书名称"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="pxName"
+          label="培训名称"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="content"
+          label="授权内容"
           align="center">
         </el-table-column>
         <el-table-column
           label="证书有效期"
           align="center">
-          <template slot-scope="scope">{{ scope.row.stTime }} ~ {{ scope.row.sxTime }}</template>
+          <template slot-scope="scope">{{ scope.row.startTime }} ~ {{ scope.row.endTime }}</template>
         </el-table-column>
       </template>
     </table-panel>
-    <el-dialog width="500px" :title="action === 'add' ? '新增加盟商' : '编辑加盟商'" :visible.sync="dialog">
+    <el-dialog width="500px" :title="action === 'add' ? '新增证书' : '编辑证书'" :visible.sync="dialog">
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <!-- <el-form-item label="证书类型" prop="categoryType">
           <el-select v-model="form.categoryType" placeholder="请选择证书类型" @change="handleChange">
             <el-option v-for="item in typeList" :key="item.dictValue" :label="item.dictValue" :value="item.dictValue"></el-option>
           </el-select>
         </el-form-item> -->
-        <el-form-item label="加盟类型" prop="categoryId">
-          <el-select v-model="form.categoryId" placeholder="请选择加盟类型">
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="照片" prop="icon">
+          <img-upload v-model="form.icon" />
+        </el-form-item>
+        <el-form-item label="证书分类" prop="categoryId">
+          <el-select v-model="form.categoryId" placeholder="请选择证书分类" @change="handleChange">
             <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="加盟商名称">
-          <el-input v-model="form.name" placeholder="请输入加盟商名称"></el-input>
+        <el-form-item label="证书编号" prop="code">
+          <el-input placeholder="请输入证书编号" v-model="form.code">
+            <template slot="prepend">{{ preCode }}</template>
+          </el-input>
+          <!-- <el-input v-model="form.code" disabled placeholder="请输入证书编号"></el-input> -->
         </el-form-item>
-        <el-form-item label="加盟商地址">
-          <el-input v-model="form.address" placeholder="请输入加盟商地址"></el-input>
+        <el-form-item label="证书名称" prop="zsName">
+          <el-input v-model="form.zsName" disabled placeholder="请输入证书名称"></el-input>
         </el-form-item>
-        <el-form-item label="对接销售">
-          <el-input v-model="form.djxs" placeholder="请输入对接销售"></el-input>
+        <el-form-item label="培训名称" prop="pxName">
+          <el-input v-model="form.pxName" placeholder="请输入培训名称"></el-input>
         </el-form-item>
-        <el-form-item label="加盟金额">
-          <el-input v-model="form.amount" placeholder="请输入加盟金额"></el-input>
+        <el-form-item label="授权内容" prop="content">
+          <el-input v-model="form.content" placeholder="请输入授权内容"></el-input>
         </el-form-item>
-        <el-form-item label="所属子公司">
-          <el-input v-model="form.company" placeholder="请输入所属子公司"></el-input>
-        </el-form-item>
-        <el-form-item label="联系人姓名">
-          <el-input v-model="form.lxrName" placeholder="请输入联系人姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="联系人电话">
-          <el-input v-model="form.lxrMobile" placeholder="请输入联系人电话"></el-input>
-        </el-form-item>
-        <el-form-item label="联系人职务">
-          <el-input v-model="form.lxrPost" placeholder="请输入联系人职务"></el-input>
-        </el-form-item>
-        <el-form-item label="合同编号">
-          <el-input v-model="form.htNumber" placeholder="请输入合同编号"></el-input>
-        </el-form-item>
-        <el-form-item label="合同归档">
-          <el-radio v-model="form.htgd" label="已归档"></el-radio>
-          <el-radio v-model="form.htgd" label="未归档"></el-radio>
-        </el-form-item>
-        <el-form-item label="合同开始日期">
+        <!-- <template v-if="form.categoryType === '个人证书'"> -->
+          <!-- <el-form-item label="性别">
+            <el-radio v-model="form.sex" :label="1">男</el-radio>
+            <el-radio v-model="form.sex" :label="2">女</el-radio>
+          </el-form-item>
+          <el-form-item label="身份证号">
+            <el-input v-model="form.idCard" maxlength="18" placeholder="请输入身份证号"></el-input>
+          </el-form-item>
+          <el-form-item label="照片">
+            <img-upload v-model="form.icon" />
+          </el-form-item> -->
+        <!-- </template> -->
+        <!-- <template v-if="form.categoryType === '机构证书'">
+          <el-form-item label="单位名称">
+            <el-input v-model="form.deptName" placeholder="请输入单位名称"></el-input>
+          </el-form-item>
+        </template> -->
+        <!-- <el-form-item label="培训名称">
+          <el-input v-model="form.pxName" placeholder="请输入培训名称"></el-input>
+        </el-form-item> -->
+        <el-form-item label="证书生效日期" prop="startTime">
           <el-date-picker
-            v-model="form.htStartTime"
+            v-model="form.startTime"
             type="date"
             value-format="yyyy-MM-dd"
             range-separator="至"
-            placeholder="选择开始日期">
+            placeholder="选择生效日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="合同结束日期">
+        <el-form-item label="证书失效日期" prop="endTime">
           <el-date-picker
-            v-model="form.htEndTime"
+            v-model="form.endTime"
             type="date"
             value-format="yyyy-MM-dd"
             range-separator="至"
-            placeholder="选择结束日期">
+            placeholder="选择失效日期">
           </el-date-picker>
         </el-form-item>
         <!-- <el-form-item label="直传证书">
           <img-upload v-model="form.path" />
         </el-form-item> -->
-        <el-form-item label="所属区域">
-          <el-cascader
-            v-model="form.areaCode"
-            :options="areaList"
-            :props="areaProps"
-          >
-          </el-cascader>
-        </el-form-item>
+        <!-- <el-form-item label="所属区域" prop="areaId">
+          <el-select v-model="form.areaId" placeholder="请选择所属区域">
+            <el-option v-for="item in areaList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialog = false">取 消</el-button>
@@ -179,15 +190,6 @@ export default {
   },
   data () {
     return {
-      areaList: [],
-      loading: true,
-      areaProps: {
-        expandTrigger: 'hover',
-        checkStrictly: true,
-        value: 'code',
-        label: 'name',
-        children: 'childArea'
-      },
       listQuery: {},
       dialog: false,
       form: {
@@ -195,22 +197,21 @@ export default {
       action: 'add',
       rules: {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
-        idCard: [{ required: true, message: '请输入身份证号', trigger: 'blur' }],
         icon: [{ required: true, message: '请上次照片', trigger: 'blur' }],
-        categoryType: [{ required: true, message: '请选择证书类型', trigger: 'blur' }],
-        categoryId: [{ required: true, message: '请选择证书分类', trigger: 'blur' }],
-        areaId: [{ required: true, message: '请选择所属区域', trigger: 'blur' }],
-        deptName: [{ required: true, message: '请输入单位名称', trigger: 'blur' }],
+        categoryId: [{ required: true, message: '请选择证书分类', trigger: 'change' }],
         code: [{ required: true, message: '请输入证书编号', trigger: 'blur' }],
-        stTime: [{ required: true, message: '请选择证书开始有效期', trigger: 'blur' }],
-        sxTime: [{ required: true, message: '请选择证书结束有效期', trigger: 'blur' }]
+        zsName: [{ required: true, message: '请输入证书名称', trigger: 'blur' }],
+        pxName: [{ required: true, message: '请输入培训名称', trigger: 'blur' }],
+        content: [{ required: true, message: '请输入授权内容', trigger: 'blur' }],
+        startTime: [{ required: true, message: '请选择生效日期', trigger: 'change' }],
+        endTime: [{ required: true, message: '请选择失效日期', trigger: 'change' }]
       },
       categoryList: [],
       queryCategoryList: [],
       typeList: [],
       areaList: [],
-      selectList: []
+      selectList: [],
+      preCode: ''
     }
   },
 
@@ -219,12 +220,11 @@ export default {
     this.getQueryCategory()
     this.getCategory()
     this.getArea()
-    this.getAreaList()
   },
 
   mounted () {
     this.listQuery = this.$refs.table.listQuery
-    this.listQuery.categoryType = '机构证书'
+    // this.listQuery.categoryType = '个人证书'
     // setTimeout(() => {
     //   this.form.categoryType = '机构证书'
     //   this.$set(this.form, 'categoryType', '机构证书')
@@ -249,15 +249,6 @@ export default {
   },
 
   methods: {
-    getAreaList () {
-      this.api.getArea().then(res => {
-        if (res.success) {
-          this.areaList = res.data
-          this.loading = false
-        }
-      })
-    },
-
     getType () {
       this.api.getDictList({ code: 'zs' }).then(res => {
         if (res.success) {
@@ -266,13 +257,20 @@ export default {
       })
     },
 
-    handleChange () {
-      this.$set(this.form, 'categoryId', '')
-      this.getCategory()
+    handleChange (val) {
+      // this.$set(this.form, 'categoryId', '')
+      // this.getCategory()
+      this.api.getPersonCredCode({ id: val }).then(res => {
+        if (res.success) {
+          this.$set(this.form, 'zsName', res.data.name)
+          // this.$set(this.form, 'code', res.data.code)
+          this.preCode = res.data.code
+        }
+      })
     },
 
     getCategory () { // this.form.categoryType
-      this.api.getzsCategoryPage({ size: 20, type: '机构证书' }).then(res => {
+      this.api.getzsCategoryPage({ size: 20, type: '个人证书' }).then(res => {
         if (res.success) {
           this.categoryList = res.data.records
         }
@@ -280,7 +278,7 @@ export default {
     },
 
     getQueryCategory () {
-      this.api.getzsCategoryPage({ size: 20, type: '机构证书' }).then(res => {
+      this.api.getzsCategoryPage({ size: 20, type: '个人证书' }).then(res => {
         if (res.success) {
           this.queryCategoryList = res.data.records
         }
@@ -298,9 +296,9 @@ export default {
     toEdit () {
       this.action = 'edit'
       this.dialog = true
-      const { id, categoryId, name, address, djxs, amount, company, lxrName, lxrMobile, lxrPost, htNumber, htgd, htStartTime, htEndTime, areaCode } = this.selectList[0]
-      this.form = { id, categoryId, name, address, djxs, amount, company, lxrName, lxrMobile, lxrPost, htNumber, htgd, htStartTime, htEndTime, areaCode }
-      // this.getCategory()
+      const { id, name, icon, categoryId, code, zsName, pxName, content, startTime, endTime } = this.selectList[0]
+      this.form = { id, name, icon, categoryId, code, zsName, pxName, content, startTime, endTime }
+      this.handleChange(this.selectList[0].categoryId)
     },
 
     toDetail () {
@@ -310,8 +308,9 @@ export default {
     handleAdd () {
       this.$refs.form.validate((valid) => {
         if (valid) {
+          this.form.code = this.preCode + this.form.code
           if (this.action === 'add') {
-            this.api.saveOrganCred(this.form).then((res) => {
+            this.api.savePersonCred(this.form).then((res) => {
               if (res.success) {
                 this.$message.success('新增成功，审核通过后可查看')
                 this.dialog = false
@@ -320,7 +319,7 @@ export default {
               }
             })
           } else {
-            this.api.saveOrganCred(this.form).then((res) => {
+            this.api.savePersonCred(this.form).then((res) => {
               if (res.success) {
                 this.$message.success('编辑成功')
                 this.dialog = false
@@ -343,7 +342,7 @@ export default {
         for (let item of this.selectList) {
           ids.push(item.id)
         }
-        this.api.delCerd({ ids: ids.toString() }).then(res => {
+        this.api.delPersonCred({ ids: ids.toString() }).then(res => {
           if (res.success) {
             this.$message.success('删除成功')
             this.$refs.table.listQuery.current = 1

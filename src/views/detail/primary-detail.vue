@@ -456,7 +456,7 @@ export default {
           name: '肺活量', my: res.data.feiHl, avg: res.data.feiHlAvg, unit: 'ml'
         },
         {
-         name: '灵敏性',  my: res.data.sensitiveAvg, avg: res.data.sensitives, unit: 'cm'
+         name: '灵敏性',  my: res.data.sensitives, avg: res.data.sensitiveAvg, unit: 's'
         },
         {
           name: '柔韧性', my: res.data.flexibility, avg: res.data.flexibilityAvg, unit: 'cm'

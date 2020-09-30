@@ -96,7 +96,7 @@ export default {
         type: [{ required: true, message: '请选择类型', trigger: 'change' }]
       },
       selectList: [],
-      areaProps: {
+      areaPropsareaProps: {
         expandTrigger: 'hover',
         checkStrictly: true,
         value: 'code',

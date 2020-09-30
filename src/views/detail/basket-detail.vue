@@ -7,6 +7,7 @@
     </div>
     <div class="wrapper" id="content">
       <div class="info-item">
+        <!-- <div class="cover"></div> -->
         <span class="text1">{{ info.name }}</span>
         <span class="text2">{{ info.sex === 1 ? '男' : '女' }}</span>
         <span class="text3">{{ info.birthday }}</span>
@@ -26,10 +27,10 @@
               <div></div>
               <span>实际测量</span>
             </div>
-            <div class="pingjun">
+            <!-- <div class="pingjun">
               <div></div>
               <span>全国平均值</span>
-            </div>
+            </div> -->
           </div>
           <div class="content">
             <div class="item" v-for="item in compareData" :key="item.my">
@@ -37,15 +38,15 @@
               <div class="compare">
                 <template v-if="item.my < item.avg">
                   <div class="top1"></div>
-                  <div class="bottom"></div>
+                  <!-- <div class="bottom"></div> -->
                 </template>
                 <template v-else-if="item.my > item.avg">
                   <div class="top3"></div>
-                  <div class="bottom"></div>
+                  <!-- <div class="bottom"></div> -->
                 </template>
                 <template v-else>
                   <div class="top2"></div>
-                  <div class="bottom"></div>
+                  <!-- <div class="bottom"></div> -->
                 </template>
               </div>
             </div>
@@ -85,6 +86,73 @@
           <img src="../../assets/primary/title.png" class="left">
           <img src="../../assets/primary/web.png" class="right">
         </div>
+        <div class="title">体态测试</div>
+        <div class="box-content">
+          <div class="box-small">
+            <div class="small-title">项目1：身高</div>
+            <div class="tushi">
+              <div class="shiji">
+                <div></div>
+                <span>实际测量</span>
+              </div>
+              <div class="pingjun">
+                <div></div>
+                <span>全国平均值</span>
+              </div>
+            </div>
+            <div class="zhanshi">
+              <span class="left">{{ info.height }}cm</span>
+              <template v-if="info.sex === 1">
+                <img v-if="info.height < info.hightAvg" src="../../assets/wx/小鹅通评估报告-39.png">
+                <img v-else-if="info.height > info.hightAvg" src="../../assets/wx/小鹅通评估报告-41.png">
+                <img v-else src="../../assets/wx/小鹅通评估报告-40.png">
+              </template>
+              <template v-else>
+                <img v-if="info.height < info.hightAvg" src="../../assets/wx/小鹅通评估报告-36.png">
+                <img v-else-if="info.height > info.hightAvg" src="../../assets/wx/小鹅通评估报告-37.png">
+                <img v-else src="../../assets/wx/小鹅通评估报告-38.png">
+              </template>
+              <span class="right">{{ info.hightAvg }}cm</span>
+            </div>
+            <div class="text" v-if="info.heightScore < 12">
+              数据显示幼儿身高偏低，建议咨询相关生长发育的专家及教师，注重幼儿营养均衡，定期保证幼儿一定量和强度的运动，建议晚间9-10点必须入睡，保证优质睡眠。
+            </div>
+            <div class="text" v-else-if="info.heightScore >= 16">
+              幼儿处于身体发育比较好的水平，但也不能大意，因为幼儿时期决定不了成年后的身高，如果有营养及体育锻炼，才能保障孩子打下坚实的基础。希望继续保持良好的作息、运动和饮食习惯。
+            </div>
+            <div class="text" v-else>
+              幼儿身高处于正常发育水平，但如果想让孩子长高，注重幼儿营养均衡，定期保证幼儿一定量和强度的运动，建议晚间9-10点必须入睡，保证优质睡眠。
+            </div>
+          </div>
+          <div class="box-small">
+            <div class="small-title">项目2：BMI</div>
+            <div class="tushi">
+              <div class="shiji">
+                <div></div>
+                <span>实际测量：{{ info.ibm }}</span>
+              </div>
+              <div class="pingjun">
+                <div></div>
+                <span>全国平均值：{{ info.bmiAvg }}</span>
+              </div>
+            </div>
+            <div class="zhanshi">
+              <div class="method">
+                <span>计算公式：</span>
+                <img src="../../assets/img/method.png" class="method">
+              </div>
+            </div>
+            <div class="text" v-if="info.ibmScore === 4">
+              特别注意一个警惕信号，如果孩子没有病态并导致这个情况，要么孩子过胖、要么过廋，过胖唯一解决孩子的方式是少吃多动，建立合理的饮食，少摄入脂肪，多进行一些有氧运动。过廋是因为身体的吸收能量过少导致，适当的运动可以让孩子身体机能活力增强，新陈代谢加快，促进胃腺的活动，增加孩子饥饿感，并增强食欲。
+            </div>
+            <div class="text" v-else-if="info.ibmScore === 20">
+              体态非常优秀，希望继续保持，保持良好的饮食习惯和睡眠习惯，有规律的进行周期性运动。
+            </div>
+            <div class="text" v-else>
+              身体发育正常，但与正常值有点偏，建议加强运动，合理饮食，保证良好的作息习惯，使身体肌肉的质量增加，增强协调性和灵敏性，是幼儿时期最重要的砝码。
+            </div>
+          </div>
+        </div>
         <div class="title">篮球技能</div>
         <div class="box-content">
           <div class="box-small">
@@ -104,14 +172,8 @@
             <div class="zhanshi">
               <div class="basket">
                 <img src="../../assets/primary/lq1.png" class="lq1">
-                <span v-if="info.rallScore <= 8">
-                  建议：培养幼儿兴趣为主，加强身体的协助性，在家可以采用全蹲体前左右滚球，与家长面对面地滚球，眼睛看目标（球）滚动，每次练习 5-8 分钟，一周练习 2-3 次，期待着孩子进步
-                </span>
-                <span v-else-if="8 < info.rallScore < 16">
-                  建议：以幼儿手眼协助为主，通过胯下滚球，左右手交替协调滚球，坚持有效的练习，相信幼儿会取得更大的进步
-                </span>
-                <span v-else>
-                  建议：每周坚持 2-3 次的球性练习，幼儿对球感觉越来越好，每次练习不小于 20 分钟，希望幼儿取得比较大的进步
+                <span>
+                  {{ rallScore }}
                 </span>
               </div>
             </div>
@@ -134,19 +196,22 @@
             <div class="zhanshi">
               <div class="basket">
                 <img src="../../assets/primary/lq1.png" class="lq1">
-                <span v-if="info.dsDribbleScore <= 8">
-                  建议：培养幼儿成功感，前期家长可以手握幼儿手，让幼儿找准节奏，再慢慢放手，采用 7 号或者 5 号球，节奏感会更易把握
-                </span>
-                <span v-else-if="8 < info.dsDribbleScore < 16">
-                  建议：在教幼儿时，给予幼儿及时肯定，一周练习 3-5 次，每次能连续拍 20 下，可采用 5 号球，有节奏拍起球
-                </span>
-                <span v-else>
-                  建议：坚持每周练习 2-3 次，连续拍球 1 分钟以上，拍球范围尽量在 1-2 米之内
+                <span>
+                  {{ dsDribbleScore }}
                 </span>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="part-item">
+        <div class="header">
+          <img src="../../assets/primary/title.png" class="left">
+          <img src="../../assets/primary/web.png" class="right">
+        </div>
+        <div class="title">篮球技能</div>
+        
         <div class="box-content">
           <div class="box-small">
             <div class="small-title">项目3：行进间运球</div>
@@ -166,14 +231,8 @@
             <div class="zhanshi">
               <div class="basket">
                 <img src="../../assets/primary/lq2.png" class="lq2">
-                <span v-if="info.batScore <= 8">
-                  建议：让幼儿原地熟悉连续拍球 30 下，可以原地拍一下球，往前走一步，3 米能连续运球，5 米慢慢增加 8 米行进间运球
-                </span>
-                <span v-else-if="8 < info.batScore < 16">
-                  建议：在原地熟悉连续拍球 50 下，尝试左手/右手，右左手交替运球，以幼儿最快最舒服的运球方式终于站后折返运球
-                </span>
-                <span v-else>
-                  建议：坚持每周练习 2-3 次，连续拍球 1 分钟以上，拍球范围尽量在 1-2 米之内
+                <span>
+                  {{ batScore }}
                 </span>
               </div>
             </div>
@@ -196,14 +255,8 @@
             <div class="zhanshi">
               <div class="basket">
                 <img src="../../assets/primary/lq3.png" class="lq3">
-                <span v-if="info.passScore <= 8">
-                  建议：让幼儿原地熟悉连续拍球 30 下，可以原地拍一下球，往前走一步，3 米能连续运球，5 米慢慢增加 8 米行进间运球
-                </span>
-                <span v-else-if="8 < info.passScore < 16">
-                  建议：幼儿可练习地滚球，朝着目标将球“滚出”，接着朝着目标“抛出”，让幼儿感兴趣，最后家长一周让幼儿练习 2-3 次
-                </span>
-                <span v-else>
-                  建议：保持一周练习 2-3 次，适当通过手脚爬、手膝爬等爬行动作，来锻炼上肢力量，再进行有目标抛/传球
+                <span>
+                  {{ passScore }}
                 </span>
               </div>
             </div>
@@ -228,21 +281,18 @@
             <div class="zhanshi">
               <div class="basket">
                 <img src="../../assets/primary/lq4.png" class="lq4">
-                <span v-if="info.shootScore <= 8">
-                  建议：保持一周练习 2-3 次，适当通过手脚爬、手膝爬等爬行动作，来锻炼上肢力量，再进行有目标投篮，比如家长举起手，幼儿将球投到家长手上
-                </span>
-                <span v-else-if="8 < info.shootScore < 16">
-                  建议：让幼儿获得成功喜悦，家长一周 2-3 次，让幼儿将球投到指点的位置，比如墙壁贴怪兽，让幼儿打怪兽等
-                </span>
-                <span v-else>
-                  建议：保持一周练习 2-3 次，建意适合的篮筐，让幼儿定点投篮，注意动作发力点
+                <span>
+                  {{ shootScore }}
                 </span>
               </div>
             </div>
           </div>
           <div class="right1">
-            <img src="../../assets/img/basket.png">
+            <img src="../../assets/primary/left1.png">
           </div>
+        </div>
+        <div class="logo">
+          <img src="../../assets/img/basket.png">
         </div>
       </div>
 
@@ -274,11 +324,11 @@ export default {
   computed: {
     pingyu () {
       if (this.info.type == 1) {
-        if (this.total <= 40) {
+        if (this.total < 60) {
           return `孩子身体协调能力比全国现年龄段孩子水平偏弱，如长期发展，会对孩子身心健康产生比较大影响。
           （1）合理安排户外运动 10 分钟以上，一周不小于 2 次，培训孩子运动兴趣，家长共同参与，比如简单坐地面滚球、滚球打保龄球；
           （2）让孩子在运动中获得成功喜悦，多鼓励幼儿尝试，前期可以手把手教孩子拍球，每次练习不小于 10 分钟。`
-        } else if (40 < this.total < 80) {
+        } else if (this.total > 59 && this.total < 80) {
           return `孩子身体协调能力达到全国现年龄段孩子正常水平，坚持让孩子在运动中找到兴趣，让孩子乐于其中。
           （1）坚持运动让孩子更加自信，乐观，在兴趣基础上，增加运动时长和次数，孩子也越来越健康；
           （2）原地连续拍球 30 以上，增加非优势肢体锻炼，让左右手稳定拍球，左右脑得到有效锻炼，适合增加行进间运球速度，快速并且稳定左右手行进间运球 10 米返回。`
@@ -289,10 +339,10 @@ export default {
         }
       }
       if (this.info.type == 2) {
-        if (this.total <= 40) {
+        if (this.total < 60) {
           return `每周适当 2-3 次户外锻炼，有针对性加强身体的爬、走、跑、跳等。
           （1）合理安排户外运动 15 分钟以上，一周不小于 2 次，培训孩子运动兴趣，家长共同参与，让孩子在运动中获得成功喜悦，多鼓励幼儿尝试，前期可以手把手教孩子拍球，每次练习不小于 15 分钟。`
-        } else if (40 < this.total < 80) {
+        } else if (this.total > 59 && this.total < 80) {
           return `坚持每周球性练习，让孩子将球围绕头、腰、膝盖、胯下，转圈，动作由慢到快，巩固球性练习，打好基本功。
           （1）坚持运动让孩子更加自信，乐观，在兴趣基础上，增加运动时长和次数，孩子也越来越健康；
           （2）原地连续拍球 40 以上，增加非优势肢体锻炼，让左右手稳定拍球，左右脑得到有效锻炼，适合增加行进间运球速度，快速并且稳定左右手行进间运球 10 米返回。`
@@ -303,9 +353,9 @@ export default {
         }
       }
       if (this.info.type == 3) {
-        if (this.total <= 40) {
+        if (this.total < 60) {
           return '户外运动时，结合篮球游戏，让孩子乐意参与游戏中，切记不能采用机械训练。合理安排户外运动 20 分钟以上，一周不小于 2 次，培训孩子运动兴趣，家长共同参与，比如简单坐地面滚球、滚球打保龄球，让孩子在运动中获得成功喜悦，多鼓励幼儿尝试。'
-        } else if (40 < this.total < 80) {
+        } else if (this.total > 59 && this.total < 80) {
           return `行进间运球由慢到快，运球平衡，并且灵活，10 米快速运球一周练习 5-8 次。
           （1）坚持运动让孩子更加自信，乐观，在兴趣基础上，增加运动时长和次数，孩子也越来越健康；
           （2）原地连续拍球 60 以上，增加非优势肢体锻炼，让左右手稳定拍球，左右脑得到有效锻炼，适合增加行进间运球速度，快速并且稳定左右手行进间运球 10 米返回。`
@@ -313,6 +363,181 @@ export default {
           return `结合传球、投篮、运球，有针对性完成篮球作业，多参与篮球比赛活动，让孩子在篮球中找到快乐、自信。
           （1）孩子在运动中表现，及时肯定和表扬，让孩子在运动中找到快乐，快乐运动中，养成运动良好习惯；
           （2）在速度上，一周 2-3 次 10 米行进间运球，练习 3 组。在身体协调上，左右手都稳定拍球 65 个以上，一周练习 2-3 次。在上肢力量，投篮 1.8 米高篮筐，每次练习 3-5 次，每组 10 个。`
+        }
+      }
+    },
+    rallScore () {
+      if (this.info.type == 1) {
+        if (this.info.rallScore >= 4 && this.info.rallScore <= 8) {
+          return '数据显示幼儿球感偏低，建意培养幼儿兴趣为主，加强身体的协助性，在家可以采用全蹲体前左右滚球，与家长面对面地滚球，眼睛看目标（球）滚动，每次练习4-6分钟，一周练习2-3次，期待着孩子进步'
+        }
+        if (this.info.rallScore >= 12 && this.info.rallScore <= 16) {
+          return '测试结果幼儿球感处于中等水平，建意以幼儿手眼协助为主，通过胯下滚球，左右手交替协调滚球，坚持有效的练习，相信幼儿会取得更大的进步'
+        }
+        if (this.info.rallScore == 20) {
+          return '测试显示幼儿球感非常优秀，建意每周坚持2-3次的球性练习，幼儿对球感越来越好，每次练习不小于10分钟，希望幼儿取得比较大的进步'
+        }
+      }
+      if (this.info.type == 2) {
+        if (this.info.rallScore >= 4 && this.info.rallScore <= 8) {
+          return '数据显示幼儿球感偏低，建意培养幼儿兴趣为主，加强身体的协助性，在家可以采用全蹲体前左右滚球，与家长面对面地滚球，眼睛看目标（球）滚动，每次练习5-8分钟，一周练习2-3次，期待着孩子进步'
+        }
+        if (this.info.rallScore >= 12 && this.info.rallScore <= 16) {
+          return '测试结果幼儿球感处于中等水平，建意练习以幼儿手眼协助为主，通过胯下滚球，左右手交替协调滚球，坚持有效的练习，相信幼儿会取得更大的进步'
+        }
+        if (this.info.rallScore == 20) {
+          return '测试显示幼儿球感非常优秀，建意每周坚持2-3次的球性练习，幼儿对球感越来越好，每次练习不小于15分钟，希望幼儿取得比较大的进步'
+        }
+      }
+      if (this.info.type == 3) {
+        if (this.info.rallScore >= 4 && this.info.rallScore <= 8) {
+          return '数据显示幼儿球感偏低，建意培养幼儿兴趣为主，加强身体的协助性，在家可以采用三绕环，将球围绕脖子、腰、膝盖转圈，眼睛看目标（球）滚动，每次练习5-8分钟，一周练习2-3次，期待着孩子进步'
+        }
+        if (this.info.rallScore >= 12 && this.info.rallScore <= 16) {
+          return '测试结果幼儿球感处于中等水平，建意练习以幼儿手眼协助为主，通过胯下左右手交替8字滚球，坚持有效的练习，相信幼儿会取得更大的进步'
+        }
+        if (this.info.rallScore == 20) {
+          return '测试显示幼儿球感非常优秀，建意每周坚持3-4次的球性练习，幼儿对球感越来越好，每次练习不小于20分钟，希望幼儿取得比较大的进步'
+        }
+      }
+    },
+    dsDribbleScore () {
+      if (this.info.type == 1) {
+        if (this.info.dsDribbleScore >= 4 && this.info.dsDribbleScore <= 8) {
+          return '数据显示幼儿原地运球能力偏低，建意培养幼儿成功感，前期家长可以手握幼儿手原地运球，让幼儿找准节奏，再慢慢放手，可采用7号或者5号球，节奏感会更易把握'
+        }
+        if (this.info.dsDribbleScore >= 12 && this.info.dsDribbleScore <= 16) {
+          return '测试结果幼儿原地运球能力处于中等水平，建意幼儿蹲下双手有节奏运球，家长与幼儿互动时，给予幼儿及时肯定，一周练习3-5次，每次能连续拍20下，可采用5号球，有节奏拍起球'
+        }
+        if (this.info.dsDribbleScore == 20) {
+          return '测试显示幼儿原地运球非常优秀，建意坚持每周练习2-3次，连续拍球1分钟以上，拍球范围尽量在直径2米之内'
+        }
+      }
+      if (this.info.type == 2) {
+        if (this.info.dsDribbleScore >= 4 && this.info.dsDribbleScore <= 8) {
+          return '数据显示幼儿原地运球能力偏低，建意培养幼儿成功感，前期家长可以手握幼儿手进行运球，让幼儿找准节奏，再慢慢放手，可采用5号球，节奏感会更易把握'
+        }
+        if (this.info.dsDribbleScore >= 12 && this.info.dsDribbleScore <= 16) {
+          return '测试结果幼儿原地运球能力处于中等水平，建意幼儿站立两脚打开，双手有节奏运球，家长在与幼儿互动时，给予幼儿及时肯定，一周练习3-4次，每次能连续拍30下，可采用5号球，有节奏拍起球'
+        }
+        if (this.info.dsDribbleScore == 20) {
+          return '测试显示幼儿原地运球非常优秀，建意坚持每周练习3-4次，连续拍球1分钟以上，拍球范围尽量在1-2米之内'
+        }
+      }
+      if (this.info.type == 3) {
+        if (this.info.dsDribbleScore >= 4 && this.info.dsDribbleScore <= 8) {
+          return '数据显示幼儿原地运球能力偏低，建意培养幼儿成功感，前期幼儿可以蹲下双手有节奏运球，让幼儿找准节奏，再站立双手有节奏运球，采用7号或者5号球，节奏感会更易把握'
+        }
+        if (this.info.dsDribbleScore >= 12 && this.info.dsDribbleScore <= 16) {
+          return '测试显示幼儿原地运球处于中等水平，建意在幼儿原地单手连续运球时，给予幼儿及时肯定，一周练习3-5次，每次能连续拍40下，可采用5号球，有节奏拍起球'
+        }
+        if (this.info.dsDribbleScore == 20) {
+          return '测试显示幼儿原地运球非常优秀，建意坚持每周练习2-3次，连续运球1分钟以上，运球次数每一次都有所增加，运球范围尽量在1米之内'
+        }
+      }
+    },
+    batScore () {
+      if (this.info.type == 1) {
+        if (this.info.batScore >= 4 && this.info.batScore <= 8) {
+          return '数据显示幼儿行进间运球水平偏低，建意让幼儿原地熟悉连续拍球30下，可以原地拍一下球，往前走一步，3米能连续运球，5米慢慢增加8米行进间运球'
+        }
+        if (this.info.batScore >= 12 && this.info.batScore <= 16) {
+          return '测试结果幼儿原地运球能力处于中等水平，建意在原地熟悉连续拍球50下，尝试左手/右手，右左手交替运球，以幼儿最快最舒服的运球方式，起来到终点折返运球'
+        }
+        if (this.info.batScore == 20) {
+          return '测试显示幼儿行进间运球非常优秀，建意坚持每周练习2-3次，8米直线行进间运球返回，多采用非优势手行进间运球或者左右手行进间运球'
+        }
+      }
+      if (this.info.type == 2) {
+        if (this.info.batScore >= 4 && this.info.batScore <= 8) {
+          return '数据显示幼儿行进间运球水平偏低，建意让幼儿原地熟练连续拍球40下，可以原地拍一下球，往前走一步，5米能连续运球，8米慢慢增加10米行进间运球'
+        }
+        if (this.info.batScore >= 12 && this.info.batScore <= 16) {
+          return '测试结果幼儿行进间运球能力处于中等水平，建意在原地熟悉连续拍球60下，尝试左手/右手，右左手交替运球，以幼儿最快最舒服的运球方式，起来到终点折返运球'
+        }
+        if (this.info.batScore == 20) {
+          return '测试显示幼儿行进间运球非常优秀，建意坚持每周练习3-4次，10米直线行进间运球返回，多采用非优势手行进间运球，左右手交替行进间运球'
+        }
+      }
+      if (this.info.type == 3) {
+        if (this.info.batScore >= 4 && this.info.batScore <= 8) {
+          return '数据显示幼儿行进间运球水平偏低，建意让幼儿原地熟悉连续拍球30下，可以原地拍一下球，往前走一步，5米能连续运球，8米慢慢增加10米行进间绕障碍运球'
+        }
+        if (this.info.batScore >= 12 && this.info.batScore <= 16) {
+          return '测试结果幼儿行进间运球能力处于中等水平，建意在原地熟悉连续拍球50下，尝试左手/右手，右左手交替运球，10米绕障碍运球返回，提高行进间运球稳定性'
+        }
+        if (this.info.batScore == 20) {
+          return '测试显示幼儿行进间运球非常优秀，建意坚持每周练习2-3次，10米行进间绕障碍返回，提升行进间运球速度和稳定性'
+        }
+      }
+    },
+    passScore () {
+      if (this.info.type == 1) {
+        if (this.info.passScore >= 4 && this.info.passScore <= 8) {
+          return '数据显示幼儿传球水平偏低，建意朝着目标将球“滚出”，接着朝着目标“抛出”，让幼儿感兴趣，最后家长一周让幼儿练习3-4次'
+        }
+        if (this.info.passScore >= 12 && this.info.passScore <= 16) {
+          return '测试结果幼儿传球能力处于中等水平，建意幼儿近距离击地传球，0.5米慢慢增加1米等，让幼儿掌握接球时机，过度胸前传球，距离由近到远'
+        }
+        if (this.info.passScore == 20) {
+          return '测试显示幼儿传球非常优秀，建意保持一周练习2-3次，适当通过手脚爬、手膝爬等爬行动作，来锻炼上肢力量，再进行有目标抛/传球'
+        }
+      }
+      if (this.info.type == 2) {
+        if (this.info.passScore >= 4 && this.info.passScore <= 8) {
+          return '数据显示幼儿传球水平偏低，建意朝着目标将球“滚出”，接着朝着目标“抛出”，让幼儿感兴趣，最后家长一周让幼儿练习3-4次'
+        }
+        if (this.info.passScore >= 12 && this.info.passScore <= 16) {
+          return '测试结果幼儿传球能力处于中等水平，建意幼儿近距离击地传球，1米慢慢增加1.5米等，让幼儿掌握接球时机，过度胸前传球，距离由近到远'
+        }
+        if (this.info.passScore == 20) {
+          return '测试显示幼儿传球非常优秀，建意保持一周练习2-3次，通过胸前传球到贴在墙壁目标，目标由大变小，让传球质量更高有效，目标性更强'
+        }
+      }
+      if (this.info.type == 3) {
+        if (this.info.passScore >= 4 && this.info.passScore <= 8) {
+          return '数据显示幼儿传球水平偏低，建意朝着目标将球“滚出”，接着朝着目标“抛出”，让幼儿感兴趣，最后家长一周让幼儿练习3-4次'
+        }
+        if (this.info.passScore >= 12 && this.info.passScore <= 16) {
+          return '测试结果幼儿传球能力处于中等水平，建意幼儿近距离击地传球，1.5米慢慢增加2米，让幼儿掌握接球时机，过度胸前传球，距离由近到远'
+        }
+        if (this.info.passScore == 20) {
+          return '测试显示幼儿传球非常优秀，建意保持一周练习2-3次，胸前传球到墙壁目标由大到小，提高传球准确度'
+        }
+      }
+    },
+    shootScore () {
+      if (this.info.type == 1) {
+        if (this.info.shootScore >= 4 && this.info.shootScore <= 8) {
+          return '数据显示幼儿原地投篮水平偏低，建意保持一周练习2-3次，适当通过手脚爬、手膝爬等爬行动作，来锻炼上肢力量，再进行有目标投篮，比如家长举起手，幼儿将球投到家长手上'
+        }
+        if (this.info.shootScore >= 12 && this.info.shootScore <= 16) {
+          return '测试结果幼儿原地投篮处于中等水平，建意让幼儿获得成功喜悦，家长一周2-3次，让幼儿将球投到指点的位置，比如墙壁贴怪兽，让幼儿打怪兽等'
+        }
+        if (this.info.shootScore == 20) {
+          return '测试显示幼儿原地投篮非常优秀，建意保持一周练习2-3次，建意1.4米适合的篮筐，让幼儿定点投篮，注意动作发力点'
+        }
+      }
+      if (this.info.type == 2) {
+        if (this.info.shootScore >= 4 && this.info.shootScore <= 8) {
+          return '数据显示幼儿原地投篮水平偏低，建意保持一周练习3-4次，适当通过手脚爬、手膝爬等爬行动作，来锻炼上肢力量，再进行有目标投篮，比如家长举起手，幼儿将球投到家长手上'
+        }
+        if (this.info.shootScore >= 12 && this.info.shootScore <= 16) {
+          return '测试结果幼儿原地投篮处于中等水平，建意让幼儿获得成功喜悦，家长一周3-4次，让幼儿将球投到指点的位置，比如墙壁贴怪兽，让幼儿打怪兽等'
+        }
+        if (this.info.shootScore == 20) {
+          return '测试显示幼儿原地投篮非常优秀，建意保持一周练习3-4次，建意适合的1.6米篮筐，让幼儿定点投篮，注意动作发力点'
+        }
+      }
+      if (this.info.type == 3) {
+        if (this.info.shootScore >= 4 && this.info.shootScore <= 8) {
+          return '数据显示幼儿原地投篮水平偏低，建意保持一周练习2-3次，适当通过手脚爬、手膝爬等爬行动作，来锻炼上肢力量，再进行有目标投篮，比如家长举起手，幼儿将球投到家长手上'
+        }
+        if (this.info.shootScore >= 12 && this.info.shootScore <= 16) {
+          return '数据显示幼儿原地投篮属于中等水平，建意让幼儿获得成功喜悦，家长一周2-3次，让幼儿将球投到指点的位置，比如墙壁贴怪兽，让幼儿打怪兽等'
+        }
+        if (this.info.shootScore == 20) {
+          return '数据显示幼儿原地投篮能力非常优秀，建意保持一周练习2-3次，建意1.8米适合的篮筐，让幼儿定点投篮，注意动作发力点'
         }
       }
     }
@@ -346,22 +571,22 @@ export default {
       this.infoData = [res.data.batScore, res.data.dsDribbleScore, res.data.passScore, res.data.rallScore, res.data.shootScore]
       this.compareData = [
         {
-          name: '总分', my: res.data.total, avg: 50, unit: ''
+          name: '身高', my: res.data.height, avg: res.data.hightAvg, unit: 'cm'
         },
         {
-          name: '球感', my: res.data.rallScore, avg: 10, unit: ''
+          name: '球感', my: res.data.rall, avg: 3, unit: '个'
         },
         {
-          name: '原地运球', my: res.data.dsDribbleScore, avg: 10, unit: ''
+          name: '原地运球', my: res.data.dsDribble, avg: 15, unit: '个'
         },
         {
-          name: '行进间运球', my: res.data.batScore, avg: 10, unit: ''
+          name: '行进间运球', my: res.data.bat, avg: 30, unit: '秒'
         },
         {
-          name: '抛/传球', my: res.data.passScore, avg: 10, unit: ''
+          name: '抛/传球', my: res.data.pass, avg: 3, unit: '个'
         },
         {
-          name: '原地投篮', my: res.data.shootScore, avg: 10, unit: ''
+          name: '原地投篮', my: res.data.shoot, avg: 2, unit: '个'
         }
       ]
     })
@@ -494,6 +719,15 @@ export default {
         color: #304890;
         position: absolute;
       }
+      .cover {
+        width: 420px;
+        height: 80px;
+        background-color: #fff;
+        z-index: 1;
+        position: absolute;
+        bottom: 420px;
+        left: 100px;
+      }
       .text1 {
         bottom: 520px;
         left: 230px;
@@ -612,6 +846,7 @@ export default {
               font-size: 16px;
               color: #062f87;
               text-align: right;
+              white-space: nowrap;
             }
             .compare {
               margin-left: 10px;
@@ -974,20 +1209,21 @@ export default {
           position: relative;
           img {
             width: 330px;
-            height: 90px;
-            // transform: rotate(180deg);
+            height: 130px;
+            transform: rotate(180deg);
             position: absolute;
             right: 0;
-            // right: -35px;
-            bottom: 80px;
+            right: -35px;
+            bottom: 85px;
           }
         }
       }
       .logo {
-        width: 400px;
-        height: 60px;
-        display: block;
-        margin: 50px auto 0;
+        margin: 0 auto;
+        img {
+          width: 330px;
+            height: 85px;
+        }
       }
     }
   }
