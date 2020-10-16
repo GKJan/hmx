@@ -72,6 +72,12 @@ export default [
     meta: { title: '机构证书' }
   },
   {
+    path: '/cred/audit',
+    name: 'CredAudit',
+    component: () => import('@/views/menu/cred-audit.vue'),
+    meta: { title: '机构证书审核' }
+  },
+  {
     path: '/cred-person',
     name: 'CredPerson',
     component: () => import('@/views/menu/cred-person.vue'),

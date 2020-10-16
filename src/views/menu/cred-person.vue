@@ -35,12 +35,20 @@
           <el-input v-model="listQuery.zsName" placeholder="请输入证书名称"></el-input>
         </div>
         <div class="search-item">
+          <span>状态</span>
+          <el-select v-model="listQuery.status" clearable placeholder="请选择状态">
+            <el-option v-for="item in statusList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
+        </div>
+        <div class="search-item">
           <el-button type="primary" icon="el-icon-search" @click="$refs.table.getList()">搜索</el-button>
         </div>
       </template>
       <template #operBtn>
         <el-button type="success" icon="el-icon-plus" @click="action = 'add';form = {};dialog = true">新增</el-button>
         <el-button type="warning" icon="el-icon-edit-outline" :disabled="editDisabled" @click="toEdit">编辑</el-button>
+        <el-button type="warning" icon="el-icon-edit-outline" :disabled="auditDisabled" @click="toAudit(1)">启用</el-button>
+        <el-button type="danger" icon="el-icon-edit-outline" :disabled="auditDisabled" @click="toAudit(2)">禁用</el-button>
         <el-button type="danger" :disabled="delDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button>
         <el-button type="warning" icon="el-icon-view" :disabled="editDisabled" @click="toDetail">预览</el-button>
       </template>
@@ -60,7 +68,7 @@
           <template slot-scope="scope">{{ scope.row.state === 1 ? '男' : '女' }}</template>
         </el-table-column> -->
         <el-table-column
-          prop="categoryId"
+          prop="categoryName"
           label="证书分类"
           align="center">
         </el-table-column>
@@ -89,6 +97,11 @@
           align="center">
           <template slot-scope="scope">{{ scope.row.startTime }} ~ {{ scope.row.endTime }}</template>
         </el-table-column>
+        <el-table-column
+          label="状态"
+          align="center">
+          <template slot-scope="scope">{{ scope.row.status == 0 ? '待生效' : (scope.row.status == 1 ? '生效' : '失效') }}</template>
+        </el-table-column>
       </template>
     </table-panel>
     <el-dialog width="500px" :title="action === 'add' ? '新增证书' : '编辑证书'" :visible.sync="dialog">
@@ -110,10 +123,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="证书编号" prop="code">
-          <el-input placeholder="请输入证书编号" v-model="form.code">
+          <!-- <el-input placeholder="请输入证书编号" v-model="form.code">
             <template slot="prepend">{{ preCode }}</template>
-          </el-input>
-          <!-- <el-input v-model="form.code" disabled placeholder="请输入证书编号"></el-input> -->
+          </el-input> -->
+          <el-input v-model="form.code" disabled placeholder="请输入证书编号"></el-input>
         </el-form-item>
         <el-form-item label="证书名称" prop="zsName">
           <el-input v-model="form.zsName" disabled placeholder="请输入证书名称"></el-input>
@@ -194,6 +207,20 @@ export default {
       dialog: false,
       form: {
       },
+      statusList: [
+        {
+          id: 0,
+          name: '待生效'
+        },
+        {
+          id: 1,
+          name: '生效'
+        },
+        {
+          id: 2,
+          name: '失效'
+        }
+      ],
       action: 'add',
       rules: {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
@@ -245,6 +272,13 @@ export default {
       } else {
         return true
       }
+    },
+    auditDisabled () {
+      if (this.selectList.length && this.selectList.every(item => item.status == 0)) {
+        return false
+      } else {
+        return true
+      }
     }
   },
 
@@ -263,8 +297,8 @@ export default {
       this.api.getPersonCredCode({ id: val }).then(res => {
         if (res.success) {
           this.$set(this.form, 'zsName', res.data.name)
-          // this.$set(this.form, 'code', res.data.code)
-          this.preCode = res.data.code
+          this.$set(this.form, 'code', res.data.code)
+          // this.preCode = res.data.code
         }
       })
     },
@@ -302,7 +336,8 @@ export default {
     },
 
     toDetail () {
-      this.$router.push({ path: '/cred/img', query: { id: this.selectList[0].id }})
+      // this.$router.push({ path: '/cred/img', query: { id: this.selectList[0].id }})
+      this.$router.push({ path: '/cred/img', query: { info: JSON.stringify(this.selectList[0]) }})
     },
 
     handleAdd () {
@@ -349,6 +384,23 @@ export default {
             this.$refs.table.getList()
           }
         })
+      })
+    },
+
+    toAudit (status) {
+      let ids = []
+      for (let item of this.selectList) {
+        ids.push(item.id)
+      }
+      this.api.auditPersonCred({ auditStatus: status, ids: ids.toString() }).then(res => {
+        if (res.success) {
+          if (status == 1) {
+            this.$message.success('启用成功')
+          } else {
+            this.$message.success('禁用成功')
+          }
+          this.$refs.table.getList()
+        }
       })
     },
 

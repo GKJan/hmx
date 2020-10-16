@@ -130,6 +130,14 @@ export default {
     })
   },
 
+  auditPersonCred (params) {
+    return request({
+      url: '/zsPersonal/audit',
+      method: 'get',
+      params: params
+    })
+  },
+
   getPersonCredCode (params) {
     return request({
       url: '/zsCategory/getAcCode',
@@ -141,6 +149,22 @@ export default {
   getOrganCredPage (params) {
     return request({
       url: '/zsDept/page',
+      method: 'get',
+      params: params
+    })
+  },
+
+  getOrganCredAuditPage (params) {
+    return request({
+      url: '/zsDept/auditPage',
+      method: 'get',
+      params: params
+    })
+  },
+
+  auditOrganCred (params) {
+    return request({
+      url: '/zsDept/audit',
       method: 'get',
       params: params
     })

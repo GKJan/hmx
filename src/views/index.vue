@@ -138,6 +138,13 @@ export default {
               icon: 'icon-zhengshu'
             },
             {
+              id: '19',
+              name: '机构证书审核',
+              path: '/cred/audit',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
               id: '15',
               name: '个人证书',
               path: '/cred-person',

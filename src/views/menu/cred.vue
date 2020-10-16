@@ -50,40 +50,65 @@
           type="selection"
           align="center">
         </el-table-column>
-        <!-- <el-table-column
+        <el-table-column
           prop="name"
-          label="姓名"
+          label="加盟商名称"
           align="center">
         </el-table-column>
         <el-table-column
-          prop="idCard"
-          label="身份证号"
+          prop="categoryName"
+          label="加盟类型"
           align="center">
         </el-table-column>
         <el-table-column
-          label="性别"
-          align="center">
-          <template slot-scope="scope">{{ scope.row.state === 1 ? '男' : '女' }}</template>
-        </el-table-column> -->
-        <el-table-column
-          prop="deptName"
-          label="机构名称"
+          prop="address"
+          label="加盟商地址"
           align="center">
         </el-table-column>
         <el-table-column
-          prop="code"
-          label="证书编号"
+          prop="djxs"
+          label="对接销售"
           align="center">
         </el-table-column>
         <el-table-column
-          prop="categoryType"
-          label="证书类型"
+          prop="amount"
+          label="加盟金额"
           align="center">
         </el-table-column>
         <el-table-column
-          label="证书有效期"
+          prop="company"
+          label="所属子公司"
           align="center">
-          <template slot-scope="scope">{{ scope.row.stTime }} ~ {{ scope.row.sxTime }}</template>
+        </el-table-column>
+        <el-table-column
+          prop="lxrName"
+          label="联系人"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="lxrMobile"
+          label="联系人电话"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="lxrPost"
+          label="联系人职务"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="htNumber"
+          label="合同编号"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="htgd"
+          label="是否归档"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          label="合同有效期"
+          align="center">
+          <template slot-scope="scope">{{ scope.row.htStartTime }} ~ {{ scope.row.htEndTime }}</template>
         </el-table-column>
       </template>
     </table-panel>
@@ -99,7 +124,7 @@
             <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="加盟商名称">
+        <el-form-item label="加盟商名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入加盟商名称"></el-input>
         </el-form-item>
         <el-form-item label="加盟商地址">
@@ -186,7 +211,8 @@ export default {
         checkStrictly: true,
         value: 'code',
         label: 'name',
-        children: 'childArea'
+        children: 'childArea',
+        emitPath: false
       },
       listQuery: {},
       dialog: false,
@@ -194,7 +220,7 @@ export default {
       },
       action: 'add',
       rules: {
-        name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入加盟商名称', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         idCard: [{ required: true, message: '请输入身份证号', trigger: 'blur' }],
         icon: [{ required: true, message: '请上次照片', trigger: 'blur' }],
@@ -311,6 +337,7 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           if (this.action === 'add') {
+            console.log(this.form)
             this.api.saveOrganCred(this.form).then((res) => {
               if (res.success) {
                 this.$message.success('新增成功，审核通过后可查看')
