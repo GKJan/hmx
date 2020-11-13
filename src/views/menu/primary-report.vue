@@ -53,6 +53,11 @@
               align="center">
             </el-table-column>
             <el-table-column
+              prop="createBy"
+              label="录入人"
+              align="center">
+            </el-table-column>
+            <el-table-column
               prop="xyType"
               label="学员类型"
               align="center">

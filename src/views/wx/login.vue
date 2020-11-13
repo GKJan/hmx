@@ -1,8 +1,11 @@
 <template>
   <div class="login-container">
     <div class="login-form">
-      <img src="../../assets/img/logo.png">
-      <div class="title">华蒙星儿童体质测查系统</div>
+      <img src="../../assets/wx/logo.png">
+      <div class="title">
+        <img src="../../assets/wx/add.png">
+        <span>华蒙星儿童体质测查系统</span>
+      </div>
       <el-form ref="form" :model="form" :rules="rules">
         <el-form-item prop="username">
           <el-input v-model="form.username" placeholder="请输入用户名">
@@ -16,12 +19,31 @@
           </el-input>
         </el-form-item>
       </el-form>
-      <div class="other">
-        <span></span>
-        <span @click="toApply">证书申请</span>
+      <el-button class="login-btn" type="primary" @click="submit">登录</el-button>
+      <div class="title title2">
+        <img src="../../assets/wx/add.png">
+        <span>华蒙星儿童体测证书查询系统</span>
       </div>
-      <el-button @click="submit" class="login-btn" type="primary">登录</el-button>
+      <div class="other">
+        <el-button class="cred-btn" type="primary" @click="toApply">证书申请</el-button>
+        <el-button class="cred-btn" type="primary" @click="toQuery">证书查询</el-button>
+      </div>
     </div>
+    <div class="bottom-link">
+      <div class="item" @click="toLink1">
+        <img src="../../assets/wx/tri.png">
+        <span>掌上华蒙星</span>
+      </div>
+      <div class="item" @click="toLink2">
+        <img src="../../assets/wx/tri.png">
+        <span>体育学院</span>
+      </div>
+      <div class="item" @click="toLink3">
+        <img src="../../assets/wx/tri.png">
+        <span>华蒙星商城</span>
+      </div>
+    </div>
+    <van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
   </div>
 </template>
 
@@ -35,7 +57,16 @@ export default {
         username: [{ required: true, message: '请输入用户名' }],
         password: [{ required: true, message: '请输入密码' }]
       },
-      showPwd: false
+      showPwd: false,
+      show: false,
+      actions: [
+        {
+          name: '个人证书申请'
+        },
+        {
+          name: '机构证书申请'
+        }
+      ]
     }
   },
 
@@ -54,7 +85,33 @@ export default {
     },
 
     toApply () {
-      this.$router.push('/wx/apply')
+      this.show = true
+      // this.$router.push('/wx/apply')
+    },
+
+    toQuery () {
+      this.$router.push('/wx/cred/search')
+    },
+
+    onSelect (val) {
+      if (val.name === '个人证书申请') {
+        this.$router.push('/wx/applyPersonal')
+      } else {
+        this.$router.push('/wx/apply')
+      }
+      this.show = false
+    },
+
+    toLink1 () {
+      window.location.href = 'https://app9VoK1sbY2661.h5.xiaoeknow.com/mp/eyJpZCI6MTIyNDU1M30'
+    },
+
+    toLink2 () {
+      window.location.href = 'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI3MTU2MjIzOA==&scene=124#wechat_redirect'
+    },
+
+    toLink3 () {
+      this.$toast('暂未开放')
     },
 
     submit () {
@@ -86,25 +143,74 @@ export default {
     width: 80%;
     text-align: center;
     img {
-      width: 100px;
+      width: 120px;
       height: 100px;
     }
     .title {
-      margin: 0 0 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px 0;
+      img {
+        width: 15px;
+        height: 15px;
+      }
+      span {
+        font-size: 14px;
+        color: #384148;
+      }
+    }
+    .title2 {
+      margin: 40px 0 20px;
     }
     .other {
+      padding-bottom: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: -15px 0 10px;
-      span {
-        font-size: 14px;
-        color: #409EFF;
+      .cred-btn {
+        width: 45%;
       }
     }
     .login-btn {
       width: 100%;
     }
+  }
+  .bottom-link {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-image: url('../../assets/wx/radius.png');
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    .item {
+      display: flex;
+      align-items: flex-end;
+      img {
+        width: 10px;
+        height: 12px;
+      }
+      span {
+        font-size: 13px;
+        color: #fff;
+        margin-left: 5px;
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.login-container {
+  .el-input__inner {
+    border-radius: 20px;
+  }
+  .el-button--primary {
+    background-color: #06338E;
+    border-color: #06338E;
+    border-radius: 20px;
   }
 }
 </style>

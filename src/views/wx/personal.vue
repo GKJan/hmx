@@ -5,11 +5,11 @@
       <img v-else src="../../assets/wx/小鹅通评估报告-34.jpg">
       <span>{{ userInfo.username }}</span>
     </div>
-    <div class="menu" @click="toSearch">
+    <div class="menu" @click="toSearch" v-if="userInfo.role !== 4 && userInfo.role !== 5">
       <span>报告查询</span>
       <span class="arrow">></span>
     </div>
-    <div class="menu" @click="toRecord">
+    <div class="menu" @click="toRecord" v-if="userInfo.role !== 4 && userInfo.role !== 5">
       <span>数据录入</span>
       <span class="arrow">></span>
     </div>
@@ -17,7 +17,7 @@
       <span>证书申请</span>
       <span class="arrow">></span>
     </div> -->
-    <div class="menu" @click="toSearchCred">
+    <div class="menu" @click="toSearchCred" v-if="userInfo.role === 1 || userInfo.role === 4 || userInfo.role === 5">
       <span>证书相关</span>
       <span class="arrow">></span>
     </div>

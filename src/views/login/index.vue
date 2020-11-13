@@ -2,7 +2,7 @@
   <div class="login-container">
     <img src="../../assets/primary/logo.png">
     <div class="login-form">
-      <div class="title">华蒙星儿童体质测查系统</div>
+      <div class="title">华蒙星儿童业务系统</div>
       <el-form ref="form" :model="form" :rules="rules">
         <el-form-item prop="username">
           <el-input v-model="form.username" placeholder="请输入用户名">

@@ -15,19 +15,19 @@ export default [
     path: '/report',
     name: 'Report',
     component: () => import('@/views/menu/report.vue'),
-    meta: { title: '信息报告(幼儿园)' }
+    meta: { title: '幼儿体质测查' }
   },
   {
     path: '/primaryReport',
     name: 'PrimaryReport',
     component: () => import('@/views/menu/primary-report.vue'),
-    meta: { title: '信息报告(小学)' }
+    meta: { title: '小学生体质测查' }
   },
   {
     path: '/basketReport',
     name: 'BasketReport',
     component: () => import('@/views/menu/basket.vue'),
-    meta: { title: '信息报告(篮球)' }
+    meta: { title: '篮球专项测查' }
   },
   {
     path: '/report/primaryDetail',
@@ -93,7 +93,7 @@ export default [
     path: '/audit',
     name: 'Audit',
     component: () => import('@/views/menu/audit.vue'),
-    meta: { title: '证书审核管理' }
+    meta: { title: '个人证书审核' }
   },
   {
     path: '/cred/class',

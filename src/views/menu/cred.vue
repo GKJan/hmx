@@ -23,6 +23,16 @@
             <el-option v-for="item in queryCategoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </div>
+        <div class="search-item">
+          <span>所属区域</span>
+          <el-cascader
+            v-model="listQuery.areaCode"
+            :options="areaList"
+            :props="areaProps"
+            clearable
+          >
+          </el-cascader>
+        </div>
         <!-- <div class="search-item">
           <span>姓名</span>
           <el-input v-model="listQuery.name" placeholder="请输入姓名"></el-input>
@@ -61,8 +71,8 @@
           align="center">
         </el-table-column>
         <el-table-column
-          prop="address"
-          label="加盟商地址"
+          prop="areaName"
+          label="所属区域"
           align="center">
         </el-table-column>
         <el-table-column
@@ -138,6 +148,12 @@
         </el-form-item>
         <el-form-item label="所属子公司">
           <el-input v-model="form.company" placeholder="请输入所属子公司"></el-input>
+        </el-form-item>
+        <el-form-item label="法人姓名">
+          <el-input v-model="form.frName" placeholder="请输入法人姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="法人身份证号">
+          <el-input v-model="form.idCard" placeholder="请输入法人身份证号"></el-input>
         </el-form-item>
         <el-form-item label="联系人姓名">
           <el-input v-model="form.lxrName" placeholder="请输入联系人姓名"></el-input>
@@ -235,7 +251,6 @@ export default {
       categoryList: [],
       queryCategoryList: [],
       typeList: [],
-      areaList: [],
       selectList: []
     }
   },
@@ -244,13 +259,16 @@ export default {
     this.getType()
     this.getQueryCategory()
     this.getCategory()
-    this.getArea()
+    // this.getArea()
     this.getAreaList()
   },
 
   mounted () {
     this.listQuery = this.$refs.table.listQuery
     this.listQuery.categoryType = '机构证书'
+    if (this.$route.query.cId) {
+      this.$set(this.listQuery, 'categoryId', this.$route.query.cId)
+    }
     // setTimeout(() => {
     //   this.form.categoryType = '机构证书'
     //   this.$set(this.form, 'categoryType', '机构证书')
@@ -330,7 +348,8 @@ export default {
     },
 
     toDetail () {
-      this.$router.push({ path: '/cred/img', query: { id: this.selectList[0].id }})
+      // this.$router.push({ path: '/cred/img', query: { id: this.selectList[0].id }})
+      this.$router.push({ path: '/cred/img', query: { info: JSON.stringify(this.selectList[0]) }})
     },
 
     handleAdd () {
@@ -347,7 +366,7 @@ export default {
               }
             })
           } else {
-            this.api.saveOrganCred(this.form).then((res) => {
+            this.api.updateOrganCred(this.form).then((res) => {
               if (res.success) {
                 this.$message.success('编辑成功')
                 this.dialog = false

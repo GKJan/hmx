@@ -1,50 +1,114 @@
 <template>
   <div class="login-container">
     <div class="login-form">
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="证书分类" prop="categoryId">
-          <el-select v-model="form.categoryId" placeholder="请选择证书分类">
+      <el-form ref="form" :model="form" :rules="rules" label-width="150px">
+        <el-form-item label="加盟类型" prop="categoryId">
+          <el-select v-model="form.categoryId" placeholder="请选择加盟类型">
             <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
+        <el-form-item label="加盟商名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入加盟商名称"></el-input>
         </el-form-item>
-        <el-form-item label="性别" prop="sex">
-          <el-radio-group v-model="form.sex">
-            <el-radio :label="1">男</el-radio>
-            <el-radio :label="2">女</el-radio>
-          </el-radio-group>
+        <el-form-item label="加盟商地址">
+          <el-input v-model="form.address" placeholder="请输入加盟商地址"></el-input>
         </el-form-item>
-        <el-form-item label="身份证号" prop="idCard">
-          <el-input v-model="form.idCard" placeholder="请输入身份证号"></el-input>
+        <el-form-item label="对接销售">
+          <el-input v-model="form.djxs" placeholder="请输入对接销售"></el-input>
         </el-form-item>
-        <el-form-item label="照片" prop="icon">
-          <img-upload v-model="form.icon" />
+        <el-form-item label="加盟金额">
+          <el-input v-model="form.amount" placeholder="请输入加盟金额"></el-input>
         </el-form-item>
-        <el-form-item label="生效日期" prop="stTime">
+        <el-form-item label="所属子公司">
+          <el-input v-model="form.company" placeholder="请输入所属子公司"></el-input>
+        </el-form-item>
+        <el-form-item label="法人姓名">
+          <el-input v-model="form.frName" placeholder="请输入法人姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="法人身份证号">
+          <el-input v-model="form.idCard" placeholder="请输入法人身份证号"></el-input>
+        </el-form-item>
+        <el-form-item label="联系人姓名">
+          <el-input v-model="form.lxrName" placeholder="请输入联系人姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="联系人电话">
+          <el-input v-model="form.lxrMobile" placeholder="请输入联系人电话"></el-input>
+        </el-form-item>
+        <el-form-item label="联系人职务">
+          <el-input v-model="form.lxrPost" placeholder="请输入联系人职务"></el-input>
+        </el-form-item>
+        <el-form-item label="合同编号">
+          <el-input v-model="form.htNumber" placeholder="请输入合同编号"></el-input>
+        </el-form-item>
+        <el-form-item label="合同归档">
+          <el-radio v-model="form.htgd" label="已归档"></el-radio>
+          <el-radio v-model="form.htgd" label="未归档"></el-radio>
+        </el-form-item>
+        <el-form-item label="合同开始日期">
           <el-date-picker
-            v-model="form.stTime"
+            v-model="form.htStartTime"
             type="date"
             value-format="yyyy-MM-dd"
             range-separator="至"
-            placeholder="选择生效日期">
+            placeholder="选择开始日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="失效日期" prop="sxTime">
+        <el-form-item label="合同结束日期">
           <el-date-picker
-            v-model="form.sxTime"
+            v-model="form.htEndTime"
             type="date"
             value-format="yyyy-MM-dd"
             range-separator="至"
-            placeholder="选择失效日期">
+            placeholder="选择结束日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="所属区域" prop="areaId">
-          <el-select v-model="form.areaId" placeholder="请选择所属区域">
-            <el-option v-for="item in areaList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
+        <el-form-item label="所属区域">
+          <el-cascader
+            v-model="form.areaCode"
+            :options="areaList"
+            :props="areaProps"
+          >
+          </el-cascader>
         </el-form-item>
+        <!-- <el-form-item label="合作商/幼儿园名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入合作商/直联幼儿园名称"></el-input>
+        </el-form-item>
+        <el-form-item label="所属区域">
+          <el-cascader
+            v-model="form.areaCode"
+            :options="areaList"
+            :props="areaProps"
+            clearable
+          >
+          </el-cascader>
+        </el-form-item>
+        <el-form-item label="法人姓名" prop="frName">
+          <el-input v-model="form.frName" placeholder="请输入法人姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="法人身份证号" prop="idCard">
+          <el-input v-model="form.idCard" placeholder="请输入法人身份证号"></el-input>
+        </el-form-item>
+        <el-form-item label="合同编号" prop="htNumber">
+          <el-input v-model="form.htNumber" placeholder="请输入合同编号"></el-input>
+        </el-form-item>
+        <el-form-item label="合作开始日期" prop="htStartTime">
+          <el-date-picker
+            v-model="form.htStartTime"
+            type="date"
+            value-format="yyyy-MM-dd"
+            range-separator="至"
+            placeholder="选择开始日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="合作结束日期" prop="htEndTime">
+          <el-date-picker
+            v-model="form.htEndTime"
+            type="date"
+            value-format="yyyy-MM-dd"
+            range-separator="至"
+            placeholder="选择结束日期">
+          </el-date-picker>
+        </el-form-item> -->
       </el-form>
       <el-button @click="onApply" class="login-btn" type="primary">提交申请</el-button>
     </div>
@@ -64,28 +128,40 @@ export default {
         type: '机构证书'
       },
       rules: {
+        name: [{ required: true, message: '请输入合作商/直联幼儿园名称', trigger: 'blur' }],
+        address: [{ required: true, message: '请输入合作商/直联幼儿园地址', trigger: 'blur' }],
         categoryId: [{ required: true, message: '请选择证书分类', trigger: 'change' }],
-        name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
-        idCard: [{ required: true, message: '请输入身份证号', trigger: 'blur' }],
-        icon: [{ required: true, message: '请上次照片', trigger: 'blur' }],
-        stTime: [{ required: true, message: '请选择证书开始有效期', trigger: 'blur' }],
-        sxTime: [{ required: true, message: '请选择证书结束有效期', trigger: 'blur' }],
-        areaId: [{ required: true, message: '请选择所属区域', trigger: 'blur' }]
+        frName: [{ required: true, message: '请输入法人姓名', trigger: 'blur' }],
+        idCard: [{ required: true, message: '请输入法人身份证号', trigger: 'blur' }],
+        htNumber: [{ required: true, message: '请输入合同编号', trigger: 'blur' }],
+        htStartTime: [{ required: true, message: '请选择开始日期', trigger: 'change' }],
+        htEndTime: [{ required: true, message: '请选择结束日期', trigger: 'change' }]
       },
       categoryList: [],
-      areaList: []
+      areaList: [],
+      areaProps: {
+        expandTrigger: 'hover',
+        checkStrictly: true,
+        value: 'code',
+        label: 'name',
+        children: 'childArea',
+        emitPath: false
+      }
     }
   },
 
   created () {
     this.getCategory()
     this.getArea()
+    if (this.$route.query.info) {
+      this.$toast('审核暂未通过，可修改后重新提交')
+      this.form = JSON.parse(this.$route.query.info)
+    }
   },
 
   methods: {
     getCategory () {
-      this.api.getzsCategoryWxPage({ size: 20, type: this.form.type }).then(res => {
+      this.api.getzsCategoryWxPage({ size: 20, type: '机构证书' }).then(res => {
         if (res.success) {
           this.categoryList = res.data.records
         }
@@ -93,7 +169,7 @@ export default {
     },
 
     getArea () {
-      this.api.getWxRegionList().then(res => {
+      this.api.getArea().then(res => {
         if (res.success) {
           this.areaList = res.data
         }
@@ -103,14 +179,25 @@ export default {
     onApply () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.api.wxSaveCerd(this.form).then((res) => {
-            if (res.success) {
-              this.$toast('提交成功，请等待审核通过')
-              setTimeout(() => {
-                this.$router.go(-1)
-              }, 500)
-            }
-          })
+          if (this.$route.query.info) {
+            this.api.updateOrganCredWx(this.form).then((res) => {
+              if (res.success) {
+                this.$toast('提交成功，请等待审核通过')
+                setTimeout(() => {
+                  this.$router.go(-1)
+                }, 500)
+              }
+            })
+          } else {
+            this.api.saveOrganCredWx(this.form).then((res) => {
+              if (res.success) {
+                this.$toast('提交成功，请等待审核通过')
+                setTimeout(() => {
+                  this.$router.go(-1)
+                }, 500)
+              }
+            })
+          }
         }
       })
     }
@@ -127,7 +214,7 @@ export default {
   background-color: #f8f8f8;
   .login-form {
     // margin-top: 30%;
-    width: 85%;
+    width: 95%;
     text-align: center;
     img {
       width: 100px;

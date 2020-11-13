@@ -16,16 +16,12 @@
             <el-option v-for="item in typeList" :key="item.id" :label="item.dictValue" :value="item.dictValue"></el-option>
           </el-select>
         </div> -->
-        <!-- <div class="search-item">
+        <div class="search-item">
           <span>证书分类</span>
           <el-select v-model="listQuery.categoryId" clearable placeholder="请选择证书分类">
             <el-option v-for="item in queryCategoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </div>
-        <div class="search-item">
-          <span>姓名</span>
-          <el-input v-model="listQuery.name" placeholder="请输入姓名"></el-input>
-        </div> -->
         <!-- <div class="search-item">
           <span>单位名称</span>
           <el-input v-model="listQuery.deptName" placeholder="请输入单位名称"></el-input>
@@ -33,6 +29,16 @@
         <div class="search-item">
           <span>证书名称</span>
           <el-input v-model="listQuery.zsName" placeholder="请输入证书名称"></el-input>
+        </div>
+        <div class="search-item">
+          <span>所属区域</span>
+          <el-cascader
+            v-model="listQuery.areaCode"
+            :options="areaList"
+            :props="areaProps"
+            clearable
+          >
+          </el-cascader>
         </div>
         <div class="search-item">
           <span>状态</span>
@@ -47,8 +53,8 @@
       <template #operBtn>
         <el-button type="success" icon="el-icon-plus" @click="action = 'add';form = {};dialog = true">新增</el-button>
         <el-button type="warning" icon="el-icon-edit-outline" :disabled="editDisabled" @click="toEdit">编辑</el-button>
-        <el-button type="warning" icon="el-icon-edit-outline" :disabled="auditDisabled" @click="toAudit(1)">启用</el-button>
-        <el-button type="danger" icon="el-icon-edit-outline" :disabled="auditDisabled" @click="toAudit(2)">禁用</el-button>
+        <!-- <el-button type="warning" icon="el-icon-edit-outline" :disabled="qyDisabled" @click="toAudit(1)">启用</el-button>
+        <el-button type="danger" icon="el-icon-edit-outline" :disabled="jyDisabled" @click="toAudit(2)">禁用</el-button> -->
         <el-button type="danger" :disabled="delDisabled" icon="el-icon-delete" @click="handleDel">删除</el-button>
         <el-button type="warning" icon="el-icon-view" :disabled="editDisabled" @click="toDetail">预览</el-button>
       </template>
@@ -93,6 +99,11 @@
           align="center">
         </el-table-column>
         <el-table-column
+          prop="areaName"
+          label="所属区域"
+          align="center">
+        </el-table-column>
+        <el-table-column
           label="证书有效期"
           align="center">
           <template slot-scope="scope">{{ scope.row.startTime }} ~ {{ scope.row.endTime }}</template>
@@ -114,8 +125,14 @@
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
+        <el-form-item label="身份证号" prop="idCard">
+          <el-input v-model="form.idCard" placeholder="请输入身份证号"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号码" prop="mobile">
+          <el-input v-model="form.mobile" placeholder="请输入手机号码"></el-input>
+        </el-form-item>
         <el-form-item label="照片" prop="icon">
-          <img-upload v-model="form.icon" />
+          <img-upload :tips="true" v-model="form.icon" />
         </el-form-item>
         <el-form-item label="证书分类" prop="categoryId">
           <el-select v-model="form.categoryId" placeholder="请选择证书分类" @change="handleChange">
@@ -131,10 +148,25 @@
         <el-form-item label="证书名称" prop="zsName">
           <el-input v-model="form.zsName" disabled placeholder="请输入证书名称"></el-input>
         </el-form-item>
-        <el-form-item label="培训名称" prop="pxName">
+        <el-form-item label="所属机构/园所">
+          <el-input v-model="form.deptName" placeholder="请输入所属机构/幼儿园"></el-input>
+        </el-form-item>
+        <el-form-item label="所属区域">
+          <el-cascader
+            v-model="form.areaCode"
+            :options="areaList"
+            :props="areaProps"
+            clearable
+          >
+          </el-cascader>
+        </el-form-item>
+        <el-form-item label="培训名称">
           <el-input v-model="form.pxName" placeholder="请输入培训名称"></el-input>
         </el-form-item>
-        <el-form-item label="授权内容" prop="content">
+        <el-form-item label="参训期数">
+          <el-input v-model="form.periodical" placeholder="请输入参训期数"></el-input>
+        </el-form-item>
+        <el-form-item label="授权内容">
           <el-input v-model="form.content" placeholder="请输入授权内容"></el-input>
         </el-form-item>
         <!-- <template v-if="form.categoryType === '个人证书'"> -->
@@ -157,7 +189,7 @@
         <!-- <el-form-item label="培训名称">
           <el-input v-model="form.pxName" placeholder="请输入培训名称"></el-input>
         </el-form-item> -->
-        <el-form-item label="证书生效日期" prop="startTime">
+        <!-- <el-form-item label="证书生效日期" prop="startTime">
           <el-date-picker
             v-model="form.startTime"
             type="date"
@@ -174,7 +206,7 @@
             range-separator="至"
             placeholder="选择失效日期">
           </el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
         <!-- <el-form-item label="直传证书">
           <img-upload v-model="form.path" />
         </el-form-item> -->
@@ -224,6 +256,8 @@ export default {
       action: 'add',
       rules: {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+        idCard: [{ required: true, message: '请输入身份证号', trigger: 'blur' }],
+        mobile: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
         icon: [{ required: true, message: '请上次照片', trigger: 'blur' }],
         categoryId: [{ required: true, message: '请选择证书分类', trigger: 'change' }],
         code: [{ required: true, message: '请输入证书编号', trigger: 'blur' }],
@@ -237,6 +271,14 @@ export default {
       queryCategoryList: [],
       typeList: [],
       areaList: [],
+      areaProps: {
+        expandTrigger: 'hover',
+        checkStrictly: true,
+        value: 'code',
+        label: 'name',
+        children: 'childArea',
+        emitPath: false
+      },
       selectList: [],
       preCode: ''
     }
@@ -246,11 +288,15 @@ export default {
     this.getType()
     this.getQueryCategory()
     this.getCategory()
-    this.getArea()
+    // this.getArea()
+    this.getAreaList()
   },
 
   mounted () {
     this.listQuery = this.$refs.table.listQuery
+    if (this.$route.query.cId) {
+      this.$set(this.listQuery, 'categoryId', this.$route.query.cId)
+    }
     // this.listQuery.categoryType = '个人证书'
     // setTimeout(() => {
     //   this.form.categoryType = '机构证书'
@@ -273,8 +319,15 @@ export default {
         return true
       }
     },
-    auditDisabled () {
-      if (this.selectList.length && this.selectList.every(item => item.status == 0)) {
+    qyDisabled () {
+      if (this.selectList.length && this.selectList.every(item => item.status == 0 || item.status == 2)) {
+        return false
+      } else {
+        return true
+      }
+    },
+    jyDisabled () {
+      if (this.selectList.length && this.selectList.every(item => item.status == 1)) {
         return false
       } else {
         return true
@@ -283,6 +336,15 @@ export default {
   },
 
   methods: {
+    getAreaList () {
+      this.api.getArea().then(res => {
+        if (res.success) {
+          this.areaList = res.data
+          this.loading = false
+        }
+      })
+    },
+
     getType () {
       this.api.getDictList({ code: 'zs' }).then(res => {
         if (res.success) {
@@ -332,7 +394,7 @@ export default {
       this.dialog = true
       const { id, name, icon, categoryId, code, zsName, pxName, content, startTime, endTime } = this.selectList[0]
       this.form = { id, name, icon, categoryId, code, zsName, pxName, content, startTime, endTime }
-      this.handleChange(this.selectList[0].categoryId)
+      // this.handleChange(this.selectList[0].categoryId)
     },
 
     toDetail () {
@@ -354,7 +416,7 @@ export default {
               }
             })
           } else {
-            this.api.savePersonCred(this.form).then((res) => {
+            this.api.updatePersonCred(this.form).then((res) => {
               if (res.success) {
                 this.$message.success('编辑成功')
                 this.dialog = false

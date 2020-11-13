@@ -12,7 +12,47 @@ export default {
 
   getWxCredPage (params) {
     return request({
-      url: '/zsInfo/pageApp',
+      url: '/zsPersonal/getName',
+      method: 'get',
+      params: params
+    })
+  },
+
+  getWxCredAudit (params) {
+    return request({
+      url: '/zsPersonal/getAuditName',
+      method: 'get',
+      params: params
+    })
+  },
+
+  updatePersonCredWx (params) {
+    return request({
+      url: '/zsPersonal/wechatUpdate',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+
+  updateOrganCredWx (params) {
+    return request({
+      url: '/zsDept/wechatUpdate',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+
+  getWxOrganCredAudit (params) {
+    return request({
+      url: '/zsDept/getAuditName',
+      method: 'get',
+      params: params
+    })
+  },
+
+  getWxOrganCredPage (params) {
+    return request({
+      url: '/zsDept/getName',
       method: 'get',
       params: params
     })
@@ -122,6 +162,22 @@ export default {
     })
   },
 
+  updatePersonCred (params) {
+    return request({
+      url: '/zsPersonal/update',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+
+  savePersonCredWx (params) {
+    return request({
+      url: '/zsPersonal/wechatSave',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+
   delPersonCred (params) {
     return request({
       url: '/zsPersonal/del',
@@ -141,6 +197,14 @@ export default {
   getPersonCredCode (params) {
     return request({
       url: '/zsCategory/getAcCode',
+      method: 'get',
+      params: params
+    })
+  },
+
+  getPersonCredCodeWx (params) {
+    return request({
+      url: '/zsCategory/getWxAcCode',
       method: 'get',
       params: params
     })
@@ -173,6 +237,22 @@ export default {
   saveOrganCred (params) {
     return request({
       url: '/zsDept/save',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+
+  updateOrganCred (params) {
+    return request({
+      url: '/zsDept/update',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+
+  saveOrganCredWx (params) {
+    return request({
+      url: '/zsDept/wechatSave',
       method: 'post',
       data: qs.stringify(params)
     })

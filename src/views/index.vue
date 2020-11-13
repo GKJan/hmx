@@ -96,21 +96,21 @@ export default {
             },
             {
               id: '4',
-              name: '体测报告(幼儿园)',
+              name: '幼儿体质测查',
               path: '/report',
               children: [],
               icon: 'icon-baogao'
             },
             {
               id: '5',
-              name: '体测报告(小学)',
+              name: '小学生体质测查',
               path: '/primaryReport',
               children: [],
               icon: 'icon-baogao'
             },
             {
               id: '6',
-              name: '体测报告(篮球)',
+              name: '篮球专项测查',
               path: '/basketReport',
               children: [],
               icon: 'icon-baogao'
@@ -153,7 +153,7 @@ export default {
             },
             {
               id: '10',
-              name: '审核管理',
+              name: '个人证书审核',
               path: '/audit',
               children: [],
               icon: 'icon-zhengshu'
@@ -207,21 +207,21 @@ export default {
           children: [
             {
               id: '3',
-              name: '信息报告(幼儿园)',
+              name: '幼儿体质测查',
               path: '/report',
               children: [],
               icon: 'icon-baogao'
             },
             {
               id: '7',
-              name: '信息报告(小学)',
+              name: '小学生体质测查',
               path: '/primaryReport',
               children: [],
               icon: 'icon-baogao'
             },
             {
               id: '9',
-              name: '信息报告(篮球)',
+              name: '篮球专项测查',
               path: '/basketReport',
               children: [],
               icon: 'icon-baogao'
@@ -246,21 +246,21 @@ export default {
             },
             {
               id: '3',
-              name: '信息报告(幼儿园)',
+              name: '幼儿体质测查',
               path: '/report',
               children: [],
               icon: 'icon-baogao'
             },
             {
               id: '7',
-              name: '信息报告(小学)',
+              name: '小学生体质测查',
               path: '/primaryReport',
               children: [],
               icon: 'icon-baogao'
             },
             {
               id: '9',
-              name: '信息报告(篮球)',
+              name: '篮球专项测查',
               path: '/basketReport',
               children: [],
               icon: 'icon-baogao'
@@ -292,9 +292,16 @@ export default {
           path: '',
           children: [
             {
-              id: '10',
+              id: '9',
               name: '机构证书',
               path: '/cred',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
+              id: '19',
+              name: '机构证书审核',
+              path: '/cred/audit',
               children: [],
               icon: 'icon-zhengshu'
             },
@@ -306,18 +313,25 @@ export default {
               icon: 'icon-zhengshu'
             },
             {
-              id: '11',
-              name: '审核管理',
+              id: '10',
+              name: '个人证书审核',
               path: '/audit',
               children: [],
               icon: 'icon-zhengshu'
             },
             {
-              id: '6',
+              id: '11',
               name: '分类管理',
               path: '/cred/class',
               children: [],
               icon: 'icon-zhengshu'
+            },
+            {
+              id: '12',
+              name: '数据统计',
+              path: '/cred/tj',
+              children: [],
+              icon: 'icon-tongji'
             }
           ],
           icon: 'icon-zhengshu'
@@ -331,9 +345,16 @@ export default {
           path: '',
           children: [
             {
-              id: '10',
+              id: '9',
               name: '机构证书',
               path: '/cred',
+              children: [],
+              icon: 'icon-zhengshu'
+            },
+            {
+              id: '19',
+              name: '机构证书审核',
+              path: '/cred/audit',
               children: [],
               icon: 'icon-zhengshu'
             },
@@ -345,14 +366,14 @@ export default {
               icon: 'icon-zhengshu'
             },
             {
-              id: '11',
-              name: '审核管理',
+              id: '10',
+              name: '个人证书审核',
               path: '/audit',
               children: [],
               icon: 'icon-zhengshu'
             },
             {
-              id: '6',
+              id: '11',
               name: '分类管理',
               path: '/cred/class',
               children: [],
@@ -407,21 +428,21 @@ export default {
             // },
             {
               id: '4',
-              name: '体测报告(幼儿园)',
+              name: '幼儿体质测查',
               path: '/report',
               children: [],
               icon: 'icon-baogao'
             },
             {
               id: '5',
-              name: '体测报告(小学)',
+              name: '小学生体质测查',
               path: '/primaryReport',
               children: [],
               icon: 'icon-baogao'
             },
             {
               id: '6',
-              name: '体测报告(篮球)',
+              name: '篮球专项测查',
               path: '/basketReport',
               children: [],
               icon: 'icon-baogao'
@@ -463,6 +484,9 @@ export default {
     // if (!routes.includes(this.$route.path)) {
     //   return this.$router.go(-1)
     // }
+    this.bus.$on('readLength', (readLength) => {
+      this.userInfo.msgCount -= readLength
+    })
   },
 
   methods: {

@@ -31,8 +31,15 @@
           align="center">
         </el-table-column>
         <el-table-column
-          prop="name"
           label="分类名称"
+          align="center">
+          <template slot-scope="scope">
+            <el-button type="text" @click="toCred(scope.row.type, scope.row.id)">{{ scope.row.name }}</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="zsNum"
+          label="证书数量"
           align="center">
         </el-table-column>
         <el-table-column
@@ -177,6 +184,14 @@ export default {
 
     handleSelectionChange (val) {
       this.selectList = val
+    },
+
+    toCred (type, id) {
+      if (type === '个人证书') {
+        this.$router.push({ path: '/cred-person', query: { cId: id }})
+      } else {
+        this.$router.push({ path: '/cred', query: { cId: id }})
+      }
     }
   }
 }

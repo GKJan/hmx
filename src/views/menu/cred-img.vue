@@ -6,7 +6,7 @@
       <el-button :loading="btnLoading" type="success" icon="el-icon-takeaway-box" @click="handleDown">下载</el-button>
     </div>
     <div class="img-wrapper" id="wrapper" v-if="type <= 2">
-      <img :src="require('../../assets/zs/' + detail.zsName + '.jpg')" class="base">
+      <img :src="require('../../assets/zs/' + detail.categoryName + '.jpg')" class="base">
       <template v-if="type === 0">
         <img :src="photoPath" class="photo0">
         <div class="info0">
@@ -40,11 +40,11 @@
         </div>
       </template>
       <template v-else>
-        <div class="name2">{{ detail.deptName }}</div>
+        <div class="name2">{{ detail.name }}</div>
         <div class="info2">
-          <span>{{ detail.deptName }}</span>
-          <span class="item2">{{ detail.code }}</span>
-          <span class="item3">{{ detail.stTime && detail.stTime.substring(0, 10) }} ~ {{ detail.sxTime && detail.sxTime.substring(0, 10) }}</span>
+          <span>{{ detail.company }}</span>
+          <span class="item2">{{ detail.htNumber }}</span>
+          <span class="item3">{{ detail.htStartTime }} ~ {{ detail.htEndTime }}</span>
         </div>
         <div class="time2">
           <span>{{ time.year }}</span>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="img-wrapper2" id="wrapper" v-else-if="type === 3">
-      <img :src="require('../../assets/zs/' + detail.zsName + '.jpg')" class="base">
+      <img :src="require('../../assets/zs/' + detail.categoryName + '.jpg')" class="base">
       <img :src="photoPath" class="photo">
       <div class="name">{{ detail.name }}</div>
       <div class="time">
@@ -64,7 +64,7 @@
     </div>
 
     <div class="img-wrapper2" id="wrapper" v-else-if="type === 4">
-      <img :src="require('../../assets/zs/' + detail.zsName + '.jpg')" class="base">
+      <img :src="require('../../assets/zs/' + detail.categoryName + '.jpg')" class="base">
       <img :src="photoPath" class="photo4">
       <div class="name4">{{ detail.name }}</div>
       <div class="code4">{{ detail.code }}</div>
@@ -74,8 +74,8 @@
       </div> -->
     </div>
 
-    <div class="img-wrapper3" v-else>
-      <img :src="cover" class="base">
+    <div class="img-wrapper" v-else>
+      <img :src="require('../../assets/zs/' + detail.categoryName + '.jpg')" class="base">
     </div>
   </div>
 </template>
@@ -86,7 +86,7 @@ import html2canvas from 'html2canvas'
 export default {
   data () {
     return {
-      type: 1,
+      type: 2,
       cover: null,
       detail: {},
       photoPath: '',
@@ -102,25 +102,31 @@ export default {
   methods: {
     getDetail () {
       this.detail = JSON.parse(this.$route.query.info)
-      if (this.detail.zsName.includes('幼儿篮球裁判员')) {
+      console.log(this.detail)
+      if (this.detail.categoryName.includes('幼儿篮球裁判员')) {
         this.type = 0
       }
-      if (this.detail.zsName.includes('WEAC') || this.detail.zsName.includes('认证培训') || this.detail.zsName.includes('公益培训')) {
+      if (this.detail.categoryName.includes('WEAC') || this.detail.categoryName.includes('认证培训') || this.detail.categoryName.includes('公益培训')) {
         this.type = 1
       }
-      if (this.detail.zsName.includes('初级')) {
+      if (this.detail.categoryName.includes('初级')) {
         this.type = 3
       }
-      if (this.detail.zsName === '幼儿篮球教师资格证书') {
+      if (this.detail.categoryName === '幼儿篮球教师资格证书') {
         this.type = 4
+      }
+      if (this.detail.categoryName.includes('小小CBA')) {
+        this.type = 5
       }
       this.time = {
         year: this.detail.createTime.substring(0, 4),
         month: this.detail.createTime.substring(5, 7),
         date: this.detail.createTime.substring(8, 10)
       }
-      let photoPath = process.env.VUE_APP_baseApi + '/upload/loadImgDataByFileName?fileName=' + this.detail.icon
-      this.imgToBase64(photoPath)
+      if (this.detail.icon) {
+        let photoPath = process.env.VUE_APP_baseApi + '/upload/loadImgDataByFileName?fileName=' + this.detail.icon
+        this.imgToBase64(photoPath)
+      }
       // this.api.getCredDetail({ id: this.$route.query.id }).then(res => {
       //   if (res.success) {
       //     if (res.data.categoryName === '星伙伴教练员') {

@@ -14,6 +14,7 @@
       :on-exceed="handleExceed">
       <i class="el-icon-plus"></i>
     </el-upload>
+    <span v-if="tips"><i style="color:#F56C6C;font-style:normal;margin-left:-20px;">*</i>请上传160*210尺寸、小于1M的照片</span>
     <el-dialog :visible.sync="dialogVisible" width="500px" :append-to-body="true">
       <img width="100%" :src="viewImg">
     </el-dialog>
@@ -31,6 +32,10 @@ export default {
     limit: {
       type: Number,
       default: 2
+    },
+    tips: {
+      type: Boolean,
+      default: false
     }
   },
   data () {

@@ -13,12 +13,14 @@ Vue.use(Vant)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.api = api
+const bus = new Vue()
+Vue.prototype.bus = bus
 
 router.beforeEach((to, from, next) => {
   // if (to.meta && to.meta.title) {
   //   document.title = to.meta.title
   // }
-  if (to.path === '/login' || to.path === '/wx' || to.path === '/wx/login' || to.path === '/wx/apply') {
+  if (to.path === '/login' || to.path === '/wx' || to.path === '/wx/login' || to.path === '/wx/apply' || to.path === '/wx/cred/search' || to.path === '/wx/cred' || to.path === '/wx/applyPersonal') {
     return next()
   }
   if (localStorage.getItem('userInfo')) {

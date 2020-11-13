@@ -1,17 +1,22 @@
 <template>
   <div class="login-container">
     <div class="login-form">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="姓名">
+      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
+        <el-form-item label="证书类型" prop="categoryId">
+          <el-select v-model="form.categoryId" placeholder="请选择证书类型">
+            <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="姓名" v-if="form.categoryId == 1 || form.categoryId == 3" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名">
           </el-input>
         </el-form-item>
-        <el-form-item label="编号">
-          <el-input v-model="form.code" placeholder="请输入证书编号">
+        <el-form-item label="加盟商名称" v-if="form.categoryId == 2 || form.categoryId == 4" prop="name">
+          <el-input v-model="form.name" placeholder="请输入加盟商名称">
           </el-input>
         </el-form-item>
-        <el-form-item label="单位">
-          <el-input v-model="form.deptName" placeholder="请输入单位">
+        <el-form-item label="身份证号" v-if="form.categoryId == 3 || form.categoryId == 4" prop="idCard">
+          <el-input v-model="form.idCard" placeholder="请输入身份证号">
           </el-input>
         </el-form-item>
       </el-form>
@@ -25,14 +30,33 @@
 export default {
   data () {
     return {
+      categoryList: [
+        {
+          name: '个人证书',
+          id: 1
+        },
+        {
+          name: '机构证书',
+          id: 2
+        },
+        {
+          name: '个人证书审核状态',
+          id: 3
+        },
+        {
+          name: '机构证书审核状态',
+          id: 4
+        }
+      ],
       show: false,
       form: {
       },
       results: [],
+      realData: [],
       rules: {
-        name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        code: [{ required: true, message: '请输入证书编号', trigger: 'blur' }],
-        deptName: [{ required: true, message: '请输入单位', trigger: 'blur' }]
+        categoryId: [{ required: true, message: '请选择证书类型', trigger: 'change' }],
+        name: [{ required: true, message: '请输入', trigger: 'blur' }],
+        idCard: [{ required: true, message: '请输入身份证号', trigger: 'blur' }],
       },
       sessionList: []
     }
@@ -46,26 +70,93 @@ export default {
     search () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.api.getWxCredPage(this.form).then((res) => {
-            if (res.data.length) {
-              // this.$router.push({ path: '/wx', query: { info: JSON.stringify(res.data) }})
-              this.results = res.data
-              this.show = true
-            } else {
-              this.$toast('没有符合条件的证书')
+          if (this.form.categoryId == 1) {
+            const params = {
+              name: this.form.name
             }
-          })
+            this.api.getWxCredPage(params).then((res) => {
+              if (res.data.length) {
+                // this.$router.push({ path: '/wx/cred', query: { info: JSON.stringify(res.data) }})
+                let data = []
+                for (let item of res.data) {
+                  data.push({name: item.zsName})
+                }
+                this.results = data
+                this.realData = res.data
+                this.show = true
+              } else {
+                this.$toast('没有符合条件的证书')
+              }
+            })
+          } else if (this.form.categoryId == 2) {
+            const params = {
+              name: this.form.name
+            }
+            this.api.getWxOrganCredPage(params).then((res) => {
+              if (res.data.length) {
+                // this.$router.push({ path: '/wx/cred', query: { info: JSON.stringify(res.data) }})
+                this.results = res.data
+                this.realData = res.data
+                this.show = true
+              } else {
+                this.$toast('没有符合条件的证书')
+              }
+            })
+          } else if (this.form.categoryId == 3) {
+            const params = {
+              name: this.form.name,
+              idCard: this.form.idCard
+            }
+            this.api.getWxCredAudit(params).then((res) => {
+              if (res.data.length) {
+                // this.$router.push({ path: '/wx/applyPersonal', query: { info: JSON.stringify(res.data) }})
+                let data = []
+                for (let item of res.data) {
+                  data.push({name: item.zsName})
+                }
+                this.results = data
+                this.realData = res.data
+                this.show = true
+              } else {
+                this.$toast('没有符合条件的证书')
+              }
+            })
+          } else {
+            const params = {
+              name: this.form.name,
+              idCard: this.form.idCard
+            }
+            this.api.getWxOrganCredAudit(params).then((res) => {
+              if (res.data.length) {
+                // this.$router.push({ path: '/wx/apply', query: { info: JSON.stringify(res.data) }})
+                this.results = res.data
+                this.show = true
+              } else {
+                this.$toast('没有符合条件的证书')
+              }
+            })
+          }
         }
       })
     },
 
-    onSelect(item) {
+    onSelect(action, index) {
+      console.log(index)
       this.show = false
       this.$toast.loading({
         message: '加载中...',
         forbidClick: true,
       })
-      this.$router.push({ path: '/wx/cred', query: { id: item.id }})
+      if (this.form.categoryId == 1 || this.form.categoryId == 2) {
+        this.$router.push({ path: '/wx/cred', query: { info: JSON.stringify(this.realData[index])}})
+      }
+      if (this.form.categoryId == 3) {
+        this.$router.push({ path: '/wx/applyPersonal', query: { info: JSON.stringify(item)}})
+      }
+      if (this.form.categoryId == 4) {
+        this.$router.push({ path: '/wx/apply', query: { info: JSON.stringify(item)}})
+      }
+      // this.$router.push({ path: '/wx/cred', query: { info: JSON.stringify(item) }})
       // window.location.href = '/wx?id=' + item.id
     }
   }

@@ -57,7 +57,13 @@ export default [
     path: '/wx/apply',
     name: 'WxCredApply',
     component: () => import('@/views/wx/apply.vue'),
-    meta: { title: '证书申请' }
+    meta: { title: '机构证书申请' }
+  },
+  {
+    path: '/wx/applyPersonal',
+    name: 'WxCredApplyPersonal',
+    component: () => import('@/views/wx/apply-personal.vue'),
+    meta: { title: '个人证书申请' }
   },
   {
     path: '/wx/cred/search',
@@ -68,7 +74,7 @@ export default [
   {
     path: '/wx/cred',
     name: 'WxCred',
-    component: () => import('@/views/wx/cred.vue'),
+    component: () => import('@/views/wx/img.vue'),
     meta: { title: '证书详情' }
   }
 ]

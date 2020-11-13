@@ -9,7 +9,7 @@
     <div class="button">
       <el-button type="warning" @click="handleRead">标记为已读</el-button>
     </div>
-    <div class="list" v-if="listQuery.status == 2">
+    <div class="list" v-if="listQuery.status == 1">
       <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
       <el-checkbox-group v-model="checkedList" @change="handleCheckedChange">
         <el-checkbox v-for="item in msgList" :label="item.id" :key="item.id">
@@ -49,11 +49,11 @@ export default {
       duOption: [
         {
           label: '未读',
-          value: 2
+          value: 1
         },
         {
           label: '已读',
-          value: 1
+          value: 2
         }
       ],
       checkAll: false,
@@ -64,7 +64,7 @@ export default {
       listQuery: {
         size: 10,
         current: 1,
-        status: 2
+        status: 1
       },
       total: 0
     }
@@ -115,6 +115,8 @@ export default {
         if (res.success) {
           this.$message.success('标记已读成功')
           this.getList()
+          this.isIndeterminate = false
+          this.bus.$emit('readLength', this.checkedList.length)
         }
       })
     }

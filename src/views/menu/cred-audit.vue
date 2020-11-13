@@ -1,6 +1,7 @@
 <template>
   <div class="cred-container">
     <table-panel
+      v-loading="loading"
       ref="table"
       :apiMethod="api.getOrganCredAuditPage"
       @handleSelectionChange="handleSelectionChange"
@@ -11,6 +12,16 @@
           <el-select v-model="listQuery.categoryId" clearable placeholder="请选择加盟类型">
             <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
+        </div>
+        <div class="search-item">
+          <span>所属区域</span>
+          <el-cascader
+            v-model="listQuery.areaCode"
+            :options="areaList"
+            :props="areaProps"
+            clearable
+          >
+          </el-cascader>
         </div>
         <div class="search-item">
           <span>审核状态</span>
@@ -54,6 +65,11 @@
           align="center">
         </el-table-column>
         <el-table-column
+          prop="areaName"
+          label="所属区域"
+          align="center">
+        </el-table-column>
+        <el-table-column
           prop="address"
           label="加盟商地址"
           align="center">
@@ -71,6 +87,16 @@
         <el-table-column
           prop="company"
           label="所属子公司"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="frName"
+          label="法人姓名"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="idCard"
+          label="法人身份证号"
           align="center">
         </el-table-column>
         <el-table-column
@@ -124,6 +150,16 @@ export default {
   },
   data () {
     return {
+      areaList: [],
+      loading: true,
+      areaProps: {
+        expandTrigger: 'hover',
+        checkStrictly: true,
+        value: 'code',
+        label: 'name',
+        children: 'childArea',
+        emitPath: false
+      },
       listQuery: {},
       categoryList: [],
       auditStatusList: [
@@ -145,6 +181,7 @@ export default {
   },
 
   created () {
+    this.getAreaList()
     this.getCategory()
   },
 
@@ -168,6 +205,14 @@ export default {
   },
 
   methods: {
+    getAreaList () {
+      this.api.getArea().then(res => {
+        if (res.success) {
+          this.areaList = res.data
+          this.loading = false
+        }
+      })
+    },
 
     getCategory () { // this.form.categoryType
       this.api.getzsCategoryPage({ size: 20, type: '机构证书' }).then(res => {
