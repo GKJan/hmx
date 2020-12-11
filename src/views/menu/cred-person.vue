@@ -68,11 +68,11 @@
           label="姓名"
           align="center">
         </el-table-column>
-        <!-- <el-table-column
+        <el-table-column
           label="性别"
           align="center">
-          <template slot-scope="scope">{{ scope.row.state === 1 ? '男' : '女' }}</template>
-        </el-table-column> -->
+          <template slot-scope="scope">{{ scope.row.sex === 1 ? '男' : '女' }}</template>
+        </el-table-column>
         <el-table-column
           prop="categoryName"
           label="证书分类"
@@ -117,13 +117,12 @@
     </table-panel>
     <el-dialog width="500px" :title="action === 'add' ? '新增证书' : '编辑证书'" :visible.sync="dialog">
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <!-- <el-form-item label="证书类型" prop="categoryType">
-          <el-select v-model="form.categoryType" placeholder="请选择证书类型" @change="handleChange">
-            <el-option v-for="item in typeList" :key="item.dictValue" :label="item.dictValue" :value="item.dictValue"></el-option>
-          </el-select>
-        </el-form-item> -->
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" prop="sex">
+          <el-radio v-model="form.sex" :label="1">男</el-radio>
+          <el-radio v-model="form.sex" :label="2">女</el-radio>
         </el-form-item>
         <el-form-item label="身份证号" prop="idCard">
           <el-input v-model="form.idCard" placeholder="请输入身份证号"></el-input>
@@ -132,7 +131,7 @@
           <el-input v-model="form.mobile" placeholder="请输入手机号码"></el-input>
         </el-form-item>
         <el-form-item label="照片" prop="icon">
-          <img-upload :tips="true" v-model="form.icon" />
+          <img-upload v-model="form.icon" :tips="true" />
         </el-form-item>
         <el-form-item label="证书分类" prop="categoryId">
           <el-select v-model="form.categoryId" placeholder="请选择证书分类" @change="handleChange">
@@ -140,18 +139,15 @@
           </el-select>
         </el-form-item>
         <el-form-item label="证书编号" prop="code">
-          <!-- <el-input placeholder="请输入证书编号" v-model="form.code">
-            <template slot="prepend">{{ preCode }}</template>
-          </el-input> -->
           <el-input v-model="form.code" disabled placeholder="请输入证书编号"></el-input>
         </el-form-item>
         <el-form-item label="证书名称" prop="zsName">
           <el-input v-model="form.zsName" disabled placeholder="请输入证书名称"></el-input>
         </el-form-item>
-        <el-form-item label="所属机构/园所">
+        <el-form-item label="所属机构/园所" prop="deptName">
           <el-input v-model="form.deptName" placeholder="请输入所属机构/幼儿园"></el-input>
         </el-form-item>
-        <el-form-item label="所属区域">
+        <el-form-item label="所属区域" prop="areaCode">
           <el-cascader
             v-model="form.areaCode"
             :options="areaList"
@@ -160,61 +156,18 @@
           >
           </el-cascader>
         </el-form-item>
-        <el-form-item label="培训名称">
+        <!-- <el-form-item label="地址">
+          <el-input v-model="form.address" placeholder="请输入地址"></el-input>
+        </el-form-item> -->
+        <el-form-item label="培训名称" prop="pxName">
           <el-input v-model="form.pxName" placeholder="请输入培训名称"></el-input>
         </el-form-item>
-        <el-form-item label="参训期数">
+        <el-form-item label="参训期数" prop="periodical">
           <el-input v-model="form.periodical" placeholder="请输入参训期数"></el-input>
         </el-form-item>
-        <el-form-item label="授权内容">
+        <el-form-item label="授权内容" prop="content">
           <el-input v-model="form.content" placeholder="请输入授权内容"></el-input>
         </el-form-item>
-        <!-- <template v-if="form.categoryType === '个人证书'"> -->
-          <!-- <el-form-item label="性别">
-            <el-radio v-model="form.sex" :label="1">男</el-radio>
-            <el-radio v-model="form.sex" :label="2">女</el-radio>
-          </el-form-item>
-          <el-form-item label="身份证号">
-            <el-input v-model="form.idCard" maxlength="18" placeholder="请输入身份证号"></el-input>
-          </el-form-item>
-          <el-form-item label="照片">
-            <img-upload v-model="form.icon" />
-          </el-form-item> -->
-        <!-- </template> -->
-        <!-- <template v-if="form.categoryType === '机构证书'">
-          <el-form-item label="单位名称">
-            <el-input v-model="form.deptName" placeholder="请输入单位名称"></el-input>
-          </el-form-item>
-        </template> -->
-        <!-- <el-form-item label="培训名称">
-          <el-input v-model="form.pxName" placeholder="请输入培训名称"></el-input>
-        </el-form-item> -->
-        <!-- <el-form-item label="证书生效日期" prop="startTime">
-          <el-date-picker
-            v-model="form.startTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            range-separator="至"
-            placeholder="选择生效日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="证书失效日期" prop="endTime">
-          <el-date-picker
-            v-model="form.endTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            range-separator="至"
-            placeholder="选择失效日期">
-          </el-date-picker>
-        </el-form-item> -->
-        <!-- <el-form-item label="直传证书">
-          <img-upload v-model="form.path" />
-        </el-form-item> -->
-        <!-- <el-form-item label="所属区域" prop="areaId">
-          <el-select v-model="form.areaId" placeholder="请选择所属区域">
-            <el-option v-for="item in areaList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
-        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialog = false">取 消</el-button>
@@ -256,12 +209,16 @@ export default {
       action: 'add',
       rules: {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+        sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         idCard: [{ required: true, message: '请输入身份证号', trigger: 'blur' }],
         mobile: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-        icon: [{ required: true, message: '请上次照片', trigger: 'blur' }],
+        icon: [{ required: true, message: '请上传照片', trigger: 'blur' }],
         categoryId: [{ required: true, message: '请选择证书分类', trigger: 'change' }],
         code: [{ required: true, message: '请输入证书编号', trigger: 'blur' }],
+        deptName: [{ required: true, message: '请输入所属机构/幼儿园', trigger: 'blur' }],
         zsName: [{ required: true, message: '请输入证书名称', trigger: 'blur' }],
+        areaCode: [{ required: true, message: '请选择区域', trigger: 'blur' }],
+        periodical: [{ required: true, message: '请输入参训期数', trigger: 'blur' }],
         pxName: [{ required: true, message: '请输入培训名称', trigger: 'blur' }],
         content: [{ required: true, message: '请输入授权内容', trigger: 'blur' }],
         startTime: [{ required: true, message: '请选择生效日期', trigger: 'change' }],
@@ -392,8 +349,8 @@ export default {
     toEdit () {
       this.action = 'edit'
       this.dialog = true
-      const { id, name, icon, categoryId, code, zsName, pxName, content, startTime, endTime } = this.selectList[0]
-      this.form = { id, name, icon, categoryId, code, zsName, pxName, content, startTime, endTime }
+      const { id, name, sex, idCard, mobile, icon, categoryId, code, zsName, deptName, pxName, periodical, content, areaCode } = this.selectList[0]
+      this.form = { id, name, sex, idCard, mobile, icon, categoryId, code, zsName, deptName, pxName, periodical, content, areaCode }
       // this.handleChange(this.selectList[0].categoryId)
     },
 

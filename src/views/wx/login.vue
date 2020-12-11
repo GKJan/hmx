@@ -139,7 +139,7 @@ export default {
   justify-content: center;
   background-color: #f8f8f8;
   .login-form {
-    margin-top: 30%;
+    margin-top: 10%;
     width: 80%;
     text-align: center;
     img {

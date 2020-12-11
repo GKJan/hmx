@@ -1,6 +1,9 @@
 <template>
   <div class="login-container">
-    <img src="../../assets/primary/logo.png">
+    <div class="left">
+      <img src="../../assets/primary/logo.png">
+      <span @click="toSearch">证书查询</span>
+    </div>
     <div class="login-form">
       <div class="title">华蒙星儿童业务系统</div>
       <el-form ref="form" :model="form" :rules="rules">
@@ -66,6 +69,10 @@ export default {
           })
         }
       })
+    },
+
+    toSearch () {
+      this.$router.push({path: '/wx/cred/search', query: {from: 'pc'}})
     }
   }
 }
@@ -74,14 +81,26 @@ export default {
 <style lang="scss" scoped>
 .login-container {
   min-height: 100%;
-  // background: #F0F3F7 url('../../assets/img/bg.png') center/100%;
   display: flex;
-  // flex-direction: column;
   align-items: center;
   justify-content: center;
-  img {
-    width: 500px;
-    height: 230px;
+  .left {
+    position: relative;
+    img {
+      width: 500px;
+      height: 230px;
+    }
+    span {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #06338E;
+      cursor: pointer;
+    }
   }
   .login-form {
     width: 350px;

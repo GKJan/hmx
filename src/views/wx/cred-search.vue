@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-form">
-      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="95px">
         <el-form-item label="证书类型" prop="categoryId">
           <el-select v-model="form.categoryId" placeholder="请选择证书类型">
             <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"></el-option>
@@ -143,12 +143,12 @@ export default {
     onSelect(action, index) {
       console.log(index)
       this.show = false
-      this.$toast.loading({
-        message: '加载中...',
-        forbidClick: true,
-      })
       if (this.form.categoryId == 1 || this.form.categoryId == 2) {
-        this.$router.push({ path: '/wx/cred', query: { info: JSON.stringify(this.realData[index])}})
+        if (this.$route.query.from === 'pc') {
+          this.$router.push({ path: '/cred/img2', query: { info: JSON.stringify(this.realData[index])}})
+        } else {
+          this.$router.push({ path: '/wx/cred', query: { info: JSON.stringify(this.realData[index])}})
+        }
       }
       if (this.form.categoryId == 3) {
         this.$router.push({ path: '/wx/applyPersonal', query: { info: JSON.stringify(item)}})
@@ -165,10 +165,12 @@ export default {
 
 <style lang="scss" scoped>
 .login-container {
+  max-width: 500px;
+  margin: 0 auto;
   height: 100%;
   display: flex;
   justify-content: center;
-  background-color: #f8f8f8;
+  background-color: #fff;
   .login-form {
     margin-top: 30%;
     width: 80%;

@@ -10,41 +10,45 @@
         <el-form-item label="加盟商名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入加盟商名称"></el-input>
         </el-form-item>
-        <el-form-item label="加盟商地址">
+        <el-form-item label="加盟商地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入加盟商地址"></el-input>
         </el-form-item>
-        <el-form-item label="对接销售">
+        <el-form-item label="对接销售" prop="djxs">
           <el-input v-model="form.djxs" placeholder="请输入对接销售"></el-input>
         </el-form-item>
-        <el-form-item label="加盟金额">
+        <el-form-item label="加盟金额" prop="amount">
           <el-input v-model="form.amount" placeholder="请输入加盟金额"></el-input>
         </el-form-item>
-        <el-form-item label="所属子公司">
+        <el-form-item label="所属子公司" prop="company">
           <el-input v-model="form.company" placeholder="请输入所属子公司"></el-input>
         </el-form-item>
-        <el-form-item label="法人姓名">
+        <el-form-item label="法人姓名" prop="frName">
           <el-input v-model="form.frName" placeholder="请输入法人姓名"></el-input>
         </el-form-item>
-        <el-form-item label="法人身份证号">
+        <el-form-item label="性别" prop="sex">
+          <el-radio v-model="form.sex" :label="1">男</el-radio>
+          <el-radio v-model="form.sex" :label="2">女</el-radio>
+        </el-form-item>
+        <el-form-item label="法人身份证号" prop="idCard">
           <el-input v-model="form.idCard" placeholder="请输入法人身份证号"></el-input>
         </el-form-item>
-        <el-form-item label="联系人姓名">
+        <el-form-item label="联系人姓名" prop="lxrName">
           <el-input v-model="form.lxrName" placeholder="请输入联系人姓名"></el-input>
         </el-form-item>
-        <el-form-item label="联系人电话">
+        <el-form-item label="联系人电话" prop="lxrMobile">
           <el-input v-model="form.lxrMobile" placeholder="请输入联系人电话"></el-input>
         </el-form-item>
-        <el-form-item label="联系人职务">
+        <el-form-item label="联系人职务" prop="lxrPost">
           <el-input v-model="form.lxrPost" placeholder="请输入联系人职务"></el-input>
         </el-form-item>
-        <el-form-item label="合同编号">
+        <el-form-item label="合同编号" prop="htNumber">
           <el-input v-model="form.htNumber" placeholder="请输入合同编号"></el-input>
         </el-form-item>
-        <el-form-item label="合同归档">
+        <el-form-item label="合同归档" prop="htgd">
           <el-radio v-model="form.htgd" label="已归档"></el-radio>
           <el-radio v-model="form.htgd" label="未归档"></el-radio>
         </el-form-item>
-        <el-form-item label="合同开始日期">
+        <el-form-item label="合同开始日期" prop="htStartTime">
           <el-date-picker
             v-model="form.htStartTime"
             type="date"
@@ -53,7 +57,7 @@
             placeholder="选择开始日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="合同结束日期">
+        <el-form-item label="合同结束日期" prop="htEndTime">
           <el-date-picker
             v-model="form.htEndTime"
             type="date"
@@ -62,7 +66,7 @@
             placeholder="选择结束日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="所属区域">
+        <el-form-item label="所属区域" prop="areaCode">
           <el-cascader
             v-model="form.areaCode"
             :options="areaList"
@@ -128,14 +132,23 @@ export default {
         type: '机构证书'
       },
       rules: {
-        name: [{ required: true, message: '请输入合作商/直联幼儿园名称', trigger: 'blur' }],
-        address: [{ required: true, message: '请输入合作商/直联幼儿园地址', trigger: 'blur' }],
-        categoryId: [{ required: true, message: '请选择证书分类', trigger: 'change' }],
+        categoryId: [{ required: true, message: '请选择加盟类型', trigger: 'change' }],
+        name: [{ required: true, message: '请输入加盟商名称', trigger: 'blur' }],
+        address: [{ required: true, message: '请输入加盟商地址', trigger: 'blur' }],
+        djxs: [{ required: true, message: '请输入对接销售', trigger: 'blur' }],
+        amount: [{ required: true, message: '请输入加盟金额', trigger: 'blur' }],
+        company: [{ required: true, message: '请输入所属子公司', trigger: 'blur' }],
         frName: [{ required: true, message: '请输入法人姓名', trigger: 'blur' }],
+        sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         idCard: [{ required: true, message: '请输入法人身份证号', trigger: 'blur' }],
+        lxrName: [{ required: true, message: '请输入联系人姓名', trigger: 'blur' }],
+        lxrMobile: [{ required: true, message: '请输入联系人姓名', trigger: 'blur' }],
+        lxrPost: [{ required: true, message: '请输入联系人职务', trigger: 'blur' }],
         htNumber: [{ required: true, message: '请输入合同编号', trigger: 'blur' }],
+        htgd: [{ required: true, message: '合同是否归档', trigger: 'blur' }],
         htStartTime: [{ required: true, message: '请选择开始日期', trigger: 'change' }],
-        htEndTime: [{ required: true, message: '请选择结束日期', trigger: 'change' }]
+        htEndTime: [{ required: true, message: '请选择结束日期', trigger: 'change' }],
+        areaCode: [{ required: true, message: '请选择区域', trigger: 'change' }]
       },
       categoryList: [],
       areaList: [],

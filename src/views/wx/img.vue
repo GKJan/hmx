@@ -6,47 +6,50 @@
       <el-button :loading="btnLoading" type="success" icon="el-icon-takeaway-box" @click="handleDown">下载</el-button>
     </div> -->
     <div class="img-wrapper" id="wrapper" v-if="type <= 2">
-      <img :src="require('../../assets/zs/' + detail.zsName + '.jpg')" class="base">
+      <img v-if="realSrc" :src="realSrc" class="base">
+      <img v-else :src="require('../../assets/zs/' + detail.categoryName + '.jpg')" class="base">
       <template v-if="type === 0">
-        <img :src="photoPath" class="photo0">
-        <div class="info0">
+        <img :src="photoPath" class="photo0" id="photo">
+        <div class="info0" v-if="!realSrc">
           <span class="item01">{{ detail.name }}</span>
           <span class="item02">{{ detail.sex === 1 ? '男' : '女' }}</span>
+          <span class="item05">{{ detail.deptName }}</span>
+          <span class="item06">{{ detail.idCard }}</span>
           <span class="item03">{{ detail.createTime && detail.createTime.substring(0, 10) }}</span>
           <span class="item04">{{ detail.code }}</span>
           <!-- <span class="item05">{{ detail.startTime }} ~ {{ detail.endTime }}</span> -->
         </div>
         <!-- <div class="name">{{ detail.name }}</div> -->
-        <div class="time">
+        <div class="time" v-if="!realSrc">
           <span>{{ time.year }}</span>
           <span>{{ time.month }}</span>
           <span>{{ time.date }}</span>
         </div>
       </template>
       <template v-else-if="type === 1">
-        <img :src="photoPath" class="photo">
-        <div class="info">
+        <img :src="photoPath" class="photo" id="photo">
+        <div class="info" v-if="!realSrc">
           <span class="item">{{ detail.name }}</span>
           <span class="item item2">{{ detail.sex === 1 ? '男' : '女' }}</span>
           <span class="item item3">{{ detail.createTime && detail.createTime.substring(0, 10) }}</span>
           <span class="item item4">{{ detail.code }}</span>
-          <span class="item item5">{{ detail.startTime }} ~ {{ detail.endTime }}</span>
+          <span class="item item5" v-if="detail.startTime">{{ detail.startTime }} ~ {{ detail.endTime }}</span>
         </div>
-        <div class="name">{{ detail.name }}</div>
-        <div class="time">
+        <div class="name" v-if="!realSrc">{{ detail.name }}</div>
+        <div class="time" v-if="!realSrc">
           <span>{{ time.year }}</span>
           <span>{{ time.month }}</span>
           <span>{{ time.date }}</span>
         </div>
       </template>
       <template v-else>
-        <div class="name2">{{ detail.name }}</div>
-        <div class="info2">
+        <div class="name2" v-if="!realSrc">{{ detail.name }}</div>
+        <div class="info2" v-if="!realSrc">
           <span>{{ detail.company }}</span>
           <span class="item2">{{ detail.htNumber }}</span>
           <span class="item3">{{ detail.htStartTime }} ~ {{ detail.htEndTime }}</span>
         </div>
-        <div class="time2">
+        <div class="time2" v-if="!realSrc">
           <span>{{ time.year }}</span>
           <span>{{ time.month }}</span>
         </div>
@@ -54,68 +57,84 @@
     </div>
 
     <div class="img-wrapper2" id="wrapper" v-else-if="type === 3">
-      <img :src="require('../../assets/zs/' + detail.zsName + '.jpg')" class="base">
-      <img :src="photoPath" class="photo">
-      <div class="name">{{ detail.name }}</div>
-      <div class="time">
+      <img v-if="realSrc" :src="realSrc" class="base">
+      <img v-else :src="require('../../assets/zs/' + detail.categoryName + '.jpg')" class="base">
+      <img :src="photoPath" class="photo" id="photo">
+      <div class="name" v-if="!realSrc">{{ detail.name }}</div>
+      <div class="time" v-if="!realSrc">
         <span>{{ time.year }}</span>
         <span>{{ time.month }}</span>
+      </div>
+      <div class="qishu" v-if="!realSrc">{{ detail.periodical }}</div>
+      <div class="time3" v-if="!realSrc">
+        <span>{{ time.year }}</span>
+        <span>{{ time.month }}</span>
+        <span>{{ time.date }}</span>
       </div>
     </div>
 
     <div class="img-wrapper2" id="wrapper" v-else-if="type === 4">
-      <img :src="require('../../assets/zs/' + detail.zsName + '.jpg')" class="base">
-      <img :src="photoPath" class="photo4">
-      <div class="name4">{{ detail.name }}</div>
-      <div class="code4">{{ detail.code }}</div>
+      <img v-if="realSrc" :src="realSrc" class="base">
+      <img v-else :src="require('../../assets/zs/' + detail.categoryName + '.jpg')" class="base">
+      <img :src="photoPath" class="photo4" id="photo">
+      <div class="party4" v-if="!realSrc">{{ detail.deptName }}</div>
+      <div class="name4" v-if="!realSrc">{{ detail.name }}</div>
+      <div class="code4" v-if="!realSrc">{{ detail.code }}</div>
       <!-- <div class="time">
         <span>{{ time.year }}</span>
         <span>{{ time.month }}</span>
       </div> -->
     </div>
 
-    <div class="img-wrapper" v-else>
-      <img :src="require('../../assets/zs/' + detail.zsName + '.jpg')" class="base">
+    <div class="img-wrapper" id="wrapper" v-else>
+      <img v-if="realSrc" :src="realSrc" class="base">
+      <img v-else :src="require('../../assets/zs/' + detail.categoryName + '.jpg')" class="base">
     </div>
   </div>
 </template>
 
 <script>
-import html2canvas from 'html2canvas'
+// import html2canvas from 'html2canvas'
+import html2canvas from '../../../public/lib/html2canvas'
 
 export default {
   data () {
     return {
       type: 2,
+      realSrc: '',
       cover: null,
       detail: {},
       photoPath: '',
       time: {},
-      btnLoading: false
     }
   },
 
   created () {
     this.getDetail()
+    this.$toast.loading({
+      message: '加载中...',
+      forbidClick: true,
+      duration: 3000
+    })
   },
 
   methods: {
     getDetail () {
       this.detail = JSON.parse(this.$route.query.info)
       console.log(this.detail)
-      if (this.detail.zsName.includes('幼儿篮球裁判员')) {
+      if (this.detail.categoryName.includes('幼儿篮球裁判员')) {
         this.type = 0
       }
-      if (this.detail.zsName.includes('WEAC') || this.detail.zsName.includes('认证培训') || this.detail.zsName.includes('公益培训')) {
+      if (this.detail.categoryName.includes('WEAC') || this.detail.categoryName.includes('认证培训') || this.detail.categoryName.includes('公益培训')) {
         this.type = 1
       }
-      if (this.detail.zsName.includes('初级')) {
+      if (this.detail.categoryName.includes('初级')) {
         this.type = 3
       }
-      if (this.detail.zsName === '幼儿篮球教师资格证书') {
+      if (this.detail.categoryName === '幼儿篮球教师资格证书') {
         this.type = 4
       }
-      if (this.detail.zsName.includes('小小CBA')) {
+      if (this.detail.categoryName.includes('小小CBA')) {
         this.type = 5
       }
       this.time = {
@@ -124,80 +143,76 @@ export default {
         date: this.detail.createTime.substring(8, 10)
       }
       if (this.detail.icon) {
-        let photoPath = process.env.VUE_APP_baseApi + '/upload/loadImgDataByFileName?fileName=' + this.detail.icon
-        this.imgToBase64(photoPath)
+        this.photoPath = process.env.VUE_APP_baseApi + '/upload/loadImgDataByFileName?fileName=' + this.detail.icon
+        // this.imgToBase64()
+        setTimeout(() => {
+          this.handleDown()
+        }, 1000)
       }
-      // this.api.getCredDetail({ id: this.$route.query.id }).then(res => {
-      //   if (res.success) {
-      //     if (res.data.categoryName === '星伙伴教练员') {
-      //       this.cover = require('../../assets/img/星伙伴教练员.jpg')
-      //     } else if (res.data.categoryName === '俱乐部星教练') {
-      //       this.cover = require('../../assets/img/俱乐部星教练.jpg')
-      //     } else if (res.data.categoryName === '星宝贝督导师') {
-      //       this.cover = require('../../assets/img/星宝贝督导师.jpg')
-      //     } else if (res.data.categoryName === '星伙伴(代理)') {
-      //       this.cover = require('../../assets/img/星伙伴.jpg')
-      //       this.type = 2
-      //     } else if (res.data.categoryName === '初级教练') {
-      //       this.cover = require('../../assets/img/初级教练.jpg')
-      //       this.type = 3
-      //     } else if (res.data.categoryName === '初级校长') {
-      //       this.cover = require('../../assets/img/初级校长.jpg')
-      //       this.type = 3
-      //     } else if (res.data.categoryName === '初级课程顾问') {
-      //       this.cover = require('../../assets/img/初级课程顾问.jpg')
-      //       this.type = 3
-      //     } else {
-      //       this.cover = process.env.VUE_APP_baseApi + '/upload/loadImgDataByFileName?fileName=' + res.data.path
-      //       this.type = 4
-      //     }
-      //     this.detail = res.data
-      //     this.time = {
-      //       year: res.data.createTime.substring(0, 4),
-      //       month: res.data.createTime.substring(5, 7),
-      //       date: res.data.createTime.substring(8, 10)
-      //     }
-      //     let photoPath = process.env.VUE_APP_baseApi + '/upload/loadImgDataByFileName?fileName=' + res.data.icon
-      //     this.imgToBase64(photoPath)
-      //   }
-      // })
     },
 
     // 将在线图片转为base64
-    imgToBase64 (photoPath) {
+    imgToBase64 () {
+      // setTimeout(() => {
+      //   let image = document.getElementById('photo')
+      //   console.log(image)
+      //   let canvas = document.getElementById('myCanvas')
+      //   let ctx = canvas.getContext('2d')
+		  //   let w = image.width
+      //   let h = image.height
+      //   ctx.drawImage(image, 0, 0, w, h)
+      // }, 1000)
+      // setTimeout(() => {
+      //   this.handleDown()
+      // }, 1000)
       let that = this
       let canvas = document.createElement('canvas')
       let ctx = canvas.getContext('2d')
-      let image = new Image()
-      image.src = photoPath
+      let image = document.getElementById('photo')
+      // let image = new Image()
+      // image.src = photoPath
       // image.src = src + '?v=' + Math.random() // 处理缓存
-      image.crossOrigin = '*' // 支持跨域图片
-      image.onload = function () {
-        canvas.width = image.width
-        canvas.height = image.height
-        ctx.drawImage(image, 0, 0, image.width, image.height)
-        that.photoPath = canvas.toDataURL('image/png') // 可选其他值 image/jpeg
-      }
+      // image.crossOrigin = '*' // 支持跨域图片
+      setTimeout(() => {
+        // image.onload = () => { // iOS上onload事件无效
+          canvas.width = image.width
+          canvas.height = image.height
+          ctx.drawImage(image, 0, 0, image.width, image.height)
+          alert(canvas.width)
+          that.photoPath = canvas.toDataURL('image/png') // 可选其他值 image/jpeg
+        // }
+      }, 1000)
+      setTimeout(() => {
+        that.handleDown()
+      }, 1000) // iOS上设置延迟才成功，但图片还是空白
+      // setTimeout(() => {
+      //   (window.html2canvas || html2canvas)(document.getElementById('photo')).then(canvas => {
+      //     this.photoPath = canvas.toDataURL('image/png')
+      //     this.handleDown()
+      //   }).catch(err => {
+      //     console.log(err)
+      //   })
+      // }, 1000)
     },
 
     // html导出图片
     handleDown () {
-      this.btnLoading = true
-      let canvasID = document.getElementById('wrapper')
-      let a = document.createElement('a')
-      html2canvas(canvasID).then(canvas => {
-        let dom = document.body.appendChild(canvas)
-        dom.style.display = 'none'
-        a.style.display = 'none'
-        document.body.removeChild(dom)
-        let blob = this.dataURLToBlob(dom.toDataURL('image/png'))
-        a.setAttribute('href', URL.createObjectURL(blob))
-        a.setAttribute('download', '证书.png')
-        document.body.appendChild(a)
-        a.click()
-        URL.revokeObjectURL(blob)
-        document.body.removeChild(a)
-        this.btnLoading = false
+      (window.html2canvas || html2canvas)(document.getElementById('wrapper')).then(canvas => {
+        this.realSrc = canvas.toDataURL('image/png')
+        // let a = document.createElement('a')
+        // let dom = document.body.appendChild(canvas)
+        // dom.style.display = 'none'
+        // a.style.display = 'none'
+        // document.body.removeChild(dom)
+        // let blob = this.dataURLToBlob(dom.toDataURL('image/png'))
+        // a.setAttribute('href', URL.createObjectURL(blob))
+        // a.setAttribute('download', '证书.png')
+        // document.body.appendChild(a)
+        // a.click()
+        // URL.revokeObjectURL(blob)
+        // document.body.removeChild(a)
+      }).catch(err => {
+        console.log(err)
       })
     },
 
@@ -222,7 +237,7 @@ export default {
   .buttons {
   }
   .img-wrapper {
-    margin-left: 20px;
+    // margin-left: 20px;
     position: relative;
     .base {
       width: 855px;
@@ -265,11 +280,11 @@ export default {
     .item03 {
       position: absolute;
       top: 403px;
-      left: 415px;
+      left: 413px;
       font-size: 18px;
       font-weight: 600;
       color: #D87830;
-      width: 95px;
+      width: 98px;
       text-align: center;
     }
     .item04 {
@@ -282,13 +297,35 @@ export default {
       width: 95px;
       text-align: center;
     }
+    .item05 {
+      position: absolute;
+      top: 295px;
+      left: 610px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #D87830;
+      width: 100px;
+      text-align: center;
+    }
+    .item06 {
+      position: absolute;
+      top: 355px;
+      left: 415px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #D87830;
+      width: 180px;
+      text-align: center;
+    }
     .name {
+      width: 90px;
+      text-align: center;
       font-size: 20px;
       font-weight: 600;
       color: #D87830;
       position: absolute;
       bottom: 190px;
-      left: 160px;
+      left: 130px;
     }
     .time {
       width: 200px;
@@ -319,13 +356,13 @@ export default {
       .item2 {
       }
       .item3 {
-        margin-top: 20px;
+        margin-top: 19px;
       }
       .item4 {
-        margin-top: 20px;
+        margin-top: 17px;
       }
       .item5 {
-        margin-top: 18px;
+        margin-top: 10px;
         width: 250px;
       }
     }
@@ -365,7 +402,7 @@ export default {
     }
   }
   .img-wrapper2 {
-    margin-left: 20px;
+    // margin-left: 20px;
     position: relative;
     .base {
       width: 445px;
@@ -392,6 +429,36 @@ export default {
       left: 43px;
       font-size: 16px;
       font-weight: 600;
+      text-align: center;
+    }
+    .qishu {
+      width: 23px;
+      position: absolute;
+      bottom: 211px;
+      left: 63px;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center; 
+    }
+    .time3 {
+      width: 155px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: absolute;
+      bottom: 107px;
+      right: 62px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .party4 {
+      width: 100px;
+      position: absolute;
+      bottom: 202px;
+      left: 190px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #D87830;
       text-align: center;
     }
     .name4 {
@@ -427,7 +494,7 @@ export default {
     }
   }
   .img-wrapper3 {
-    margin-left: 20px;
+    // margin-left: 20px;
     position: relative;
     .base {
       max-width: 850px;

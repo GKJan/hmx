@@ -11,6 +11,11 @@ const routes = [
     name: 'Login',
     component: () => import('@/views/login/index.vue')
   },
+  {
+    path: '/cred/img2',
+    name: 'CredImg2',
+    component: () => import('@/views/menu/cred-img2.vue')
+  },
   ...wxRouter,
   {
     path: '/',

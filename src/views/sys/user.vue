@@ -73,11 +73,11 @@
             <el-option v-for="item in parkList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="所属区域" prop="areaId" v-if="form.role === 4 || form.role === 5">
+        <!-- <el-form-item label="所属区域" prop="areaId" v-if="form.role === 4 || form.role === 5">
           <el-select v-model="form.areaId" placeholder="请选择所属区域">
             <el-option v-for="item in areaList" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addDialog = false">取 消</el-button>

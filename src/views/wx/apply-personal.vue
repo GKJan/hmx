@@ -5,6 +5,10 @@
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
+        <el-form-item label="性别" prop="sex">
+          <el-radio v-model="form.sex" :label="1">男</el-radio>
+          <el-radio v-model="form.sex" :label="2">女</el-radio>
+        </el-form-item>
         <el-form-item label="身份证号" prop="idCard">
           <el-input v-model="form.idCard" placeholder="请输入身份证号"></el-input>
         </el-form-item>
@@ -25,10 +29,10 @@
         <el-form-item label="证书名称" prop="zsName">
           <el-input v-model="form.zsName" disabled placeholder="请输入证书名称"></el-input>
         </el-form-item>
-        <el-form-item label="所属机构/园所">
+        <el-form-item label="所属机构/园所" prop="deptName">
           <el-input v-model="form.deptName" placeholder="请输入所属机构/幼儿园"></el-input>
         </el-form-item>
-        <el-form-item label="所属区域">
+        <el-form-item label="所属区域" prop="areaCode">
           <el-cascader
             v-model="form.areaCode"
             :options="areaList"
@@ -40,13 +44,13 @@
         <!-- <el-form-item label="地址">
           <el-input v-model="form.address" placeholder="请输入地址"></el-input>
         </el-form-item> -->
-        <el-form-item label="培训名称">
+        <el-form-item label="培训名称" prop="pxName">
           <el-input v-model="form.pxName" placeholder="请输入培训名称"></el-input>
         </el-form-item>
-        <el-form-item label="参训期数">
+        <el-form-item label="参训期数" prop="periodical">
           <el-input v-model="form.periodical" placeholder="请输入参训期数"></el-input>
         </el-form-item>
-        <el-form-item label="授权内容">
+        <el-form-item label="授权内容" prop="content">
           <el-input v-model="form.content" placeholder="请输入授权内容"></el-input>
         </el-form-item>
         <!-- <el-form-item label="证书生效日期" prop="startTime">
@@ -87,12 +91,16 @@ export default {
       },
       rules: {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+        sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         idCard: [{ required: true, message: '请输入身份证号', trigger: 'blur' }],
         mobile: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-        icon: [{ required: true, message: '请上次照片', trigger: 'blur' }],
+        icon: [{ required: true, message: '请上传照片', trigger: 'blur' }],
         categoryId: [{ required: true, message: '请选择证书分类', trigger: 'change' }],
         code: [{ required: true, message: '请输入证书编号', trigger: 'blur' }],
+        deptName: [{ required: true, message: '请输入所属机构/幼儿园', trigger: 'blur' }],
         zsName: [{ required: true, message: '请输入证书名称', trigger: 'blur' }],
+        areaCode: [{ required: true, message: '请选择区域', trigger: 'blur' }],
+        periodical: [{ required: true, message: '请输入参训期数', trigger: 'blur' }],
         pxName: [{ required: true, message: '请输入培训名称', trigger: 'blur' }],
         content: [{ required: true, message: '请输入授权内容', trigger: 'blur' }],
         startTime: [{ required: true, message: '请选择生效日期', trigger: 'change' }],

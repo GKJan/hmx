@@ -12,6 +12,8 @@
         <div class="info0">
           <span class="item01">{{ detail.name }}</span>
           <span class="item02">{{ detail.sex === 1 ? '男' : '女' }}</span>
+          <span class="item05">{{ detail.deptName }}</span>
+          <span class="item06">{{ detail.idCard }}</span>
           <span class="item03">{{ detail.createTime && detail.createTime.substring(0, 10) }}</span>
           <span class="item04">{{ detail.code }}</span>
           <!-- <span class="item05">{{ detail.startTime }} ~ {{ detail.endTime }}</span> -->
@@ -30,7 +32,7 @@
           <span class="item item2">{{ detail.sex === 1 ? '男' : '女' }}</span>
           <span class="item item3">{{ detail.createTime && detail.createTime.substring(0, 10) }}</span>
           <span class="item item4">{{ detail.code }}</span>
-          <span class="item item5">{{ detail.startTime }} ~ {{ detail.endTime }}</span>
+          <span class="item item5" v-if="detail.startTime">{{ detail.startTime }} ~ {{ detail.endTime }}</span>
         </div>
         <div class="name">{{ detail.name }}</div>
         <div class="time">
@@ -61,11 +63,18 @@
         <span>{{ time.year }}</span>
         <span>{{ time.month }}</span>
       </div>
+      <div class="qishu">{{ detail.periodical }}</div>
+      <div class="time3">
+        <span>{{ time.year }}</span>
+        <span>{{ time.month }}</span>
+        <span>{{ time.date }}</span>
+      </div>
     </div>
 
     <div class="img-wrapper2" id="wrapper" v-else-if="type === 4">
       <img :src="require('../../assets/zs/' + detail.categoryName + '.jpg')" class="base">
       <img :src="photoPath" class="photo4">
+      <div class="party4">{{ detail.deptName }}</div>
       <div class="name4">{{ detail.name }}</div>
       <div class="code4">{{ detail.code }}</div>
       <!-- <div class="time">
@@ -74,7 +83,7 @@
       </div> -->
     </div>
 
-    <div class="img-wrapper" v-else>
+    <div class="img-wrapper" id="wrapper" v-else>
       <img :src="require('../../assets/zs/' + detail.categoryName + '.jpg')" class="base">
     </div>
   </div>
@@ -282,13 +291,35 @@ export default {
       width: 95px;
       text-align: center;
     }
+    .item05 {
+      position: absolute;
+      top: 295px;
+      left: 610px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #D87830;
+      width: 100px;
+      text-align: center;
+    }
+    .item06 {
+      position: absolute;
+      top: 355px;
+      left: 415px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #D87830;
+      width: 180px;
+      text-align: center;
+    }
     .name {
+      width: 90px;
+      text-align: center;
       font-size: 20px;
       font-weight: 600;
       color: #D87830;
       position: absolute;
       bottom: 190px;
-      left: 160px;
+      left: 130px;
     }
     .time {
       width: 200px;
@@ -392,6 +423,36 @@ export default {
       left: 43px;
       font-size: 16px;
       font-weight: 600;
+      text-align: center;
+    }
+    .qishu {
+      width: 23px;
+      position: absolute;
+      bottom: 211px;
+      left: 63px;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center; 
+    }
+    .time3 {
+      width: 155px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: absolute;
+      bottom: 108px;
+      right: 62px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .party4 {
+      width: 100px;
+      position: absolute;
+      bottom: 202px;
+      left: 190px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #D87830;
       text-align: center;
     }
     .name4 {

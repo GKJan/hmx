@@ -73,6 +73,11 @@
           align="center">
         </el-table-column>
         <el-table-column
+          label="性别"
+          align="center">
+          <template slot-scope="scope">{{ scope.row.sex === 1 ? '男' : '女' }}</template>
+        </el-table-column>
+        <el-table-column
           prop="idCard"
           label="身份证"
           align="center">
@@ -259,7 +264,7 @@ export default {
       action: 'add',
       rules: {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        icon: [{ required: true, message: '请上次照片', trigger: 'blur' }],
+        icon: [{ required: true, message: '请上传照片', trigger: 'blur' }],
         categoryId: [{ required: true, message: '请选择证书分类', trigger: 'change' }],
         code: [{ required: true, message: '请输入证书编号', trigger: 'blur' }],
         zsName: [{ required: true, message: '请输入证书名称', trigger: 'blur' }],
