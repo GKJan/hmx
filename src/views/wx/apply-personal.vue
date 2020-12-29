@@ -195,6 +195,8 @@ export default {
 <style lang="scss" scoped>
 .login-container {
   // height: 100%;
+  max-width: 500px;
+  margin: 0 auto;
   padding: 20px 0;
   display: flex;
   justify-content: center;
