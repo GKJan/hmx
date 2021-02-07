@@ -152,6 +152,9 @@ export default {
       if (val === 5) {
         return '证书主管'
       }
+      if (val === 6) {
+        return '体测主管'
+      }
     }
   },
 

@@ -22,7 +22,7 @@
       <el-button class="login-btn" type="primary" @click="submit">登录</el-button>
       <div class="title title2">
         <img src="../../assets/wx/add.png">
-        <span>华蒙星儿童体测证书查询系统</span>
+        <span>华蒙星证书登记查询系统</span>
       </div>
       <div class="other">
         <el-button class="cred-btn" type="primary" @click="toApply">证书申请</el-button>

@@ -48,10 +48,10 @@
         <el-form-item label="母亲身高(cm)" prop="MHeight">
           <el-input v-model="form.MHeight" placeholder="请输入母亲身高"></el-input>
         </el-form-item>
-        <el-form-item label="家长姓名" prop="parentName">
+        <el-form-item label="家长姓名">
           <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
         </el-form-item>
-        <el-form-item label="家长手机号" prop="phone">
+        <el-form-item label="家长手机号">
           <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
         </el-form-item>
         <el-form-item label="立定跳远(cm)" prop="legs">

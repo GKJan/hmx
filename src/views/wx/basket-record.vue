@@ -42,10 +42,10 @@
             @change="handleChange">
           </el-date-picker>
         </el-form-item> -->
-        <el-form-item label="家长姓名" prop="parentName">
+        <el-form-item label="家长姓名">
           <el-input v-model="form.parentName" placeholder="请输入家长姓名"></el-input>
         </el-form-item>
-        <el-form-item label="家长手机号" prop="phone">
+        <el-form-item label="家长手机号">
           <el-input v-model="form.phone" maxlength="11" placeholder="请输入家长手机号"></el-input>
         </el-form-item>
         <el-form-item label="30秒胯下绕滚球" prop="rall">
