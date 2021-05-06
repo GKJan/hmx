@@ -153,11 +153,12 @@ export default {
       categoryList: [],
       areaList: [],
       areaProps: {
-        expandTrigger: 'hover',
+        expandTrigger: 'click',
         checkStrictly: true,
         value: 'code',
         label: 'name',
         children: 'childArea',
+        leaf: 'childArea',
         emitPath: false
       }
     }
@@ -184,6 +185,13 @@ export default {
     getArea () {
       this.api.getArea().then(res => {
         if (res.success) {
+          for (let item of res.data) {
+            for (let area of item.childArea) {
+              for (let child of area.childArea) {
+                child.childArea = null
+              }
+            }
+          }
           this.areaList = res.data
         }
       })
